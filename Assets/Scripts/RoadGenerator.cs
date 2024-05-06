@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
 {
+    public static RoadGenerator instance;
     public GameObject RoadPrefab;
     private List<GameObject> roads = new List<GameObject>();
     public float maxSpeed = 10;
+    public float startSpeed = 5;
     private float speed = 0;
     public int maxRoadCount = 5;
-
+    //internal static object instance;
 
     private void Start()
     {
         ResetLevel();
         //StartLevel();
     }
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     private void Update()
     {
         if (speed == 0) return;
@@ -23,18 +31,41 @@ public class RoadGenerator : MonoBehaviour
         {
             road.transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
         }
+
         if (roads[0].transform.position.z < - 15)
         {
-            Destroy(roads[0]);
-            roads.RemoveAt(0);
+            //Destroy(roads[0]);
+            //roads.RemoveAt(0);
+            //CreateNextRoad();
 
-            CreateNextRoad();
+            GameObject first = roads[0];
+            for (int i = 1; i < roads.Count; i++) {
+                roads[i - 1] = roads[i];
+            }
+
+            roads[roads.Count - 1] = first;
+            roads[roads.Count - 1].transform.position += new Vector3(0, 0, 75);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (speed == 0) return;
+        //if (speed < maxSpeed)
+        //{
+        //    speed += 0.01f;
+        //    Debug.Log(speed);
+        //}
+        if (Time.timeScale < 4)
+        {
+            Time.timeScale += 0.001f;
+            Debug.Log(Time.timeScale);
         }
     }
 
     public void StartLevel()
     {
-        speed = maxSpeed;
+        speed = startSpeed;
         SwipeManager.instance.enabled = true;
     }
 
