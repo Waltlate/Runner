@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
     float jumpPower = 15;
     float jumpGravity = -40;
     float realGravity = -10;
+    public GameObject bullet;
+    public float bulletSpeed = 3f;
+    private bool isClick = false;
+    private float clickTime = 0;
+    private float clickDelay = 0.5f;
 
 
     // Start is called before the first frame update
@@ -38,19 +43,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && pointFinish > -laneOffset)
+        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
         {
             MoveHorizontal(-laneChangeSpeed);
         }
-        if (Input.GetKeyDown(KeyCode.D) && pointFinish < laneOffset)
+        if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && pointFinish < laneOffset)
         {
             MoveHorizontal(laneChangeSpeed);
         }
 
-        if(Input.GetKeyDown(KeyCode.W) && isJumping == false)
+        if((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isJumping == false)
         {
             Jump();
         }
+        if (transform.position.y < 0)
+            transform.position = new Vector3(transform.position.x, 0.25f, transform.position.z);
+
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CreateBullet();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!isClick)
+            {
+                isClick = true;
+                clickTime = Time.time;
+            }
+            else
+            {
+                if (Time.time - clickTime < clickDelay)
+                {
+                    CreateBullet();
+                    Debug.Log("Double click!");
+                }
+                isClick = false;
+            }
+        }
+    }
+
+    private void CreateBullet()
+    {
+        GameObject newBullet = Instantiate(bullet,
+                            transform.position + new Vector3(0, 0, 1),
+                            Quaternion.Euler(90, 0, 0)) as GameObject;
+        Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
+        bulletRB.velocity = this.transform.forward * bulletSpeed;
     }
 
 
@@ -145,8 +184,12 @@ public class PlayerController : MonoBehaviour
             //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         }
         if(other.gameObject.tag == "Lose") {
+            PlayerParameters.Health -= 1;
+        }
+        if(PlayerParameters.Health == 0) {
             ResetGame();
         }
+
     }
 
     //private void OnTriggerExit(Collider other)
