@@ -5,13 +5,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector3 startGamePosition;
-    Quaternion startGameRotation;
-    //Vector3 targetPos;
+    Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
+    //Quaternion startGameRotation;
     float laneOffset = 2.5f;
     public float laneChangeSpeed = 15;
-    //float timeElapsed;
-    //float lerpDuration = 0.5f;
     Rigidbody rb;
     Vector3 targetVelocity;
     float pointStart;
@@ -30,17 +27,16 @@ public class PlayerController : MonoBehaviour
     private float clickDelay = 0.5f;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        startGamePosition = transform.position;
-        startGameRotation = transform.rotation;
+       // startGameRotation = transform.rotation;
         //targetPos = transform.position;
         SwipeManager.instance.MoveEvent += MovePlayer;
     }
 
-    // Update is called once per frame
+
+
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
@@ -127,26 +123,6 @@ public class PlayerController : MonoBehaviour
         Physics.gravity = new Vector3(0, realGravity, 0);
     }
 
-    //private void FixedUpdate()
-    //{
-    //    //transform.position = Vector3.MoveTowards(transform.position, targetPos, laneChangeSpeed * Time.deltaTime);
-    //    //if(timeElapsed < lerpDuration) {
-    //    //    transform.position = Vector3.MoveTowards(transform.position, targetPos, timeElapsed / lerpDuration);
-    //    //    timeElapsed += Time.deltaTime;
-    //    //}
-    //    //else {
-    //    //    transform.position = targetPos;
-    //    //}
-    //    rb.velocity = targetVelocity;
-    //    if((transform.position.x > pointFinish && targetVelocity.x > 0) ||
-    //        (transform.position.x < pointFinish && targetVelocity.x < 0))
-    //    {
-    //        targetVelocity = Vector3.zero;
-    //        rb.velocity = targetVelocity;
-    //        rb.position = new Vector3(pointFinish, rb.position.y, rb.position.z);
-    //    }
-    //}
-
     void MoveHorizontal(float speed) {
         pointStart = pointFinish;
         pointFinish += Mathf.Sign(speed) * laneOffset;
@@ -155,11 +131,6 @@ public class PlayerController : MonoBehaviour
 
         }
         movingCoroutine = StartCoroutine(MoveCoroutine(speed));
-
-
-        //targetVelocity = new Vector3(-laneChangeSpeed, 0, 0);
-
-
     }
 
     IEnumerator MoveCoroutine(float vectorX) {
@@ -179,10 +150,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Ramp")
-        {
-            //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
-        }
+        //if (other.gameObject.tag == "Ramp")
+        //{
+        //    //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
+        //}
         if(other.gameObject.tag == "Lose") {
             PlayerParameters.Health -= 1;
         }
@@ -192,31 +163,32 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Ramp")
-    //    {
-    //        //rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
+    //private void OnCollisionEnter(Collision collision) {
+    //    if(collision.gameObject.tag == "NotLose") {
+    //        MoveHorizontal(-lastVectorX);
     //    }
     //}
-
-    private void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.tag == "NotLose") {
-            MoveHorizontal(-lastVectorX);
-        }
-    }
 
     public void StartLevel()
     {
         RoadGenerator.instance.StartLevel();
     }
 
-    public void ResetGame() {
+    private void ClearSettings() {
         rb.velocity = Vector3.zero;
         pointStart = 0;
         pointFinish = 0;
         transform.position = startGamePosition;
-        transform.rotation = startGameRotation;
+    }
+
+    public void ResetGame() {
+        ClearSettings();
         RoadGenerator.instance.ResetLevel();
+    }
+
+    public void RestartGame()
+    {
+        ClearSettings();
+        RoadGenerator.instance.RestartLevel();
     }
 }

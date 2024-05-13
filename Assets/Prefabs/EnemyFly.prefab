@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 1608248830890412997}
   - component: {fileID: 7963253988664956576}
   - component: {fileID: 3875648544347740674}
+  - component: {fileID: 7008977388946643139}
   m_Layer: 0
-  m_Name: BarierUp
+  m_Name: EnemyFly
   m_TagString: Lose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8967502875486611991}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: -1}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -359,3 +360,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7008977388946643139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967502875486611991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7377d6fa230cd4dd4ab24e4020ae1257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 1
+  Health: 1

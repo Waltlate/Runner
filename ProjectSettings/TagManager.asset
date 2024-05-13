@@ -8,6 +8,7 @@ TagManager:
   - NotLose
   - Lose
   - Attack
+  - Hero
   layers:
   - Default
   - TransparentFX

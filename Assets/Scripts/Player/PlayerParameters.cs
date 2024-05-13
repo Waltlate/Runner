@@ -41,12 +41,4 @@ public class PlayerParameters : MonoBehaviour
         bestScoreLabel.text = $"Best Score: {BestScore}";
         coinsLabel.text = $"Coins: {Coins}";
     }
-
-
-    //private void OnGUI()
-    //{
-    //    GUI.Box(new Rect(20, 20, 300, 50), $"HP: {Health}");
-    //    //GUI.Label(new Rect(Screen.width / 2 - 150 - 20, Screen.height / 2 - 24 - 20, 150, 24), $"{Score}");
-    //    //GUI.Label(new Rect(Screen.width / 2 - 150 - 50, Screen.height / 2 - 24 - 50, 150, 24), $"{Coins}");
-    //}
 }
