@@ -7,12 +7,16 @@ using TMPro;
 public class PlayerParameters : MonoBehaviour
 {
     //public static PlayerParameters instance;
+    public static BaseClass archer = new WarriorClass();
     public int Level = 1;
     public static int Health;
     public static int maxHealth = 5;
+    public static float distance;
+    public static float speedAttack;
     public static int Coins = 0;
     public static int Score = 0;
     public static int BestScore = 0;
+
     public TextMeshProUGUI hpLabel;
     public TextMeshProUGUI scoreLabel;
     public TextMeshProUGUI bestScoreLabel;
@@ -22,15 +26,16 @@ public class PlayerParameters : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(archer.ClassName);
+        maxHealth = archer.Health;
+        distance = archer.Distance;
+        speedAttack = archer.Speed;
         Health = maxHealth;
-        //instance = this;
         Score = 0;
         hpLabel.text = $"HP: {Health}";
         scoreLabel.text = $"Score: {Score}";
         bestScoreLabel.text = $"Best Score: {Score}";
         coinsLabel.text = $"Coins: {Coins}";
-
-        //Canvas.GetComponent<TextMesh>().text = $"HP: {Health}";
     }
 
     // Update is called once per frame

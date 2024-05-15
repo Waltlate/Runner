@@ -21,14 +21,22 @@ public class PlayerController : MonoBehaviour
     float jumpGravity = -40;
     float realGravity = -10;
     public GameObject bullet;
+    public GameObject sword;
     public float bulletSpeed = 3f;
     private bool isClick = false;
     private float clickTime = 0;
     private float clickDelay = 0.5f;
 
+    private float timeAttack;
+    private float startTimeAttack;
+    public LayerMask Enemy;
+    public LayerMask Bullet;
+    private float attackRange = 0.5f;
+
 
     void Start()
     {
+        startTimeAttack = PlayerParameters.speedAttack / 2;
         rb = GetComponent<Rigidbody>();
        // startGameRotation = transform.rotation;
         //targetPos = transform.position;
@@ -55,29 +63,77 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < 0)
             transform.position = new Vector3(transform.position.x, 0.25f, transform.position.z);
 
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
-        if (Input.GetKeyDown(KeyCode.Space))
+        ////if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    CreateBullet();
+        //}
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (!isClick)
+        //    {
+        //        isClick = true;
+        //        clickTime = Time.time;
+        //    }
+        //    else
+        //    {
+        //        if (Time.time - clickTime < clickDelay)
+        //        {
+        //            CreateBullet();
+        //            Debug.Log("Double click!");
+        //        }
+        //        isClick = false;
+        //    }
+        //}
+
+        Collider[] enemies = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
+                                                        new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
+                                                        attackRange, Enemy);
+        Collider[] bullets = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
+                                                       new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
+                                                       attackRange, Bullet);
+
+
+
+        if (timeAttack <= 0 &&
+            (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
+            (transform.position.y == 0.25f) || transform.position.y == (0.25f + laneOffset))
         {
-            CreateBullet();
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!isClick)
-            {
-                isClick = true;
-                clickTime = Time.time;
-            }
-            else
-            {
-                if (Time.time - clickTime < clickDelay)
-                {
+            if (enemies.Length != 0) Debug.Log("----");
+            if (enemies.Length != 0) Debug.Log(enemies.Length);
+            if (bullets.Length != 0) Debug.Log(bullets.Length);
+            //for(int i = 0; i < enemies.Length; i++) {
+            //    Debug.Log(enemies[i].transform.position);
+            //    CreateBullet();
+            //}
+
+            //if(Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            //                                            new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
+            //                                            attackRange, Enemy).Length > Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            //                                           new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
+            //                                           attackRange, Bullet).Length) CreateBullet();
+
+            if (enemies.Length > bullets.Length) {
+                if (PlayerParameters.archer.ClassName != "Warrior")
                     CreateBullet();
-                    Debug.Log("Double click!");
-                }
-                isClick = false;
+                else
+                    CreateSword();
             }
+
+            timeAttack = startTimeAttack;
+        }
+        else {
+            timeAttack -= Time.deltaTime * Time.timeScale;
+           // Debug.Log(Time.deltaTime);
         }
     }
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(new Vector3(0, 0, transform.position.z), attackRange);
+    //    Gizmos.DrawSphere(new Vector3(0, 0, transform.position.z + 1), attackRange);
+    //}
 
     private void CreateBullet()
     {
@@ -86,6 +142,15 @@ public class PlayerController : MonoBehaviour
                             Quaternion.Euler(90, 0, 0)) as GameObject;
         Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
         bulletRB.velocity = this.transform.forward * bulletSpeed;
+    }
+
+    private void CreateSword()
+    {
+        GameObject newSword = Instantiate(sword,
+                            transform.position + new Vector3(0.25f, 0, 1),
+                            Quaternion.Euler(0, -15, 0)) as GameObject;
+        //Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
+        //bulletRB.velocity = this.transform.forward * bulletSpeed;
     }
 
 
@@ -154,10 +219,11 @@ public class PlayerController : MonoBehaviour
         //{
         //    //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         //}
-        if(other.gameObject.tag == "Lose") {
+        if (other.gameObject.tag == "Lose")
+        {
             PlayerParameters.Health -= 1;
         }
-        if(PlayerParameters.Health == 0) {
+        if (PlayerParameters.Health == 0) {
             ResetGame();
         }
 
@@ -178,6 +244,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector3.zero;
         pointStart = 0;
         pointFinish = 0;
+        PlayerParameters.Score = 0;
         transform.position = startGamePosition;
     }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8178031461517338615}
   m_Layer: 0
-  m_Name: PerkScore
+  m_Name: PerkCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997637222999121871}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 1}
+  m_LocalPosition: {x: 2.5, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 282350803242876815}
   - component: {fileID: 2951925415036367755}
   - component: {fileID: 224440342975084291}
-  - component: {fileID: 3651655124196090025}
+  - component: {fileID: 7882892111131940866}
   m_Layer: 0
   m_Name: Perk
   m_TagString: NotLose
@@ -34078,7 +34078,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9bf821e4a293a4a3e8f70b23b676346a, type: 2}
+  - {fileID: 2100000, guid: 0238aae1695d94a438de5ac6755eb97a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34147,7 +34147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493ef390b5a1b4725b68acd31b1ee7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3651655124196090025
+--- !u!114 &7882892111131940866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34156,6 +34156,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4268597647704117214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae76d85dbb7e340d398629325c26c168, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd38bcb438844f9c8747d8f1e6499e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

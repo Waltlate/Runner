@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6002860402507203453}
   - component: {fileID: 5149104725613049885}
   - component: {fileID: 2418435342750520773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -704,7 +704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3596966399621986479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8967502875486611991}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

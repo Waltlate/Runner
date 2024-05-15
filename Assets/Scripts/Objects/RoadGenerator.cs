@@ -22,6 +22,7 @@ public class RoadGenerator : MonoBehaviour
     public static int scoreMultiple = 1;
 
     public Button buttonPause;
+    public int currentCoins = 0;
 
 
     private void Start()
@@ -66,11 +67,12 @@ public class RoadGenerator : MonoBehaviour
             //Debug.Log(Time.timeScale);
         }
         currentScore += 1 * scoreMultiple;
-        PlayerParameters.Score = currentScore + PlayerParameters.Coins * 10;
+        PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
     }
 
     public void StartLevel()
     {
+        currentCoins = PlayerParameters.Coins;
         if(buttonPause.interactable == false)
             buttonPause.interactable = true;
         menu.SetActive(false);
@@ -134,9 +136,11 @@ public class RoadGenerator : MonoBehaviour
 
     public void ResetLevel()
     {
+        //currentCoins = PlayerParameters.Coins;
         menu.SetActive(true);
         perk.SetActive(false);
         PerkGenerator.timerPerks = 0f;
+        currentScore = 0;
         speed = 0;
         while(roads.Count > 0)
         {

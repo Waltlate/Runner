@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7157129623108537552}
   - component: {fileID: 1589780691060967}
   - component: {fileID: 5993990181259149622}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemys
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 6753868817736168952}
   - component: {fileID: 5309918015462168361}
   - component: {fileID: 4890254142956469773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemys (1)
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -1406,7 +1406,7 @@ GameObject:
   - component: {fileID: 7434444530766333157}
   - component: {fileID: 69416390606302768}
   - component: {fileID: 7177112827956417005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemys (2)
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -2094,7 +2094,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3596966399621986479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemys
   m_TagString: Lose
   m_Icon: {fileID: 0}
@@ -2109,7 +2109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8967502875486611991}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -12,7 +12,7 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.tag == "Attack")
         {
             Health -= 1;
-            Debug.Log(Health);
+            //Debug.Log(Health);
             if (Health == 0)
             {
                 Destroy(this.gameObject);
