@@ -14,7 +14,7 @@ public class SwordBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("destroy");
+        //Debug.Log("destroy");
         Destroy(gameObject);
     }
 }

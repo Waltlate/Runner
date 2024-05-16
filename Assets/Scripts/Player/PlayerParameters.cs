@@ -8,7 +8,7 @@ public class PlayerParameters : MonoBehaviour
 {
     //public static PlayerParameters instance;
     public static BaseClass archer = new WarriorClass();
-    public int Level = 1;
+    public static int Level = 1;
     public static int Health;
     public static int maxHealth = 5;
     public static float distance;
@@ -18,6 +18,7 @@ public class PlayerParameters : MonoBehaviour
     public static int BestScore = 0;
 
     public TextMeshProUGUI hpLabel;
+    public TextMeshProUGUI levelLabel;
     public TextMeshProUGUI scoreLabel;
     public TextMeshProUGUI bestScoreLabel;
     public TextMeshProUGUI coinsLabel;
@@ -28,11 +29,10 @@ public class PlayerParameters : MonoBehaviour
     {
         Debug.Log(archer.ClassName);
         maxHealth = archer.Health;
-        distance = archer.Distance;
-        speedAttack = archer.Speed;
         Health = maxHealth;
         Score = 0;
-        hpLabel.text = $"HP: {Health}";
+        hpLabel.text = $" HP: {Health}";
+        levelLabel.text = $" Lvl. {Level}";
         scoreLabel.text = $"Score: {Score}";
         bestScoreLabel.text = $"Best Score: {Score}";
         coinsLabel.text = $"Coins: {Coins}";
@@ -41,7 +41,7 @@ public class PlayerParameters : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hpLabel.text = $"HP: {Health}";
+        hpLabel.text = $" HP: {Health}";
         scoreLabel.text = $"Score: {Score}";
         bestScoreLabel.text = $"Best Score: {BestScore}";
         coinsLabel.text = $"Coins: {Coins}";

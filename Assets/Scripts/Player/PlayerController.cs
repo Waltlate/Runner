@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
     //Quaternion startGameRotation;
     float laneOffset = 2.5f;
@@ -23,12 +25,12 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject sword;
     public float bulletSpeed = 3f;
-    private bool isClick = false;
-    private float clickTime = 0;
-    private float clickDelay = 0.5f;
+    //private bool isClick = false;
+    //private float clickTime = 0;
+    //private float clickDelay = 0.5f;
 
     private float timeAttack;
-    private float startTimeAttack;
+    //private float startTimeAttack;
     public LayerMask Enemy;
     public LayerMask Bullet;
     private float attackRange = 0.5f;
@@ -36,14 +38,18 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        startTimeAttack = PlayerParameters.speedAttack / 2;
+        //startTimeAttack = PlayerParameters.speedAttack / 2;
         rb = GetComponent<Rigidbody>();
        // startGameRotation = transform.rotation;
         //targetPos = transform.position;
         SwipeManager.instance.MoveEvent += MovePlayer;
+        StartCoroutine(AttackCoroutine());
     }
 
-
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -86,54 +92,47 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
 
-        Collider[] enemies = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                                                        new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
-                                                        attackRange, Enemy);
-        Collider[] bullets = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                                                       new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
-                                                       attackRange, Bullet);
-
-
-
-        if (timeAttack <= 0 &&
-            (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
-            (transform.position.y == 0.25f) || transform.position.y == (0.25f + laneOffset))
-        {
-            if (enemies.Length != 0) Debug.Log("----");
-            if (enemies.Length != 0) Debug.Log(enemies.Length);
-            if (bullets.Length != 0) Debug.Log(bullets.Length);
-            //for(int i = 0; i < enemies.Length; i++) {
-            //    Debug.Log(enemies[i].transform.position);
-            //    CreateBullet();
-            //}
-
-            //if(Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
-            //                                            new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
-            //                                            attackRange, Enemy).Length > Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y, transform.position.z),
-            //                                           new Vector3(transform.position.x, transform.position.y, transform.position.z + laneOffset * PlayerParameters.distance),
-            //                                           attackRange, Bullet).Length) CreateBullet();
-
-            if (enemies.Length > bullets.Length) {
-                if (PlayerParameters.archer.ClassName != "Warrior")
-                    CreateBullet();
-                else
-                    CreateSword();
-            }
-
-            timeAttack = startTimeAttack;
-        }
-        else {
-            timeAttack -= Time.deltaTime * Time.timeScale;
-           // Debug.Log(Time.deltaTime);
-        }
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(new Vector3(0, 0, transform.position.z), attackRange);
-    //    Gizmos.DrawSphere(new Vector3(0, 0, transform.position.z + 1), attackRange);
-    //}
+    IEnumerator AttackCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.0001f);
+            //yield return new WaitForSeconds(PlayerParameters.archer.Speed / 60 * 100 * 15);
+            //Debug.Log("second" + PlayerParameters.archer.Speed);
+            Collider[] enemies = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
+                                                transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
+                                                attackRange, Enemy);
+            Collider[] bullets = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
+                                                transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
+                                                           attackRange, Bullet);
+            if (
+                timeAttack <= 0 &&
+                        (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset)
+                        && (transform.position.y == 0.25f) ||
+                        transform.position.y >= 2.5f && transform.position.y <= 3f
+                        //transform.position.y == (0.25f + laneOffset)
+                        )
+            {
+                //Debug.Log("attack");
+                if (enemies.Length > bullets.Length)
+                {
+                    if (PlayerParameters.archer.ClassName != "Warrior")
+                        CreateBullet();
+                    else
+                        CreateSword();
+                }
+
+                timeAttack = PlayerParameters.archer.Speed * 0.001f * 15 * 0.8f / Time.timeScale;
+            }
+            else
+            {
+                timeAttack -= 0.0001f;
+                // Debug.Log(Time.deltaTime);
+            }
+        }
+    }
 
     private void CreateBullet()
     {
@@ -147,7 +146,7 @@ public class PlayerController : MonoBehaviour
     private void CreateSword()
     {
         GameObject newSword = Instantiate(sword,
-                            transform.position + new Vector3(0.25f, 0, 1),
+                            transform.position + new Vector3(0, 0, 1),
                             Quaternion.Euler(0, -15, 0)) as GameObject;
         //Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
         //bulletRB.velocity = this.transform.forward * bulletSpeed;
@@ -219,13 +218,15 @@ public class PlayerController : MonoBehaviour
         //{
         //    //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         //}
-        if (other.gameObject.tag == "Lose")
-        {
-            PlayerParameters.Health -= 1;
-        }
-        if (PlayerParameters.Health == 0) {
-            ResetGame();
-        }
+
+
+        //if (other.gameObject.tag == "Lose")
+        //{
+        //    PlayerParameters.Health -= 1;
+        //}
+        //if (PlayerParameters.Health == 0) {
+        //    ResetGame();
+        //}
 
     }
 
@@ -246,6 +247,7 @@ public class PlayerController : MonoBehaviour
         pointFinish = 0;
         PlayerParameters.Score = 0;
         transform.position = startGamePosition;
+        LevelWorld.levelEnemy = 1;
     }
 
     public void ResetGame() {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Data;
 
 public class RoadGenerator : MonoBehaviour
 {
@@ -23,14 +24,19 @@ public class RoadGenerator : MonoBehaviour
 
     public Button buttonPause;
     public int currentCoins = 0;
+    private int countRoad = 0;
+
+    private float countSpeed;
 
 
     private void Start()
     {
+
         ResetLevel();
         buttonPause.interactable = false;
         PlayerParameters.BestScore = PlayerPrefs.GetInt("BestScore");
         //StartLevel();
+        StartCoroutine(Movement());
     }
 
     void Awake()
@@ -40,34 +46,81 @@ public class RoadGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (speed == 0) return;
-        foreach(GameObject road in roads)
-        {
-            road.transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
-        }
+        //countSpeed = Time.deltaTime;
 
-        if (roads[0].transform.position.z < - 20)
+
+        //if (speed == 0) return;
+        //foreach(GameObject road in roads)
+        //{
+        //    road.transform.position -= new Vector3(0, 0, speed * countSpeed);
+        //}
+
+        //if (roads[0].transform.position.z < - 20)
+        //{
+        //    Destroy(roads[0]);
+        //    roads.RemoveAt(0);
+        //    CreateNextRoad();
+        //}
+        //if (Input.GetKeyDown(KeyCode.Escape)) {
+        //    PauseLevel();
+        //}
+    }
+
+
+    IEnumerator Movement()
+    {
+        while (true)
         {
-            Destroy(roads[0]);
-            roads.RemoveAt(0);
-            CreateNextRoad();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            PauseLevel();
+            yield return new WaitForSeconds(0.01f);
+            //countSpeed = Time.deltaTime;
+            countSpeed = 0.01f;
+            //Debug.Log(countSpeed);
+            if (speed != 0)
+            {
+                foreach (GameObject road in roads)
+                {
+                    road.transform.position -= new Vector3(0, 0, speed * countSpeed);
+                }
+
+                if (roads[0].transform.position.z < -20)
+                {
+                    Destroy(roads[0]);
+                    roads.RemoveAt(0);
+                    CreateNextRoad();
+
+                    //Debug.Log("road");//--------
+
+                }
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseLevel();
+                }
+
+                Time.timeScale = 3f;
+
+                if (Time.timeScale < 3f)
+                {
+                    Time.timeScale += 0.0001f;
+                    //Debug.Log(Time.timeScale);
+                }
+                currentScore += 1 * scoreMultiple;
+                PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
+            }
         }
     }
 
+
     private void FixedUpdate()
     {
-        if (speed == 0) return;
+        //if (speed == 0) return;
 
-        if (Time.timeScale < 4f)
-        {
-            Time.timeScale += 0.0001f;
-            //Debug.Log(Time.timeScale);
-        }
-        currentScore += 1 * scoreMultiple;
-        PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
+        //if (Time.timeScale < 4f)
+        //{
+        //    Time.timeScale += 0.0001f;
+        //    //Debug.Log(Time.timeScale);
+        //}
+        //currentScore += 1 * scoreMultiple;
+        //PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
     }
 
     public void StartLevel()
@@ -132,10 +185,16 @@ public class RoadGenerator : MonoBehaviour
             }
 
         roads.Add(go);
+        countRoad++;
+        if(countRoad % 25 == 0)
+        {
+            LevelWorld.levelEnemy++;
+        }
     }
 
     public void ResetLevel()
     {
+        countRoad = 0;
         //currentCoins = PlayerParameters.Coins;
         menu.SetActive(true);
         perk.SetActive(false);

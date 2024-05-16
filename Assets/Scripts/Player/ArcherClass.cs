@@ -11,7 +11,7 @@ public class ArcherClass : BaseClass
         Level = 1;
         Health = 5;
         Damage = 1;
-        Speed = 0.5f;
+        Speed = 1.5f;
         Distance = 2.5f;
     }
 }

@@ -9,7 +9,7 @@ public class WarriorClass : BaseClass
         Level = 1;
         Health = 5;
         Damage = 1;
-        Speed = 0.5f;
+        Speed = 1f;
         Distance = 1f;
     }
 }

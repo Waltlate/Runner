@@ -14,7 +14,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("destroy");
+        //Debug.Log("destroy");
         Destroy(gameObject);
     }
 }
