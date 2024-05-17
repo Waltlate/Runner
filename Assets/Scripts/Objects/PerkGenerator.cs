@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PerkGenerator : MonoBehaviour
 {
+    public static PerkGenerator instance;
     public static bool exist = false;
     public static float timerPerks = 0f;
     public static bool scoreX2 = false;
@@ -14,18 +15,16 @@ public class PerkGenerator : MonoBehaviour
     public GameObject coinUI;
     private float maxTimePerks = 30f;
 
+    void Awake()
+    {
+        instance = this;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        timerPerks += Time.deltaTime; // Увеличиваем время каждый кадр
-        //Debug.Log(timer);
-        if (timerPerks >= maxTimePerks) // Проверяем, прошло ли уже 30 секунд
+        if (scoreX2 == true)
         {
-            timerPerks = 0f; // Сбрасываем таймер
-            exist = true;
-        }
-
-        if(scoreX2 == true) {
             StartCoroutine(CoroutineScoreX2());
             scoreX2 = false;
         }
@@ -35,6 +34,26 @@ public class PerkGenerator : MonoBehaviour
             StartCoroutine(CoroutineCoinX2());
             coinX2 = false;
         }
+
+        timerPerks += Time.deltaTime; // Увеличиваем время каждый кадр
+        //Debug.Log(timer);
+        if (timerPerks >= maxTimePerks) // Проверяем, прошло ли уже 30 секунд
+        {
+            timerPerks = 0f; // Сбрасываем таймер
+            exist = true;
+        }
+
+    }
+
+    public void ClearScoreMultiple() {
+        RoadGenerator.scoreMultiple = 1;
+        scoreUI.SetActive(false);
+    }
+
+    public void ClearCoinMultiple()
+    {
+        CoinBehavior.coinMultiple = 1;
+        coinUI.SetActive(false);
     }
 
     IEnumerator CoroutineScoreX2()
@@ -42,8 +61,7 @@ public class PerkGenerator : MonoBehaviour
         RoadGenerator.scoreMultiple = 2;
         scoreUI.SetActive(true);
         yield return new WaitForSeconds(5);
-        RoadGenerator.scoreMultiple = 1;
-        scoreUI.SetActive(false);
+        ClearScoreMultiple();
     }
 
     IEnumerator CoroutineCoinX2()
@@ -51,7 +69,6 @@ public class PerkGenerator : MonoBehaviour
         CoinBehavior.coinMultiple = 2;
         coinUI.SetActive(true);
         yield return new WaitForSeconds(5);
-        CoinBehavior.coinMultiple = 1;
-        coinUI.SetActive(false);
+        ClearCoinMultiple();
     }
 }

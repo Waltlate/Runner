@@ -21,7 +21,7 @@ public class CoinBehavior : MonoBehaviour
             yield return new WaitForSeconds(0.005f);
             if (euler > 30f || euler < -30f)
             {
-                offset *= -1;
+                offset *= -1f;
             }
             euler += offset;
             transform.rotation = Quaternion.Euler(90f, euler, 0);

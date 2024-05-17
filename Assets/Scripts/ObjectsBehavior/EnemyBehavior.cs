@@ -11,6 +11,12 @@ public class EnemyBehavior : MonoBehaviour
 
     public TextMeshProUGUI levelLabel;
 
+    public int Level
+    {
+        get { return level; }
+        //set { className = value; }
+    }
+
     public void Start()
     {
         level = LevelWorld.levelWorld + LevelWorld.levelEnemy - 1;

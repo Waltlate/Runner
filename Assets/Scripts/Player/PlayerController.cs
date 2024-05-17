@@ -115,20 +115,28 @@ public class PlayerController : MonoBehaviour
                         //transform.position.y == (0.25f + laneOffset)
                         )
             {
-                //Debug.Log("attack");
+                //if(enemies.Length > 0)
+                //    if(enemies[0].gameObject.GetComponent<EnemyBehavior>() != null)
+                //Debug.Log(enemies[0].gameObject.GetComponent<EnemyBehavior>().Level);
                 if (enemies.Length > bullets.Length)
                 {
+                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.Level ||
+                        enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().Level <= PlayerParameters.Level)
+                    {
+
                     if (PlayerParameters.archer.ClassName != "Warrior")
                         CreateBullet();
                     else
                         CreateSword();
+                    }
                 }
 
                 timeAttack = PlayerParameters.archer.Speed * 0.001f * 15 * 0.8f / Time.timeScale;
             }
             else
             {
-                timeAttack -= 0.0001f;
+                //timeAttack -= 0.0001f;
+                timeAttack -= Time.deltaTime;
                 // Debug.Log(Time.deltaTime);
             }
         }
