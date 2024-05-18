@@ -22,10 +22,9 @@ public class EnemyBehavior : MonoBehaviour
         level = LevelWorld.levelWorld + LevelWorld.levelEnemy - 1;
         health = level;
         damage = level;
-        if(level > PlayerParameters.Level)
+        if(level > PlayerParameters.archer.Level)
         levelLabel.color = Color.red;
         levelLabel.text = $"Lvl. {level}";
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,18 +36,20 @@ public class EnemyBehavior : MonoBehaviour
            
             if (health == 0)
             {
-                if (level > 1)
-                    Debug.Log("level" + level);
-                    Destroy(this.gameObject);
+                //if (level > 1)
+                //    Debug.Log("level" + level);
+                Destroy(this.gameObject);
                 PlayerParameters.Coins += level;
+                PlayerParameters.archer.CurrentExp += level;
             }
         }
+
         if (other.gameObject.tag == "Hero")
         {
-            PlayerParameters.Health -= damage;
+            PlayerParameters.health -= damage;
             Destroy(this.gameObject);
         }
-        if (PlayerParameters.Health <= 0)
+        if (PlayerParameters.health <= 0)
         {
             PlayerController.instance.ResetGame();
         }

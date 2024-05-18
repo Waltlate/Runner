@@ -15,6 +15,8 @@ public class RoadGenerator : MonoBehaviour
     public int maxRoadCount = 6;
     public GameObject menu;
     public GameObject pause;
+    public GameObject displayGame;
+    public GameObject settingsGames;
     public GameObject perk;
     public GameObject[] Objects;
     public GameObject[] Perks;
@@ -33,7 +35,7 @@ public class RoadGenerator : MonoBehaviour
     {
 
         ResetLevel();
-        buttonPause.interactable = false;
+        
         PlayerParameters.BestScore = PlayerPrefs.GetInt("BestScore");
         //StartLevel();
 
@@ -199,6 +201,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void ResetLevel()
     {
+        buttonPause.interactable = false;
         countRoad = 0;
         //currentCoins = PlayerParameters.Coins;
         menu.SetActive(true);
@@ -227,8 +230,34 @@ public class RoadGenerator : MonoBehaviour
             PlayerParameters.BestScore = PlayerParameters.Score;
             PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
         }
+        Debug.Log(PlayerParameters.archer.ClassName);
+        Debug.Log(PlayerParameters.archer.CurrentExp);
+        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
+        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
+        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
+        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
         PlayerParameters.Score = 0;
-        PlayerParameters.Health = PlayerParameters.maxHealth;
+        PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
         Time.timeScale = 1;
+    }
+
+    public void SettingsGame()
+    {
+        menu.SetActive(false);
+        displayGame.SetActive(false);
+        settingsGames.SetActive(true);
+    }
+
+    public void ReturnButton()
+    {
+        settingsGames.SetActive(false);
+        displayGame.SetActive(true);
+        menu.SetActive(true);
+        
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

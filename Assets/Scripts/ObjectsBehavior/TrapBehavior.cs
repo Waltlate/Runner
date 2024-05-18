@@ -11,9 +11,9 @@ public class TrapBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Hero")
         {
-            PlayerParameters.Health -= 1;
+            PlayerParameters.health -= 1;
         }
-        if (PlayerParameters.Health == 0)
+        if (PlayerParameters.health == 0)
         {
             Debug.Log(0);
             PlayerController.instance.ResetGame();

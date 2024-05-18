@@ -6,6 +6,8 @@ public class BaseClass
 {
     private string className;
     private int level;
+    private int currentExp;
+    private int levelExp;
     private int damage;
     private int health;
     private float speed;
@@ -21,6 +23,18 @@ public class BaseClass
     {
         get { return level; }
         set { level = value; }
+    }
+
+    public int CurrentExp
+    {
+        get { return currentExp; }
+        set { currentExp = value; }
+    }
+
+    public int LevelExp
+    {
+        get { return levelExp; }
+        set { levelExp = value; }
     }
 
     public int Damage

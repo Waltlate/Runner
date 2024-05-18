@@ -9,8 +9,8 @@ public class PerkHealth : MonoBehaviour
         if (other.gameObject.tag == "Hero")
         {
             Destroy(gameObject);
-            if (PlayerParameters.Health < PlayerParameters.maxHealth) {
-                PlayerParameters.Health += 1;
+            if (PlayerParameters.health < PlayerParameters.maxHealth) {
+                PlayerParameters.health += 1;
             }
         }
     }

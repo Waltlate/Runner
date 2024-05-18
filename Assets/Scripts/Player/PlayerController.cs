@@ -120,8 +120,8 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log(enemies[0].gameObject.GetComponent<EnemyBehavior>().Level);
                 if (enemies.Length > bullets.Length)
                 {
-                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.Level ||
-                        enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().Level <= PlayerParameters.Level)
+                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.archer.Level ||
+                        enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().level <= PlayerParameters.archer.Level)
                     {
 
                     if (PlayerParameters.archer.ClassName != "Warrior")
