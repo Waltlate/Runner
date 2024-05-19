@@ -1,0 +1,13 @@
+{
+    "greatings": [
+        "Greetings, adventurer. Your race begins here.",
+        "Move left, right and up to avoid enemies and traps",
+        "If you can't dodge, your health will decrease",
+        "Over time, your score will increase. Run as far as you can before your health reaches zero."
+    ],
+    "enemyText": "There will be enemies on your way. You can defeat enemies that are below your level with your weapons. Stronger opponents will deal damage corresponding to their level",
+    "enemyFlyText": "Flying enemies appear in the game. Their level is equal to the level of the world and they deal damage according to their level",
+    "coinText": "Collect coins to upgrade your heroes",
+    "trapText": "Avoid the trap. Their level is equal to the world level and they deal damage according to their level",
+    "perkText": "Pick up bonuses. They can improve your score or heal you"
+}

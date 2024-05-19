@@ -611,6 +611,7 @@ GameObject:
   - component: {fileID: 298870907}
   - component: {fileID: 298870906}
   - component: {fileID: 298870905}
+  - component: {fileID: 298870908}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -684,6 +685,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 4.5, y: 0, z: 0}
+--- !u!114 &298870908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298870904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51528da75aa647b1a36cf65cf4c9ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &354241216
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,13 +859,15 @@ GameObject:
   m_Component:
   - component: {fileID: 433912031}
   - component: {fileID: 433912030}
+  - component: {fileID: 433912033}
+  - component: {fileID: 433912032}
   m_Layer: 0
   m_Name: Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &433912030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -861,10 +876,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433912029}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 2, z: 1}
+  m_Size: {x: 10, y: 3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &433912031
 Transform:
@@ -874,13 +889,52 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433912029}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 1.1, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433912032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433912029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148ad59d4cfd9480c92b116a34bbd307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greatings: 0
+  enemyTrigger: 0
+  enemyExist: 0
+  enemyFlyTrigger: 0
+  enemyFlyExist: 0
+  trapTrigger: 0
+  trapExist: 0
+  coinTrigger: 0
+  coinExist: 0
+  perkTrigger: 0
+  perkExist: 0
+--- !u!54 &433912033
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433912029}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &456084448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,6 +1759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719230742}
   - component: {fileID: 719230743}
+  - component: {fileID: 719230744}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -1783,6 +1838,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &719230744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719230741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98849c5a86b404bb395a618f5053e5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggle: {fileID: 719230743}
 --- !u!1 &720026174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3281,6 +3349,7 @@ MonoBehaviour:
   displayGame: {fileID: 1888176078}
   settingsGames: {fileID: 979133635}
   perk: {fileID: 1150441568}
+  tutorial: {fileID: 433912029}
   Objects:
   - {fileID: 8967502875486611991, guid: a0f81769fde2d4ed0a909581b9bc551a, type: 3}
   - {fileID: 8967502875486611991, guid: e3a3b15773da54f8c904ed41c57b6026, type: 3}

@@ -18,6 +18,7 @@ public class RoadGenerator : MonoBehaviour
     public GameObject displayGame;
     public GameObject settingsGames;
     public GameObject perk;
+    public GameObject tutorial;
     public GameObject[] Objects;
     public GameObject[] Perks;
     private float currentTime = 1;
@@ -132,6 +133,17 @@ public class RoadGenerator : MonoBehaviour
 
     public void StartLevel()
     {
+        if(Tutorial.trigerTutorial == true) {
+            tutorial.SetActive(true);
+            if (Tutorial.trigerTutorial)
+            {
+                Tutorial.instance.OnTutorial();
+            }
+            else
+            {
+                Tutorial.instance.OffTutorial();
+            }
+        }
         currentCoins = PlayerParameters.Coins;
         if(buttonPause.interactable == false)
             buttonPause.interactable = true;
@@ -246,6 +258,7 @@ public class RoadGenerator : MonoBehaviour
         menu.SetActive(false);
         displayGame.SetActive(false);
         settingsGames.SetActive(true);
+        ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
     }
 
     public void ReturnButton()
