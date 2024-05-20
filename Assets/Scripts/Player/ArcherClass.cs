@@ -9,11 +9,15 @@ public class ArcherClass : BaseClass
     public ArcherClass()
     {
         ClassName = "Archer";
+        Description = LanguageSettenings.ls.descriptionArcher;
         Level = 1;
         CurrentExp = 0;
         LevelExp = 50;
+        LevelWeapon = 1;
+        CurrentExpWeapon = 0;
+        LevelExpWeapon = 2;
         Health = 5;
-        Damage = 1;
+        Damage = Level + LevelWeapon - 1;
         Speed = 1.5f;
         Distance = 2.5f;
     }
@@ -21,15 +25,15 @@ public class ArcherClass : BaseClass
     public ArcherClass(int level, int currenExp, int levelExp, int health)
     {
         ClassName = "Archer";
-        //Level = PlayerPrefs.GetInt("ArcherLevel", 1);
-        //CurrentExp = PlayerPrefs.GetInt("ArcherCurrentExp", 0);
-        //LevelExp = PlayerPrefs.GetInt("ArcherLevelExp", 50);
-        //Health = PlayerPrefs.GetInt("ArcherHealth", 5);
+        Description = LanguageSettenings.ls.descriptionArcher;
         Level = level;
         CurrentExp = currenExp;
         LevelExp = levelExp;
+        LevelWeapon = 1;
+        CurrentExpWeapon = 0;
+        LevelExpWeapon = 2;
         Health = health;
-        Damage = 1;
+        Damage = Level + LevelWeapon - 1;
         Speed = 1.5f;
         Distance = 2.5f;
     }

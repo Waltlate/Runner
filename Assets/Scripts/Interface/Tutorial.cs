@@ -56,7 +56,7 @@ public class Tutorial : MonoBehaviour
         headStyle.wordWrap = true;
     }
 
-    void TextLoad()
+    public void TextLoad()
     {
         greatingsText = LanguageSettenings.ls.greatings;
         enemyText = LanguageSettenings.ls.enemyText;

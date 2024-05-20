@@ -37,17 +37,12 @@ public class PlayerParameters : MonoBehaviour
                                   PlayerPrefs.GetInt("WarriorCurrentExp", 0),
                                   PlayerPrefs.GetInt("WarriorLevelExp", 50),
                                   PlayerPrefs.GetInt("WarriorHealth", 10));
-        Debug.Log(archer.ClassName + "ff");
         maxHealth = archer.Health;
         health = archer.Level * maxHealth;
-        Score = 0;
         archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
-        levelLabel.text = $" Lvl. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
-        hpLabel.text = $" HP: {health}";
-
-        scoreLabel.text = $"Score: {Score}";
-        bestScoreLabel.text = $"Best Score: {Score}";
-        coinsLabel.text = $"Coins: {Coins}";
+        archer.LevelExpWeapon = ExpLevelWeapon(archer.LevelWeapon);
+        Score = 0;
+        LoadText();
     }
 
     private void Awake()
@@ -63,12 +58,17 @@ public class PlayerParameters : MonoBehaviour
             archer.Level += 1;
             health = archer.Level * maxHealth;
             archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
+            archer.Damage = archer.Level + archer.LevelWeapon - 1;
         }
-        levelLabel.text = $" Lvl. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
-        hpLabel.text = $" HP: {health}";
-        scoreLabel.text = $"Score: {Score}";
-        bestScoreLabel.text = $"Best Score: {BestScore}";
-        coinsLabel.text = $"Coins: {Coins}";
+        LoadText();
+    }
+
+    private void LoadText() {
+        levelLabel.text = $" {LanguageSettenings.ls.level}. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
+        hpLabel.text = $" {LanguageSettenings.ls.hp}: {health}";
+        scoreLabel.text = $"{LanguageSettenings.ls.score}: {Score}";
+        bestScoreLabel.text = $"{LanguageSettenings.ls.bestScore}: {BestScore}";
+        coinsLabel.text = $"{LanguageSettenings.ls.coins}: {Coins}";
     }
 
     public void Stats()
@@ -78,6 +78,15 @@ public class PlayerParameters : MonoBehaviour
         health = archer.Level * archer.Health;
         archer.CurrentExp = archer.CurrentExp;
         archer.LevelExp = archer.LevelExp;
+    }
+
+    int ExpLevelWeapon(int level) {
+        int result = 1;
+
+        result *= BinaryPow(10, level / 3);
+        if (level % 3 == 1) result *= 2;
+        if (level % 3 == 2) result *= 5;
+        return result;
     }
 
     string ConvertNumberToString(float number)

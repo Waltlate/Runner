@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
+using TMPro;
 
 public class RoadGenerator : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class RoadGenerator : MonoBehaviour
     public GameObject menu;
     public GameObject pause;
     public GameObject displayGame;
+    public GameObject heroes;
     public GameObject settingsGames;
     public GameObject perk;
     public GameObject tutorial;
@@ -30,7 +32,7 @@ public class RoadGenerator : MonoBehaviour
     private int countRoad = 0;
 
     private float countSpeed;
-
+    public TMP_Dropdown dropdown;
 
     private void Start()
     {
@@ -135,6 +137,7 @@ public class RoadGenerator : MonoBehaviour
     {
         if(Tutorial.trigerTutorial == true) {
             tutorial.SetActive(true);
+            Tutorial.instance.TextLoad();
             if (Tutorial.trigerTutorial)
             {
                 Tutorial.instance.OnTutorial();
@@ -242,8 +245,8 @@ public class RoadGenerator : MonoBehaviour
             PlayerParameters.BestScore = PlayerParameters.Score;
             PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
         }
-        Debug.Log(PlayerParameters.archer.ClassName);
-        Debug.Log(PlayerParameters.archer.CurrentExp);
+        //Debug.Log(PlayerParameters.archer.ClassName);
+        //Debug.Log(PlayerParameters.archer.CurrentExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
@@ -253,17 +256,30 @@ public class RoadGenerator : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void HeroesGames()
+    {
+        menu.SetActive(false);
+        displayGame.SetActive(false);
+        heroes.SetActive(true);
+    }
+
     public void SettingsGame()
     {
         menu.SetActive(false);
         displayGame.SetActive(false);
         settingsGames.SetActive(true);
+        if (PlayerPrefs.GetString("Languages", "ENG") == "ENG")
+            dropdown.value = 0;
+        else
+            dropdown.value = 1;
+        if(ToggleController.instance)
         ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
     }
 
-    public void ReturnButton()
+    public void BackButton()
     {
         settingsGames.SetActive(false);
+        heroes.SetActive(false);
         displayGame.SetActive(true);
         menu.SetActive(true);
         

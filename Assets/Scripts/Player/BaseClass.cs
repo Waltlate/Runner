@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseClass
 {
     private string className;
+    private string description;
     private int level;
     private int currentExp;
     private int levelExp;
@@ -12,11 +13,21 @@ public class BaseClass
     private int health;
     private float speed;
     private float distance;
+    private int levelWeapon;
+    private int currentExpWeapon;
+    private int levelExpWeapon;
+
 
 
     public string ClassName {
         get { return className; }
         set { className = value; }
+    }
+
+    public string Description
+    {
+        get { return description; }
+        set { description = value; }
     }
 
     public int Level
@@ -59,5 +70,23 @@ public class BaseClass
     {
         get { return distance; }
         set { distance = value; }
+    }
+
+    public int LevelWeapon
+    {
+        get { return levelWeapon; }
+        set { levelWeapon = value; }
+    }
+
+    public int CurrentExpWeapon
+    {
+        get { return currentExpWeapon; }
+        set { currentExpWeapon = value; }
+    }
+
+    public int LevelExpWeapon
+    {
+        get { return levelExpWeapon; }
+        set { levelExpWeapon = value; }
     }
 }

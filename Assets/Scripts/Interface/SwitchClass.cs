@@ -18,9 +18,8 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("WarriorLevelExp", 50),
                                                         PlayerPrefs.GetInt("WarriorHealth", 10));
             archer.GetComponent<MeshRenderer>().material = warriorMaterial;
-            PlayerParameters.instance.Stats();
-            //archer.SetActive(false);
-            //warrior.SetActive(true);
+            PlayerParameters.maxHealth = PlayerPrefs.GetInt("WarriorHealth", 10);
+            //PlayerParameters.instance.Stats();
         }
         if (dropdown.options[dropdown.value].text == "Archer")
         {
@@ -29,9 +28,9 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("ArcherLevelExp", 50),
                                                         PlayerPrefs.GetInt("ArcherHealth", 5));
             archer.GetComponent<MeshRenderer>().material = archerMaterial;
-            PlayerParameters.instance.Stats();
-            //archer.SetActive(true);
-            //warrior.SetActive(false);
+            PlayerParameters.maxHealth = PlayerPrefs.GetInt("ArcherHealth", 5);
         }
+        PlayerParameters.instance.Stats();
+        HeroesText.instance.ChangeLanguageAndRefresh();
     }
 }

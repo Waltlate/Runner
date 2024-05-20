@@ -31,10 +31,10 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            health -= 1;
+            health -= PlayerParameters.archer.Damage;
 
            
-            if (health == 0)
+            if (health <= 0)
             {
                 //if (level > 1)
                 //    Debug.Log("level" + level);

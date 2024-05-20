@@ -11,9 +11,9 @@ public class EnemyFlyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            health -= 1;
+            health -= PlayerParameters.archer.Damage;
             //Debug.Log(Health);
-            if (health == 0)
+            if (health <= 0)
             {
                 Destroy(this.gameObject);
                 PlayerParameters.Coins += 1;
