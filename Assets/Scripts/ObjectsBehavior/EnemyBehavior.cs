@@ -23,7 +23,10 @@ public class EnemyBehavior : MonoBehaviour
         health = level;
         damage = level;
         if(level > PlayerParameters.archer.Level)
-        levelLabel.color = Color.red;
+            if(level > PlayerParameters.archer.Level + PlayerParameters.archer.LevelWeapon - 1)
+                levelLabel.color = Color.red;
+            else
+                levelLabel.color = Color.yellow;
         levelLabel.text = $"Lvl. {level}";
     }
 

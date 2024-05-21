@@ -9,6 +9,7 @@ public class MenuText : MonoBehaviour
     public static MenuText instance;
     public TextMeshProUGUI playButtonText;
     public TextMeshProUGUI heroesButtonText;
+    public TextMeshProUGUI shopButtonText;
     public TextMeshProUGUI settenignsButtonText;
     public TextMeshProUGUI exitButtonText;
 
@@ -26,6 +27,7 @@ public class MenuText : MonoBehaviour
     {
         playButtonText.text = LanguageSettenings.ls.play;
         heroesButtonText.text = LanguageSettenings.ls.heroes;
+        shopButtonText.text = LanguageSettenings.ls.shop;
         settenignsButtonText.text = LanguageSettenings.ls.settenigns;
         exitButtonText.text = LanguageSettenings.ls.exit;
     }

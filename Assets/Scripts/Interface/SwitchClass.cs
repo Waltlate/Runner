@@ -6,7 +6,6 @@ using TMPro;
 public class SwitchClass : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
-    //public GameObject warrior;
     public GameObject archer;
     public Material archerMaterial;
     public Material warriorMaterial;

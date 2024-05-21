@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using UnityEngine.Networking;
 
 public class LanguageSettenings : MonoBehaviour
 {
     private string json;
     public static LanguageSystem ls = new LanguageSystem();
     public TMP_Dropdown dropdown;
+    public TextMeshProUGUI bestScoreLabel;
+
 
     void Awake()
     {
@@ -31,20 +34,33 @@ public class LanguageSettenings : MonoBehaviour
         LanguageSystemLoad();
     }
 
-    void LanguageSystemLoad()
+    private void LanguageSystemLoad()
     {
+        string path = "";
 
     #if UNITY_ANDROID && !UNITY_EDITOR
-        string path = Path.Combine(Application.streamingAssetsPath + "/Languages/" + PlayerPrefs.GetString("Languages", "ENG") + ".json");
-        WWW reader = new WWW(path);
-        //while (!reader.isDone) {}
-        json = reader.text;
-    #endif
-
-    #if UNITY_EDITOR
-        json = File.ReadAllText(Application.streamingAssetsPath + "/Languages/" + PlayerPrefs.GetString("Languages", "ENG") + ".json");
+        path = "jar:file://" + Application.dataPath + "!/assets/Languages/" + PlayerPrefs.GetString("Languages", "ENG") + ".json";
+        StartCoroutine(ReadFileFromAndroid(path, (result) =>
+        {
+            json = result;
+            ls = JsonUtility.FromJson<LanguageSystem>(json);
+        }));
+    #else
+        path = Path.Combine(Application.streamingAssetsPath, "Languages", PlayerPrefs.GetString("Languages", "ENG") + ".json");
+        json = File.ReadAllText(path);
         ls = JsonUtility.FromJson<LanguageSystem>(json);
     #endif
+
+
+
+        if (DisplayText.instance)
+        {
+            DisplayText.instance.ChangeLanguageAndRefresh();
+        }
+        if (HeroesText.instance)
+        {
+            HeroesText.instance.ChangeLanguageAndRefresh();
+        }
 
         if (MenuText.instance)
         {
@@ -54,18 +70,12 @@ public class LanguageSettenings : MonoBehaviour
         {
             SetteningsText.instance.ChangeLanguageAndRefresh();
         }
-        if (DisplayText.instance)
-        {
-            DisplayText.instance.ChangeLanguageAndRefresh();
-        }
         if (PauseText.instance)
         {
             PauseText.instance.ChangeLanguageAndRefresh();
         }
-        if (HeroesText.instance)
-        {
-            HeroesText.instance.ChangeLanguageAndRefresh();
-        }
+
+
         //if (PlayerParameters.instance)
         //{
         //    if (PlayerParameters.archer.ClassName == "Warrior")
@@ -78,6 +88,25 @@ public class LanguageSettenings : MonoBehaviour
         //    }
         //}
     }
+
+
+
+    IEnumerator ReadFileFromAndroid(string path, System.Action<string> callback)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(path);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            callback.Invoke(www.downloadHandler.text);
+        }
+        else
+        {
+            string error = "Error loading file: " + www.error;
+            bestScoreLabel.text = error;
+            Debug.LogError(error);
+        }
+    }
 }
 
 public class LanguageSystem
@@ -89,13 +118,16 @@ public class LanguageSystem
     public string trapText;
     public string perkText;
 
-    public string play;
-    public string heroes;
-    public string settenigns;
-    public string exit;
+    public string play = "Play";
+    public string heroes = "Heroes";
+    public string shop = "Shop";
+    public string settenigns = "Settenigns";
+    public string exit = "Exit";
 
     public string back;
     public string levelUp;
+    public string buy;
+
     public string hero;
     public string stats;
     public string weapon;

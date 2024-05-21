@@ -18,6 +18,7 @@ public class RoadGenerator : MonoBehaviour
     public GameObject pause;
     public GameObject displayGame;
     public GameObject heroes;
+    public GameObject shop;
     public GameObject settingsGames;
     public GameObject perk;
     public GameObject tutorial;
@@ -218,8 +219,8 @@ public class RoadGenerator : MonoBehaviour
     {
         buttonPause.interactable = false;
         countRoad = 0;
-        //currentCoins = PlayerParameters.Coins;
         menu.SetActive(true);
+        //MenuText.instance.ChangeLanguageAndRefresh();
 
         PerkGenerator.timerPerks = 0f;
         if (perk.activeSelf == true)
@@ -228,31 +229,37 @@ public class RoadGenerator : MonoBehaviour
             PerkGenerator.instance.ClearScoreMultiple();
         }
         perk.SetActive(false);
-        currentScore = 0;
+
         speed = 0;
-        while(roads.Count > 0)
+        while (roads.Count > 0)
         {
             Destroy(roads[0]);
             roads.RemoveAt(0);
         }
-        for(int i =0; i < maxRoadCount; i++)
+        for (int i = 0; i < maxRoadCount; i++)
         {
             CreateNextRoad();
         }
-        SwipeManager.instance.enabled = false;
-        if (PlayerParameters.BestScore < PlayerParameters.Score)
+        if (SwipeManager.instance)
         {
-            PlayerParameters.BestScore = PlayerParameters.Score;
+            SwipeManager.instance.enabled = false;
+        }
+
+        //Debug.Log($"{PlayerParameters.BestScore} - {PlayerParameters.Score} - {currentScore}");
+        if (PlayerParameters.BestScore < currentScore)
+        {
+            PlayerParameters.BestScore = currentScore;
             PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
         }
-        //Debug.Log(PlayerParameters.archer.ClassName);
-        //Debug.Log(PlayerParameters.archer.CurrentExp);
+        currentScore = 0;
+        if (PlayerParameters.archer != null) {
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
         PlayerParameters.Score = 0;
         PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
+        }
         Time.timeScale = 1;
     }
 
@@ -261,6 +268,13 @@ public class RoadGenerator : MonoBehaviour
         menu.SetActive(false);
         displayGame.SetActive(false);
         heroes.SetActive(true);
+    }
+
+    public void ShopGames()
+    {
+        menu.SetActive(false);
+        displayGame.SetActive(false);
+        shop.SetActive(true);
     }
 
     public void SettingsGame()
@@ -280,6 +294,7 @@ public class RoadGenerator : MonoBehaviour
     {
         settingsGames.SetActive(false);
         heroes.SetActive(false);
+        shop.SetActive(false);
         displayGame.SetActive(true);
         menu.SetActive(true);
         
