@@ -13,7 +13,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Enemy
@@ -41,7 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - TempCast
   m_SortingLayers:
   - name: Default
     uniqueID: 0

@@ -20,16 +20,16 @@ public class WarriorClass : BaseClass
     }
 
 
-    public WarriorClass(int level, int currenExp, int levelExp, int health)
+    public WarriorClass(int level, int currenExp, int levelExp, int health, int levelWeapon, int currenExpWeapon, int levelExpWeapon)
     {
         ClassName = "Warrior";
         Description = LanguageSettenings.ls.descriptionWarrior;
         Level = level;
         CurrentExp = currenExp;
         LevelExp = levelExp;
-        LevelWeapon = 1;
-        CurrentExpWeapon = 0;
-        LevelExpWeapon = 2;
+        LevelWeapon = levelWeapon;
+        CurrentExpWeapon = currenExpWeapon;
+        LevelExpWeapon = levelExpWeapon;
         Health = health;
         Damage = Level + LevelWeapon - 1;
         Speed = 1f;

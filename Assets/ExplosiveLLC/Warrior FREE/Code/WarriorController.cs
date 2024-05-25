@@ -113,11 +113,15 @@ namespace WarriorAnimsFREE
 		/// </summary>
 		private void GetInput()
 		{
-			if (allowedInput) {
+			//ControllerDebug();
+
+            if (allowedInput) {
 
 				// Use input from WarriorInputController / Input Manager.
 				if (!useInputSystem) {
 					if (warriorInputController != null) {
+						if (warriorInputController.inputAttack)
+							Debug.Log("attack");
 						inputAttack = warriorInputController.inputAttack;
 						inputJump = warriorInputController.inputJump;
 						moveInput = warriorInputController.moveInput;
@@ -125,8 +129,12 @@ namespace WarriorAnimsFREE
 
 					// Use input from WarriorInputSystemController / Warrior Input Actions.
 				} else {
-					if (warriorInputSystemController != null) {
-						inputAttack = warriorInputSystemController.inputAttack;
+                    if (warriorInputSystemController.inputAttack)
+                        Debug.Log("attack");
+                    //Debug.Log("here");
+                    if (warriorInputSystemController != null) {
+                        
+                        inputAttack = warriorInputSystemController.inputAttack;
 						inputJump = warriorInputSystemController.inputJump;
 						moveInput = warriorInputSystemController.moveInput;
 					}
@@ -134,12 +142,18 @@ namespace WarriorAnimsFREE
 			}
 		}
 
+		//public void MyAttack()
+		//{
+		//	inputAttack = true;
+		//}
+
 		/// <summary>
 		/// Checks move input and returns if active.
 		/// </summary>
 		public bool HasMoveInput()
 		{
-			return moveInput != Vector3.zero;
+            return true;
+            //return moveInput != Vector3.zero;
 		}
 
 		/// <summary>
@@ -157,9 +171,10 @@ namespace WarriorAnimsFREE
 		private void Update()
 		{
 			GetInput();
-
-			// Character is on ground.
-			if (MaintainingGround() && canAction) { Attacking(); }
+            warriorInputSystemController.inputJump = false;
+            // Character is on ground.
+            if (canAction) { Attacking(); }
+			//if (MaintainingGround() && canAction) { Attacking(); }
 
 			UpdateAnimationSpeed();
 		}
@@ -211,6 +226,7 @@ namespace WarriorAnimsFREE
 		{
 			SetAnimatorInt("Action", 1);
 			SetAnimatorTrigger(AnimatorTrigger.AttackTrigger);
+            warriorInputSystemController.inputAttack = false;
 			Lock(true, true, true, 0, warriorTiming.TimingLock(warrior, "attack1"));
 		}
 
@@ -255,7 +271,7 @@ namespace WarriorAnimsFREE
 				SetAnimatorBool("Moving", false);
 				SetAnimatorRootMotion(true);
 				_canMove = false;
-				moveInput = Vector3.zero;
+				//moveInput = Vector3.zero;
 			} else {
 				_canMove = true;
 				SetAnimatorRootMotion(false);

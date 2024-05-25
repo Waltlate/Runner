@@ -61,7 +61,10 @@ public class LanguageSettenings : MonoBehaviour
         {
             HeroesText.instance.ChangeLanguageAndRefresh();
         }
-
+        if (ShopText.instance)
+        {
+            ShopText.instance.ChangeLanguageAndRefresh();
+        }
         if (MenuText.instance)
         {
             MenuText.instance.ChangeLanguageAndRefresh();

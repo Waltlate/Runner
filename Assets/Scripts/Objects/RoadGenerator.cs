@@ -37,10 +37,10 @@ public class RoadGenerator : MonoBehaviour
 
     private void Start()
     {
-
+        //PlayerPrefs.SetInt("BestScore", 0);
         ResetLevel();
         
-        PlayerParameters.BestScore = PlayerPrefs.GetInt("BestScore");
+        
         //StartLevel();
 
         //StartCoroutine(Movement());
@@ -164,6 +164,7 @@ public class RoadGenerator : MonoBehaviour
     public void ResumeLevel()
     {
         pause.SetActive(false);
+        buttonPause.interactable = true;
         Time.timeScale = currentTime;
        
     }
@@ -176,6 +177,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void PauseLevel()
     {
+        buttonPause.interactable = false;
         currentTime = Time.timeScale;
         Time.timeScale = 0;
         pause.SetActive(true);
@@ -245,13 +247,14 @@ public class RoadGenerator : MonoBehaviour
             SwipeManager.instance.enabled = false;
         }
 
-        //Debug.Log($"{PlayerParameters.BestScore} - {PlayerParameters.Score} - {currentScore}");
-        if (PlayerParameters.BestScore < currentScore)
+        Debug.Log($"{PlayerParameters.BestScore} - {PlayerParameters.Score} - {currentScore}");
+        if (PlayerParameters.BestScore < PlayerParameters.Score)
         {
-            PlayerParameters.BestScore = currentScore;
+            PlayerParameters.BestScore = PlayerParameters.Score;
             PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
         }
         currentScore = 0;
+        PlayerParameters.Score = 0;
         if (PlayerParameters.archer != null) {
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
@@ -260,7 +263,16 @@ public class RoadGenerator : MonoBehaviour
         PlayerParameters.Score = 0;
         PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
         }
+        PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
         Time.timeScale = 1;
+        if (ShopText.instance)
+        {
+            ShopText.instance.ChangeLanguageAndRefresh();
+        }
+        if (ShopBehavior.instance)
+        {
+            ShopBehavior.instance.ChangeStateButton();
+        }
     }
 
     public void HeroesGames()

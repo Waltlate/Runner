@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using WarriorAnimsFREE;
 
 public class PlayerController : MonoBehaviour
 {
+
     public static PlayerController instance;
     Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
     //Quaternion startGameRotation;
@@ -35,6 +37,13 @@ public class PlayerController : MonoBehaviour
     public LayerMask Bullet;
     private float attackRange = 0.5f;
 
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public bool useRootMotion = false;
+    public float animationSpeed = 2f;
+    [HideInInspector] public WarriorInputSystemController warriorInputSystemController;
+    [HideInInspector] public WarriorController warriorController;
+    //public Animation animationRun;
+    public AnimationClip animationRun;
 
     void Start()
     {
@@ -44,15 +53,32 @@ public class PlayerController : MonoBehaviour
         //targetPos = transform.position;
         SwipeManager.instance.MoveEvent += MovePlayer;
         StartCoroutine(AttackCoroutine());
+
     }
 
     void Awake()
     {
+
+        //warriorInputSystemController = GetComponentInChildren<WarriorInputSystemController>();
+        //warriorController = GetComponentInChildren<WarriorController>();
+
+
+        //warriorController = GameObject.Find("Knight Warrior").GetComponent<WarriorController>();
+        animator = GetComponentInChildren<Animator>();
         instance = this;
+        
     }
 
     void Update()
     {
+        SetAnimatorFloat("Animation Speed", animationSpeed);
+        if (warriorController)
+        {
+            warriorController.LockMove(false);
+            warriorController.SetAnimatorBool("Moving", true);
+            warriorController.isMoving = true;
+            warriorController.SetAnimatorFloat("Velocity", Vector3.forward.magnitude);
+        }
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
         {
             MoveHorizontal(-laneChangeSpeed);
@@ -92,6 +118,10 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
 
+
+        //if(warriorInputSystemController.inputAttack)
+        //Debug.Log(warriorInputSystemController.inputAttack);
+
     }
 
     IEnumerator AttackCoroutine()
@@ -120,15 +150,18 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log(enemies[0].gameObject.GetComponent<EnemyBehavior>().Level);
                 if (enemies.Length > bullets.Length)
                 {
-                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.archer.Level ||
-                        enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().level <= PlayerParameters.archer.Level)
+                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.archer.Damage ||
+                        enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().level <= PlayerParameters.archer.Damage)
                     {
 
                     if (PlayerParameters.archer.ClassName != "Warrior")
                         CreateBullet();
                     else
                         CreateSword();
+                    if(warriorInputSystemController)
+                        warriorInputSystemController.inputAttack = true;
                     }
+                    
                 }
 
                 timeAttack = PlayerParameters.archer.Speed * 0.001f * 15 * 0.8f / Time.timeScale;
@@ -180,6 +213,8 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        if(warriorInputSystemController)
+        warriorInputSystemController.inputJump = true;
         isJumping = true;
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         Physics.gravity = new Vector3(0, jumpGravity, 0);
@@ -220,30 +255,6 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.gameObject.tag == "Ramp")
-        //{
-        //    //rb.constraints |= RigidbodyConstraints.FreezePositionZ;
-        //}
-
-
-        //if (other.gameObject.tag == "Lose")
-        //{
-        //    PlayerParameters.Health -= 1;
-        //}
-        //if (PlayerParameters.Health == 0) {
-        //    ResetGame();
-        //}
-
-    }
-
-    //private void OnCollisionEnter(Collision collision) {
-    //    if(collision.gameObject.tag == "NotLose") {
-    //        MoveHorizontal(-lastVectorX);
-    //    }
-    //}
-
     public void StartLevel()
     {
         RoadGenerator.instance.StartLevel();
@@ -253,9 +264,10 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector3.zero;
         pointStart = 0;
         pointFinish = 0;
-        PlayerParameters.Score = 0;
+        //PlayerParameters.Score = 0;
         transform.position = startGamePosition;
         LevelWorld.levelEnemy = 1;
+        //SetAnimatorBool("Moving", false);
     }
 
     public void ResetGame() {
@@ -267,5 +279,36 @@ public class PlayerController : MonoBehaviour
     {
         ClearSettings();
         RoadGenerator.instance.RestartLevel();
+    }
+
+    public void SetAnimatorInt(string name, int i)
+    {
+        //Debug.Log("SetAnimatorInt: " + name + i);
+        animator.SetInteger(name, i);
+    }
+
+    public void SetAnimatorTrigger(AnimatorTrigger trigger)
+    {
+        //Debug.Log("SetAnimatorTrigger: " + trigger + " - " + ( int )trigger);
+        animator.SetInteger("Trigger Number", (int)trigger);
+        animator.SetTrigger("Trigger");
+    }
+
+    public void SetAnimatorBool(string name, bool b)
+    {
+        //Debug.Log("SetAnimatorBool: " + name + b);
+        animator.SetBool(name, b);
+    }
+
+    public void SetAnimatorRootMotion(bool b)
+    {
+        useRootMotion = b;
+    }
+
+    public void SetAnimatorFloat(string name, float f)
+    {
+        //Debug.Log("SetAnimatorFloat: " + name + f);
+        if(animator)
+        animator.SetFloat(name, f);
     }
 }

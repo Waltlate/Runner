@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class Tutorial : MonoBehaviour
 {
     public static Tutorial instance;
-    public static bool trigerTutorial = true;
+    public static bool trigerTutorial = false;
     public bool greatings;
     public bool enemyTrigger;
     public bool enemyExist;

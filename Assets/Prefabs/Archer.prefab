@@ -33,8 +33,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.25, z: -6}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 2152893851045197888}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,6 +138,10 @@ MonoBehaviour:
   Bullet:
     serializedVersion: 2
     m_Bits: 0
+  animator: {fileID: 0}
+  useRootMotion: 0
+  animationSpeed: 2
+  warriorInputSystemController: {fileID: 0}
 --- !u!114 &48311567684447702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,69 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbea174878c164d9983b63d05e97ac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 1
   hpLabel: {fileID: 0}
+  levelLabel: {fileID: 0}
   scoreLabel: {fileID: 0}
   bestScoreLabel: {fileID: 0}
   coinsLabel: {fileID: 0}
---- !u!1 &220028951543235046
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2152893851045197888}
-  - component: {fileID: 751766266486396741}
-  - component: {fileID: 3460763079449383902}
-  m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2152893851045197888
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220028951543235046}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 48311567684447691}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!136 &751766266486396741
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220028951543235046}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3460763079449383902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220028951543235046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25be03ca54c5d4512903b0fb30c0aac8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 1175616835363306511, guid: 28d6c2e73d9964f28a29ba23acd37165, type: 3}
-  bulletSpeed: 3

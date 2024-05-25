@@ -33,10 +33,15 @@ public class PlayerParameters : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BestScore = PlayerPrefs.GetInt("BestScore", 0);
+        Coins = PlayerPrefs.GetInt("Coins", 0);
         archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
                                   PlayerPrefs.GetInt("WarriorCurrentExp", 0),
                                   PlayerPrefs.GetInt("WarriorLevelExp", 50),
-                                  PlayerPrefs.GetInt("WarriorHealth", 10));
+                                  PlayerPrefs.GetInt("WarriorHealth", 10),
+                                  PlayerPrefs.GetInt("WarriorLevelWeapon", 1),
+                                  PlayerPrefs.GetInt("WarriorCurrentExpWeapon", 0),
+                                  PlayerPrefs.GetInt("WarriorLevelExpWeapon", 2));
         maxHealth = archer.Health;
         health = archer.Level * maxHealth;
         archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
@@ -80,7 +85,7 @@ public class PlayerParameters : MonoBehaviour
         archer.LevelExp = archer.LevelExp;
     }
 
-    int ExpLevelWeapon(int level) {
+    public int ExpLevelWeapon(int level) {
         int result = 1;
 
         result *= BinaryPow(10, level / 3);

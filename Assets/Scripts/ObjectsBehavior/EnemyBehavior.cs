@@ -22,6 +22,7 @@ public class EnemyBehavior : MonoBehaviour
         level = LevelWorld.levelWorld + LevelWorld.levelEnemy - 1;
         health = level;
         damage = level;
+        if(PlayerParameters.instance)
         if(level > PlayerParameters.archer.Level)
             if(level > PlayerParameters.archer.Level + PlayerParameters.archer.LevelWeapon - 1)
                 levelLabel.color = Color.red;
@@ -54,6 +55,7 @@ public class EnemyBehavior : MonoBehaviour
         }
         if (PlayerParameters.health <= 0)
         {
+            if(PlayerController.instance)
             PlayerController.instance.ResetGame();
         }
     }

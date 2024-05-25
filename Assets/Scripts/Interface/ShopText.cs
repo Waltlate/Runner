@@ -8,6 +8,7 @@ public class ShopText : MonoBehaviour
     public static ShopText instance;
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI shopText;
+    public TextMeshProUGUI coinText;
     public TextMeshProUGUI[] buyText;
 
     void Start()
@@ -24,7 +25,8 @@ public class ShopText : MonoBehaviour
     {
         backButtonText.text = LanguageSettenings.ls.back;
         shopText.text = LanguageSettenings.ls.shop;
-        for(int i = 0; i < buyText.Length; i++)
+        coinText.text = $"{LanguageSettenings.ls.coins}: {PlayerParameters.Coins}"; ;
+        for (int i = 0; i < buyText.Length; i++)
         {
             buyText[i].text = LanguageSettenings.ls.buy;
         }
