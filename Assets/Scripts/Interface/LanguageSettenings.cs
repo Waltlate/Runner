@@ -142,6 +142,8 @@ public class LanguageSystem
     public string restart;
 
     public string level;
+    public string levelWorld;
+    public string levelWorldFull;
     public string hp;
     public string health;
     public string damage;
@@ -150,6 +152,7 @@ public class LanguageSystem
 
     public string descriptionWarrior;
     public string descriptionArcher;
+    public string descriptionMage;
 
     public string coins;
     public string score;

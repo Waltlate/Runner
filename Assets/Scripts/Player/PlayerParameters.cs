@@ -22,11 +22,11 @@ public class PlayerParameters : MonoBehaviour
     private int k1 = 25;
     private int k2 = 2;
 
-    public TextMeshProUGUI hpLabel;
     public TextMeshProUGUI levelLabel;
+    public TextMeshProUGUI levelWorldLabel;
+    public TextMeshProUGUI hpLabel;
     public TextMeshProUGUI scoreLabel;
     public TextMeshProUGUI bestScoreLabel;
-    
     public TextMeshProUGUI coinsLabel;
     
     
@@ -48,6 +48,9 @@ public class PlayerParameters : MonoBehaviour
         archer.LevelExpWeapon = ExpLevelWeapon(archer.LevelWeapon);
         Score = 0;
         LoadText();
+        RoadGenerator.instance.dropdownClass.value = PlayerPrefs.GetInt("NumbersHero", 0);
+        if(SwitchClass.instance)
+        SwitchClass.instance.Switch();
     }
 
     private void Awake()
@@ -70,6 +73,7 @@ public class PlayerParameters : MonoBehaviour
 
     private void LoadText() {
         levelLabel.text = $" {LanguageSettenings.ls.level}. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
+        levelWorldLabel.text = $" {LanguageSettenings.ls.levelWorld} {LevelWorld.levelWorld}";
         hpLabel.text = $" {LanguageSettenings.ls.hp}: {health}";
         scoreLabel.text = $"{LanguageSettenings.ls.score}: {Score}";
         bestScoreLabel.text = $"{LanguageSettenings.ls.bestScore}: {BestScore}";

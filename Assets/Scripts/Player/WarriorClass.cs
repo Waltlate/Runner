@@ -15,7 +15,7 @@ public class WarriorClass : BaseClass
         LevelExpWeapon = 2;
         Health = 10;
         Damage = Level + LevelWeapon - 1;
-        Speed = 1f;
+        Speed = 1.5f;
         Distance = 1f;
     }
 
@@ -32,7 +32,7 @@ public class WarriorClass : BaseClass
         LevelExpWeapon = levelExpWeapon;
         Health = health;
         Damage = Level + LevelWeapon - 1;
-        Speed = 1f;
+        Speed = 1.5f;
         Distance = 1f;
     }
 }

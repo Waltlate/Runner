@@ -24,8 +24,9 @@ public class PlayerController : MonoBehaviour
     float jumpPower = 15;
     float jumpGravity = -40;
     float realGravity = -10;
-    public GameObject bullet;
     public GameObject sword;
+    public GameObject bullet;
+    public GameObject fireBall;
     public float bulletSpeed = 3f;
     //private bool isClick = false;
     //private float clickTime = 0;
@@ -137,27 +138,33 @@ public class PlayerController : MonoBehaviour
             Collider[] bullets = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
                                                 transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
                                                            attackRange, Bullet);
-            if (
-                timeAttack <= 0 &&
-                        (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset)
-                        && (transform.position.y == 0.25f) ||
-                        transform.position.y >= 2.5f && transform.position.y <= 3f
-                        //transform.position.y == (0.25f + laneOffset)
-                        )
+            if (timeAttack <= 0 &&
+                (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
+                (transform.position.y == 0.25f) || transform.position.y >= 2.5f && transform.position.y <= 3f)
             {
-                //if(enemies.Length > 0)
-                //    if(enemies[0].gameObject.GetComponent<EnemyBehavior>() != null)
-                //Debug.Log(enemies[0].gameObject.GetComponent<EnemyBehavior>().Level);
                 if (enemies.Length > bullets.Length)
                 {
-                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().Level <= PlayerParameters.archer.Damage ||
+                    if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().level <= PlayerParameters.archer.Damage ||
                         enemies[0].gameObject.GetComponent<EnemyFlyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyFlyBehavior>().level <= PlayerParameters.archer.Damage)
                     {
-
-                    if (PlayerParameters.archer.ClassName != "Warrior")
-                        CreateBullet();
-                    else
-                        CreateSword();
+                        if (PlayerParameters.archer.ClassName == "Warrior")
+                        {
+                            CreateSword();
+                        }
+                        else
+                        {
+                            if (PlayerParameters.archer.ClassName == "Archer")
+                            {
+                                CreateBullet();
+                            }
+                            else
+                            {
+                                if (bullets.Length < 1)
+                                {
+                                    CreateFireBall();
+                                }
+                            }
+                        }
                     if(warriorInputSystemController)
                         warriorInputSystemController.inputAttack = true;
                     }
@@ -168,11 +175,16 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //timeAttack -= 0.0001f;
                 timeAttack -= Time.deltaTime;
-                // Debug.Log(Time.deltaTime);
             }
         }
+    }
+
+    private void CreateSword()
+    {
+        GameObject newSword = Instantiate(sword,
+                            transform.position + new Vector3(0, 0, 1),
+                            Quaternion.Euler(0, -15, 0)) as GameObject;
     }
 
     private void CreateBullet()
@@ -184,15 +196,14 @@ public class PlayerController : MonoBehaviour
         bulletRB.velocity = this.transform.forward * bulletSpeed;
     }
 
-    private void CreateSword()
+    private void CreateFireBall()
     {
-        GameObject newSword = Instantiate(sword,
+        GameObject newFireBall = Instantiate(fireBall,
                             transform.position + new Vector3(0, 0, 1),
-                            Quaternion.Euler(0, -15, 0)) as GameObject;
-        //Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
-        //bulletRB.velocity = this.transform.forward * bulletSpeed;
+                            Quaternion.Euler(90, 0, 0)) as GameObject;
+        Rigidbody fireBallRB = newFireBall.GetComponent<Rigidbody>();
+        fireBallRB.velocity = this.transform.forward * bulletSpeed;
     }
-
 
     void MovePlayer(bool[] swipes)
     {

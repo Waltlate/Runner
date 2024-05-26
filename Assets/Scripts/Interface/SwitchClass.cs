@@ -5,10 +5,18 @@ using TMPro;
 
 public class SwitchClass : MonoBehaviour
 {
+
+    public static SwitchClass instance;
     public TMP_Dropdown dropdown;
     public GameObject archer;
     public Material archerMaterial;
     public Material warriorMaterial;
+    public Material mageMaterial;
+
+    public void Awake()
+    {
+        instance = this;
+    }
 
     public void Switch() {
         if (dropdown.options[dropdown.value].text == "Warrior") {
@@ -21,7 +29,7 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("WarriorLevelExpWeapon", 2));
             archer.GetComponent<MeshRenderer>().material = warriorMaterial;
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("WarriorHealth", 10);
-            //PlayerParameters.instance.Stats();
+            PlayerPrefs.SetInt("NumbersHero", 0);
         }
         if (dropdown.options[dropdown.value].text == "Archer")
         {
@@ -34,9 +42,25 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("ArcherLevelExpWeapon", 2));
             archer.GetComponent<MeshRenderer>().material = archerMaterial;
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("ArcherHealth", 5);
+            PlayerPrefs.SetInt("NumbersHero", 1);
+        }
+        if (dropdown.options[dropdown.value].text == "Mage")
+        {
+            PlayerParameters.archer = new MageClass(PlayerPrefs.GetInt("MageLevel", 1),
+                                                        PlayerPrefs.GetInt("MageCurrentExp", 0),
+                                                        PlayerPrefs.GetInt("MageLevelExp", 50),
+                                                        PlayerPrefs.GetInt("MageHealth", 5),
+                                                        PlayerPrefs.GetInt("MageLevelWeapon", 1),
+                                                        PlayerPrefs.GetInt("MageCurrentExpWeapon", 0),
+                                                        PlayerPrefs.GetInt("MageLevelExpWeapon", 2));
+            archer.GetComponent<MeshRenderer>().material = mageMaterial;
+            PlayerParameters.maxHealth = PlayerPrefs.GetInt("MageHealth", 5);
+            PlayerPrefs.SetInt("NumbersHero", 2);
         }
         PlayerParameters.instance.Stats();
-        HeroesText.instance.ChangeLanguageAndRefresh();
-        WeaponBehavior.instance.ChangeStateButton();
+        if(HeroesText.instance)
+            HeroesText.instance.ChangeLanguageAndRefresh();
+        if(WeaponBehavior.instance)
+            WeaponBehavior.instance.ChangeStateButton();
     }
 }

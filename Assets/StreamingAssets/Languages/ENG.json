@@ -26,6 +26,8 @@
     "continueBtn": "Continue",
     "restart": "Restart",
     "level": "Lvl",
+    "levelWorld": "L.W.",
+    "levelWorldFull": "Level world",
     "hp": "HP",
     "health": "Health",
     "damage": "Damage",
@@ -33,6 +35,7 @@
     "distance": "Distance",
     "descriptionWarrior": "It is warrior",
     "descriptionArcher": "It is archer",
+    "descriptionMage": "It is mage",
     "coins": "Coins",
     "score": "Score",
     "bestScore": "Best score"

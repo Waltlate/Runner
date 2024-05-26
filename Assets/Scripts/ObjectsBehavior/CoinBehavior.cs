@@ -33,7 +33,7 @@ public class CoinBehavior : MonoBehaviour
         if (other.gameObject.tag == "Hero")
         {
                 Destroy(gameObject);
-                PlayerParameters.Coins += 1 * coinMultiple;
+                PlayerParameters.Coins += LevelWorld.levelWorld * coinMultiple;
         }
     }
 }

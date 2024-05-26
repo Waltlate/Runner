@@ -9,9 +9,10 @@ public class HeroesText : MonoBehaviour
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI levelUpButtonText;
     public TextMeshProUGUI heroText;
-    public TextMeshProUGUI statsText; //параметры
+    public TextMeshProUGUI statsText; 
     public TextMeshProUGUI weaponText;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI levelWorldText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI speedText;
@@ -37,6 +38,7 @@ public class HeroesText : MonoBehaviour
         statsText.text = LanguageSettenings.ls.stats;
         weaponText.text = LanguageSettenings.ls.weapon;
         levelText.text = $" {LanguageSettenings.ls.level}. {PlayerParameters.archer.Level} [{ConvertNumberToString(PlayerParameters.archer.CurrentExp)}/{ConvertNumberToString(PlayerParameters.archer.LevelExp)}]";
+        levelWorldText.text = $"{LanguageSettenings.ls.levelWorldFull} {LevelWorld.levelWorld}";
         healthText.text = $" {LanguageSettenings.ls.health}: {PlayerParameters.archer.Level * PlayerParameters.archer.Health}";
         damageText.text = $" {LanguageSettenings.ls.damage}: {PlayerParameters.archer.Damage}";
         speedText.text = $" {LanguageSettenings.ls.speed}: {PlayerParameters.archer.Speed}";

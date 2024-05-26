@@ -33,7 +33,8 @@ public class RoadGenerator : MonoBehaviour
     private int countRoad = 0;
 
     private float countSpeed;
-    public TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdownLanguage;
+    public TMP_Dropdown dropdownClass;
 
     private void Start()
     {
@@ -68,7 +69,7 @@ public class RoadGenerator : MonoBehaviour
             roads.RemoveAt(0);
             CreateNextRoad();
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !pause.activeSelf)
         {
             PauseLevel();
         }
@@ -121,16 +122,11 @@ public class RoadGenerator : MonoBehaviour
     private void FixedUpdate()
     {
         if (speed == 0) return;
-
-        //Time.timeScale = 3f;
-
         if (Time.timeScale < 3f)
         {
             Time.timeScale += 0.0001f;
-            //Time.timeScale += Time.deltaTime;
-            //Debug.Log(Time.timeScale);
         }
-        currentScore += 1 * scoreMultiple;
+        currentScore += 1 * scoreMultiple * LevelWorld.levelWorld;
         PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
     }
 
@@ -153,11 +149,10 @@ public class RoadGenerator : MonoBehaviour
             buttonPause.interactable = true;
         menu.SetActive(false);
         perk.SetActive(true);
-        if(pause.activeSelf) pause.SetActive(false);
+        if(pause.activeSelf)
+            pause.SetActive(false);
         speed = maxSpeed;
         Time.timeScale = currentTime;
-        //Time.timeScale = 1;
-
         SwipeManager.instance.enabled = true;
     }
 
@@ -185,10 +180,10 @@ public class RoadGenerator : MonoBehaviour
 
     private void CreateNextRoad()
     {
-        Vector3 pos = new Vector3(0,0,-15);
+        Vector3 pos = new Vector3(0, 0, -15);
         if(roads.Count > 0)
         {
-            pos = roads[roads.Count - 1].transform.position + new Vector3(0,0,15);
+            pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, 15);
         }
         GameObject go = Instantiate(RoadPrefab, pos, Quaternion.identity);
         go.transform.SetParent(transform);
@@ -260,7 +255,6 @@ public class RoadGenerator : MonoBehaviour
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
-        PlayerParameters.Score = 0;
         PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
         }
         PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
@@ -280,6 +274,11 @@ public class RoadGenerator : MonoBehaviour
         menu.SetActive(false);
         displayGame.SetActive(false);
         heroes.SetActive(true);
+        dropdownClass.value = PlayerPrefs.GetInt("NumbersHero", 0);
+        SwitchClass.instance.Switch();
+        PlayerParameters.instance.Stats();
+        HeroesText.instance.ChangeLanguageAndRefresh();
+
     }
 
     public void ShopGames()
@@ -295,9 +294,9 @@ public class RoadGenerator : MonoBehaviour
         displayGame.SetActive(false);
         settingsGames.SetActive(true);
         if (PlayerPrefs.GetString("Languages", "ENG") == "ENG")
-            dropdown.value = 0;
+            dropdownLanguage.value = 0;
         else
-            dropdown.value = 1;
+            dropdownLanguage.value = 1;
         if(ToggleController.instance)
         ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
     }

@@ -36,7 +36,7 @@ public class PerkGenerator : MonoBehaviour
         }
 
         timerPerks += Time.deltaTime; // Увеличиваем время каждый кадр
-        //Debug.Log(timer);
+        //Debug.Log(timerPerks);
         if (timerPerks >= maxTimePerks) // Проверяем, прошло ли уже 30 секунд
         {
             timerPerks = 0f; // Сбрасываем таймер

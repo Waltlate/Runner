@@ -10,7 +10,7 @@ public class PerkHealth : MonoBehaviour
         {
             Destroy(gameObject);
             if (PlayerParameters.health < PlayerParameters.maxHealth) {
-                PlayerParameters.health += 1;
+                PlayerParameters.health += LevelWorld.levelWorld;
             }
         }
     }

@@ -26,6 +26,8 @@
     "continueBtn": "Продолжить",
     "restart": "Перезапуск",
     "level": "Ур",
+    "levelWorld": "У.М.",
+    "levelWorldFull": "Уровень мира",
     "hp": "ОЗ",
     "health": "Здоровье",
     "damage": "Урон",
@@ -33,6 +35,7 @@
     "distance": "Дистанция",
     "descriptionWarrior": "Это воин",
     "descriptionArcher": "Это лучник",
+    "descriptionMage": "Это маг",
     "coins": "Монеты",
     "score": "Счет",
     "bestScore": "Лучший счет"

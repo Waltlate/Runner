@@ -5,17 +5,11 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    private int level = 1;
-    private int health = 1;
-    private int damage = 1;
+    public int level = 1;
+    public int health = 1;
+    public int damage = 1;
 
     public TextMeshProUGUI levelLabel;
-
-    public int Level
-    {
-        get { return level; }
-        //set { className = value; }
-    }
 
     public void Start()
     {

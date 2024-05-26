@@ -140,7 +140,7 @@ public class Tutorial : MonoBehaviour
                 step *= -1;
             }
             k += step;
-            if (countGreatings == 2) GUI.Box(new Rect(10 - (180 * (k - 1)) / 2, 180 - (60 * (k - 1)) / 2, 180 * k, 60 * k), "");
+            if (countGreatings == 2) GUI.Box(new Rect(10 - (180 * (k - 1)) / 2, 240 - (60 * (k - 1)) / 2, 180 * k, 60 * k), "");
             if (countGreatings == 3) GUI.Box(new Rect(Screen.width - 350 - (250 * (k - 1)) / 2, 180 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
         }
 
