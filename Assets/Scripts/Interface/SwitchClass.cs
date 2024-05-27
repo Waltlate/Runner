@@ -8,10 +8,13 @@ public class SwitchClass : MonoBehaviour
 
     public static SwitchClass instance;
     public TMP_Dropdown dropdown;
-    public GameObject archer;
+    //public GameObject hero;
     public Material archerMaterial;
     public Material warriorMaterial;
     public Material mageMaterial;
+    public GameObject warrior;
+    public GameObject archer;
+    public GameObject mage;
 
     public void Awake()
     {
@@ -19,6 +22,10 @@ public class SwitchClass : MonoBehaviour
     }
 
     public void Switch() {
+        warrior.SetActive(false);
+        archer.SetActive(false);
+        mage.SetActive(false);
+
         if (dropdown.options[dropdown.value].text == "Warrior") {
             PlayerParameters.archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
                                                         PlayerPrefs.GetInt("WarriorCurrentExp", 0),
@@ -27,7 +34,9 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("WarriorLevelWeapon", 1),
                                                         PlayerPrefs.GetInt("WarriorCurrentExpWeapon", 0),
                                                         PlayerPrefs.GetInt("WarriorLevelExpWeapon", 2));
-            archer.GetComponent<MeshRenderer>().material = warriorMaterial;
+            //hero.GetComponent<MeshRenderer>().material = warriorMaterial;
+            warrior.SetActive(true);
+            PlayerController.instance.animator = warrior.GetComponentInChildren<Animator>();
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("WarriorHealth", 10);
             PlayerPrefs.SetInt("NumbersHero", 0);
         }
@@ -40,7 +49,9 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("ArcherLevelWeapon", 1),
                                                         PlayerPrefs.GetInt("ArcherCurrentExpWeapon", 0),
                                                         PlayerPrefs.GetInt("ArcherLevelExpWeapon", 2));
-            archer.GetComponent<MeshRenderer>().material = archerMaterial;
+            //hero.GetComponent<MeshRenderer>().material = archerMaterial;
+            archer.SetActive(true);
+            PlayerController.instance.animator = archer.GetComponentInChildren<Animator>();
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("ArcherHealth", 5);
             PlayerPrefs.SetInt("NumbersHero", 1);
         }
@@ -53,7 +64,9 @@ public class SwitchClass : MonoBehaviour
                                                         PlayerPrefs.GetInt("MageLevelWeapon", 1),
                                                         PlayerPrefs.GetInt("MageCurrentExpWeapon", 0),
                                                         PlayerPrefs.GetInt("MageLevelExpWeapon", 2));
-            archer.GetComponent<MeshRenderer>().material = mageMaterial;
+            //hero.GetComponent<MeshRenderer>().material = mageMaterial;
+            mage.SetActive(true);
+            PlayerController.instance.animator = mage.GetComponentInChildren<Animator>();
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("MageHealth", 5);
             PlayerPrefs.SetInt("NumbersHero", 2);
         }

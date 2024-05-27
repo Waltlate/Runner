@@ -154,6 +154,11 @@ public class RoadGenerator : MonoBehaviour
         speed = maxSpeed;
         Time.timeScale = currentTime;
         SwipeManager.instance.enabled = true;
+
+
+        PlayerController.instance.animator.SetBool("Moving", true);
+        PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
+        Debug.Log(PlayerController.instance.animator.GetBool("Moving"));
     }
 
     public void ResumeLevel()
@@ -166,6 +171,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void RestartLevel()
     {
+        PlayerController.instance.ClearSettings();
         ResetLevel();
         StartLevel();
     }
@@ -267,6 +273,8 @@ public class RoadGenerator : MonoBehaviour
         {
             ShopBehavior.instance.ChangeStateButton();
         }
+
+        PlayerController.instance.animator.SetBool("Moving", false);
     }
 
     public void HeroesGames()

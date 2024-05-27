@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+//using System.random;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EnemyBehavior : MonoBehaviour
     public int damage = 1;
 
     public TextMeshProUGUI levelLabel;
+
+    public GameObject[] enemies;
 
     public void Start()
     {
@@ -23,6 +26,16 @@ public class EnemyBehavior : MonoBehaviour
             else
                 levelLabel.color = Color.yellow;
         levelLabel.text = $"Lvl. {level}";
+
+    }
+
+    public void Awake()
+    {
+        if (enemies.Length != 0)
+        {
+            int num = new System.Random().Next(0, enemies.Length);
+            enemies[num].SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

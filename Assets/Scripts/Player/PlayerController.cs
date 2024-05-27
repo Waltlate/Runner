@@ -40,18 +40,13 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Animator animator;
     [HideInInspector] public bool useRootMotion = false;
-    public float animationSpeed = 2f;
-    [HideInInspector] public WarriorInputSystemController warriorInputSystemController;
-    [HideInInspector] public WarriorController warriorController;
-    //public Animation animationRun;
-    public AnimationClip animationRun;
+    public float animationSpeed = 1.5f;
+    //[HideInInspector] public WarriorInputSystemController warriorInputSystemController;
+    //[HideInInspector] public WarriorController warriorController;
 
     void Start()
     {
-        //startTimeAttack = PlayerParameters.speedAttack / 2;
         rb = GetComponent<Rigidbody>();
-       // startGameRotation = transform.rotation;
-        //targetPos = transform.position;
         SwipeManager.instance.MoveEvent += MovePlayer;
         StartCoroutine(AttackCoroutine());
 
@@ -59,27 +54,21 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponentInChildren<Animator>(); //вруби
 
-        //warriorInputSystemController = GetComponentInChildren<WarriorInputSystemController>();
-        //warriorController = GetComponentInChildren<WarriorController>();
-
-
-        //warriorController = GameObject.Find("Knight Warrior").GetComponent<WarriorController>();
-        animator = GetComponentInChildren<Animator>();
         instance = this;
-        
     }
 
     void Update()
     {
         SetAnimatorFloat("Animation Speed", animationSpeed);
-        if (warriorController)
-        {
-            warriorController.LockMove(false);
-            warriorController.SetAnimatorBool("Moving", true);
-            warriorController.isMoving = true;
-            warriorController.SetAnimatorFloat("Velocity", Vector3.forward.magnitude);
-        }
+        //if (warriorController)
+        //{
+        //    warriorController.LockMove(false);
+        //    warriorController.SetAnimatorBool("Moving", true);
+        //    warriorController.isMoving = true;
+        //    warriorController.SetAnimatorFloat("Velocity", Vector3.forward.magnitude);
+        //}
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
         {
             MoveHorizontal(-laneChangeSpeed);
@@ -165,10 +154,11 @@ public class PlayerController : MonoBehaviour
                                 }
                             }
                         }
-                    if(warriorInputSystemController)
-                        warriorInputSystemController.inputAttack = true;
+                        //if(warriorInputSystemController)
+                        //    warriorInputSystemController.inputAttack = true;
+
                     }
-                    
+
                 }
 
                 timeAttack = PlayerParameters.archer.Speed * 0.001f * 15 * 0.8f / Time.timeScale;
@@ -185,6 +175,8 @@ public class PlayerController : MonoBehaviour
         GameObject newSword = Instantiate(sword,
                             transform.position + new Vector3(0, 0, 1),
                             Quaternion.Euler(0, -15, 0)) as GameObject;
+        animator.SetInteger("Trigger Number", 2);
+        animator.SetBool("Trigger", true);
     }
 
     private void CreateBullet()
@@ -194,6 +186,8 @@ public class PlayerController : MonoBehaviour
                             Quaternion.Euler(90, 0, 0)) as GameObject;
         Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
         bulletRB.velocity = this.transform.forward * bulletSpeed;
+        animator.SetInteger("Trigger Number", 2);
+        animator.SetBool("Trigger", true);
     }
 
     private void CreateFireBall()
@@ -203,6 +197,8 @@ public class PlayerController : MonoBehaviour
                             Quaternion.Euler(90, 0, 0)) as GameObject;
         Rigidbody fireBallRB = newFireBall.GetComponent<Rigidbody>();
         fireBallRB.velocity = this.transform.forward * bulletSpeed;
+        animator.SetInteger("Trigger Number", 2);
+        animator.SetBool("Trigger", true);
     }
 
     void MovePlayer(bool[] swipes)
@@ -224,20 +220,51 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if(warriorInputSystemController)
-        warriorInputSystemController.inputJump = true;
+        //if(warriorInputSystemController)
+        //warriorInputSystemController.inputJump = true;
         isJumping = true;
+        animator.SetInteger("Jumping", 1);
+        animator.SetInteger("Trigger Number", 1);
+        animator.SetBool("Trigger", true);
+        Debug.Log("Here " + animator.GetInteger("Jumping"));
+        Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+        Debug.Log("Here " + animator.GetBool("Trigger"));
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         Physics.gravity = new Vector3(0, jumpGravity, 0);
         StartCoroutine(StopJumpCoroutine());
+
+
     }
 
     IEnumerator StopJumpCoroutine()
     {
+
         do {
+            if (rb.velocity.y > 0 && animator.GetInteger("Jumping") != 1)
+            {
+                animator.SetInteger("Jumping", 1);
+                Debug.Log("Here " + animator.GetInteger("Jumping"));
+                Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+                Debug.Log("Here " + animator.GetBool("Trigger"));
+            }
             yield return new WaitForSeconds(0.02f);
+            if (rb.velocity.y < 0 && animator.GetInteger("Jumping") != 2) {
+                animator.SetBool("Trigger", true);
+                animator.SetInteger("Jumping", 2);
+                Debug.Log("Here " + animator.GetInteger("Jumping"));
+                Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+                Debug.Log("Here " + animator.GetBool("Trigger"));
+            }
         } while (rb.velocity.y != 0);
+        animator.SetBool("Trigger", true);
+        animator.SetInteger("Jumping", 0);
+        Debug.Log("Here " + animator.GetInteger("Jumping"));
+        Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+        Debug.Log("Here " + animator.GetBool("Trigger"));
+        //animator.SetInteger("Trigger Number", 1);
+        //animator.SetBool("Trigger", true);
         isJumping = false;
+
         Physics.gravity = new Vector3(0, realGravity, 0);
     }
 
@@ -266,60 +293,44 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
     }
 
-    public void StartLevel()
-    {
-        RoadGenerator.instance.StartLevel();
-    }
-
-    private void ClearSettings() {
+    public void ClearSettings() {
         rb.velocity = Vector3.zero;
         pointStart = 0;
         pointFinish = 0;
-        //PlayerParameters.Score = 0;
         transform.position = startGamePosition;
         LevelWorld.levelEnemy = 1;
-        //SetAnimatorBool("Moving", false);
     }
 
-    public void ResetGame() {
+    public void ResetGame()
+    {
         ClearSettings();
         RoadGenerator.instance.ResetLevel();
     }
 
-    public void RestartGame()
-    {
-        ClearSettings();
-        RoadGenerator.instance.RestartLevel();
-    }
+    //public void SetAnimatorInt(string name, int i)
+    //{
+    //    animator.SetInteger(name, i);
+    //}
 
-    public void SetAnimatorInt(string name, int i)
-    {
-        //Debug.Log("SetAnimatorInt: " + name + i);
-        animator.SetInteger(name, i);
-    }
+    //public void SetAnimatorTrigger(AnimatorTrigger trigger)
+    //{
+    //    animator.SetInteger("Trigger Number", (int)trigger);
+    //    animator.SetTrigger("Trigger");
+    //}
 
-    public void SetAnimatorTrigger(AnimatorTrigger trigger)
-    {
-        //Debug.Log("SetAnimatorTrigger: " + trigger + " - " + ( int )trigger);
-        animator.SetInteger("Trigger Number", (int)trigger);
-        animator.SetTrigger("Trigger");
-    }
+    //public void SetAnimatorBool(string name, bool b)
+    //{
+    //    animator.SetBool(name, b);
+    //}
 
-    public void SetAnimatorBool(string name, bool b)
-    {
-        //Debug.Log("SetAnimatorBool: " + name + b);
-        animator.SetBool(name, b);
-    }
-
-    public void SetAnimatorRootMotion(bool b)
-    {
-        useRootMotion = b;
-    }
+    //public void SetAnimatorRootMotion(bool b)
+    //{
+    //    useRootMotion = b;
+    //}
 
     public void SetAnimatorFloat(string name, float f)
     {
-        //Debug.Log("SetAnimatorFloat: " + name + f);
-        if(animator)
-        animator.SetFloat(name, f);
+        if (animator)
+            animator.SetFloat(name, f);
     }
 }

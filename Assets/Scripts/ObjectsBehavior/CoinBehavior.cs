@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CoinBehavior : MonoBehaviour
@@ -7,11 +8,13 @@ public class CoinBehavior : MonoBehaviour
     private float euler = 0f;
     public float offset = 0.5f;
     public static int coinMultiple = 1;
+    public TextMeshProUGUI coinText;
 
 
     public void Start()
     {
         StartCoroutine(Movement());
+        coinText.text = $"{LevelWorld.levelWorld}";
     }
 
     IEnumerator Movement()
