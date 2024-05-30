@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,10 +48,12 @@ public class WeaponBehavior : MonoBehaviour
             if (PlayerParameters.archer.CurrentExpWeapon >= PlayerParameters.archer.LevelExpWeapon)
             {
                 btn.interactable = true;
+                btn.gameObject.transform.Find("LevelUpText").gameObject.GetComponent<TextMeshProUGUI>().color = new Color(0, 1, 0, 1);
             }
             else
             {
                 btn.interactable = false;
+                btn.gameObject.transform.Find("LevelUpText").gameObject.GetComponent<TextMeshProUGUI>().color = new Color(1, 0, 0, 1);
             }
         }
     }

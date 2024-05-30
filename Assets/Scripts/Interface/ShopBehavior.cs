@@ -7,6 +7,7 @@ public class ShopBehavior : MonoBehaviour
 {
     public static ShopBehavior instance;
     private Button[] btn;
+
     public void Start()
     {
         ChangeStateButton();
@@ -111,24 +112,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000)
             {
                 BuyBase("Archer");
-                //PlayerParameters.Coins -= 1000;
-                //int currentExpWeapon = PlayerPrefs.GetInt("ArcherCurrentExpWeapon", 0);
-
-                //PlayerPrefs.SetInt("ArcherCurrentExpWeapon", currentExpWeapon + 5);
-                //if (PlayerParameters.archer.ClassName == "Archer")
-                //{
-                //    PlayerParameters.archer.CurrentExpWeapon += 5;
-                //}
-                //if (HeroesText.instance)
-                //{
-                //    HeroesText.instance.ChangeLanguageAndRefresh();
-                //}
-                //if (ShopText.instance)
-                //{
-                //    ShopText.instance.ChangeLanguageAndRefresh();
-                //}
             }
-        //WeaponBehavior.instance.ChangeStateButton();
     }
 
     public void BuyCardsWarrior()
@@ -137,24 +121,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000)
             {
                 BuyBase("Warrior");
-                //PlayerParameters.Coins -= 1000;
-                //int currentExpWeapon = PlayerPrefs.GetInt("WarriorCurrentExpWeapon", 0);
-
-                //PlayerPrefs.SetInt("WarriorCurrentExpWeapon", currentExpWeapon + 5);
-                //if (PlayerParameters.archer.ClassName == "Warrior")
-                //{
-                //    PlayerParameters.archer.CurrentExpWeapon += 5;
-                //}
-                //if (HeroesText.instance)
-                //{
-                //    HeroesText.instance.ChangeLanguageAndRefresh();
-                //}
-                //if (ShopText.instance)
-                //{
-                //    ShopText.instance.ChangeLanguageAndRefresh();
-                //}
             }
-        //WeaponBehavior.instance.ChangeStateButton();
     }
 
     public void BuyCardsMage()
@@ -163,25 +130,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000)
             {
                 BuyBase("Mage");
-                //PlayerParameters.Coins -= 1000;
-                //int currentExpWeapon = PlayerPrefs.GetInt("MageCurrentExpWeapon", 0);
-
-                //PlayerPrefs.SetInt("MageCurrentExpWeapon", currentExpWeapon + 5);
-                //if (PlayerParameters.archer.ClassName == "Mage")
-                //{
-                //    PlayerParameters.archer.CurrentExpWeapon += 5;
-                //}
-                //if (HeroesText.instance)
-                //{
-                //    HeroesText.instance.ChangeLanguageAndRefresh();
-                //}
-                //if (ShopText.instance)
-                //{
-                //    ShopText.instance.ChangeLanguageAndRefresh();
-                //}
-                //WeaponBehavior.instance.ChangeStateButton();
             }
-        
     }
 
     private void BuyBase(string className) {

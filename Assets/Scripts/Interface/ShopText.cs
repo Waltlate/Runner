@@ -10,6 +10,7 @@ public class ShopText : MonoBehaviour
     public TextMeshProUGUI shopText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI[] buyText;
+    private Color color;
 
     void Start()
     {
@@ -25,10 +26,19 @@ public class ShopText : MonoBehaviour
     {
         backButtonText.text = LanguageSettenings.ls.back;
         shopText.text = LanguageSettenings.ls.shop;
-        coinText.text = $"{LanguageSettenings.ls.coins}: {PlayerParameters.Coins}"; ;
+        coinText.text = $"{PlayerParameters.Coins}"; ;
+
+        if(PlayerParameters.Coins >= 1000)
+        {
+            color = new Color(0, 1, 0);
+        } else
+        {
+            color = new Color(1, 0, 0);
+        }
+
         for (int i = 0; i < buyText.Length; i++)
         {
-            buyText[i].text = LanguageSettenings.ls.buy;
+            buyText[i].color = color;
         }
     }
 }

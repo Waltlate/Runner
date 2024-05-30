@@ -41,15 +41,27 @@ public class LevelWorld : MonoBehaviour
     public void ChangeStateButton()
     {
         if (levelWorld > 1)
+        {
             btnMinus.interactable = true;
+            btnMinus.gameObject.transform.Find("Sign").gameObject.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+        }
         else
+        {
             btnMinus.interactable = false;
+            btnMinus.gameObject.transform.Find("Sign").gameObject.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+        }
 
         int minLevel = Math.Min(Math.Min(PlayerPrefs.GetInt("WarriorLevel", 1), PlayerPrefs.GetInt("ArcherLevel", 1)), PlayerPrefs.GetInt("MageLevel", 1));
         if (levelWorld < minLevel)
+        {
             btnPlus.interactable = true;
+            btnPlus.gameObject.transform.Find("Sign").gameObject.GetComponent<Image>().color = new Color(0, 1, 0);
+        }
         else
+        {
             btnPlus.interactable = false;
+            btnPlus.gameObject.transform.Find("Sign").gameObject.GetComponent<Image>().color = new Color(1, 0, 0);
+        }
     }
 
     private void RefreshGame()
