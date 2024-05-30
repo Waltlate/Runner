@@ -226,9 +226,9 @@ public class PlayerController : MonoBehaviour
         animator.SetInteger("Jumping", 1);
         animator.SetInteger("Trigger Number", 1);
         animator.SetBool("Trigger", true);
-        Debug.Log("Here " + animator.GetInteger("Jumping"));
-        Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-        Debug.Log("Here " + animator.GetBool("Trigger"));
+        //Debug.Log("Here " + animator.GetInteger("Jumping"));
+        //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+        //Debug.Log("Here " + animator.GetBool("Trigger"));
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         Physics.gravity = new Vector3(0, jumpGravity, 0);
         StartCoroutine(StopJumpCoroutine());
@@ -243,24 +243,24 @@ public class PlayerController : MonoBehaviour
             if (rb.velocity.y > 0 && animator.GetInteger("Jumping") != 1)
             {
                 animator.SetInteger("Jumping", 1);
-                Debug.Log("Here " + animator.GetInteger("Jumping"));
-                Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-                Debug.Log("Here " + animator.GetBool("Trigger"));
+                //Debug.Log("Here " + animator.GetInteger("Jumping"));
+                //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+                //Debug.Log("Here " + animator.GetBool("Trigger"));
             }
             yield return new WaitForSeconds(0.02f);
             if (rb.velocity.y < 0 && animator.GetInteger("Jumping") != 2) {
                 animator.SetBool("Trigger", true);
                 animator.SetInteger("Jumping", 2);
-                Debug.Log("Here " + animator.GetInteger("Jumping"));
-                Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-                Debug.Log("Here " + animator.GetBool("Trigger"));
+                //Debug.Log("Here " + animator.GetInteger("Jumping"));
+                //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+                //Debug.Log("Here " + animator.GetBool("Trigger"));
             }
         } while (rb.velocity.y != 0);
         animator.SetBool("Trigger", true);
         animator.SetInteger("Jumping", 0);
-        Debug.Log("Here " + animator.GetInteger("Jumping"));
-        Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-        Debug.Log("Here " + animator.GetBool("Trigger"));
+        //Debug.Log("Here " + animator.GetInteger("Jumping"));
+        //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
+        //Debug.Log("Here " + animator.GetBool("Trigger"));
         //animator.SetInteger("Trigger Number", 1);
         //animator.SetBool("Trigger", true);
         isJumping = false;
