@@ -99,7 +99,8 @@ public class ShopBehavior : MonoBehaviour
                     WeaponBehavior.instance.ChangeStateButton();
                 }
                 ChangeStateButton();
-                PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
+                if (PlayerParameters.Coins != 0)
+                    PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
             }
 
     }
@@ -205,6 +206,7 @@ public class ShopBehavior : MonoBehaviour
             WeaponBehavior.instance.ChangeStateButton();
         }
         ChangeStateButton();
+        if(PlayerParameters.Coins != 0)
         PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
     }
 }

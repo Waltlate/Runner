@@ -9,7 +9,7 @@ using TMPro;
 public class RoadGenerator : MonoBehaviour
 {
     public static RoadGenerator instance;
-    public GameObject RoadPrefab;
+    public GameObject[] RoadPrefab;
     private List<GameObject> roads = new List<GameObject>();
     public float maxSpeed = 10;
     private float speed = 0;
@@ -191,7 +191,9 @@ public class RoadGenerator : MonoBehaviour
         {
             pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, 15);
         }
-        GameObject go = Instantiate(RoadPrefab, pos, Quaternion.identity);
+        int number = 0;
+        if (number == 0) number++; else number--;
+        GameObject go = Instantiate(RoadPrefab[number], pos, Quaternion.identity);
         go.transform.SetParent(transform);
         int perkRoad = new System.Random().Next(0, 3);
         if (roads.Count > 1)
@@ -263,7 +265,8 @@ public class RoadGenerator : MonoBehaviour
         PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
         PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
         }
-        PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
+        if (PlayerParameters.Coins != 0)
+            PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
         Time.timeScale = 1;
         if (ShopText.instance)
         {

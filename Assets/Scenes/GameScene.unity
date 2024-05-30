@@ -7406,7 +7406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66626af221a8c4e1490477632ee34665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoadPrefab: {fileID: 4019650548477789817, guid: d231703c4073b4e9094b856bf0780ae0, type: 3}
+  RoadPrefab:
+  - {fileID: 4019650548477789817, guid: d231703c4073b4e9094b856bf0780ae0, type: 3}
+  - {fileID: 4019650548477789817, guid: 16fb2479792104609ab574f3cd5559ec, type: 3}
   maxSpeed: 10
   maxRoadCount: 6
   menu: {fileID: 1157013195}
