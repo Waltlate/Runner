@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopText : MonoBehaviour
 {
     public static ShopText instance;
+    public Image image;
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI shopText;
     public TextMeshProUGUI coinText;
@@ -15,6 +17,7 @@ public class ShopText : MonoBehaviour
     void Start()
     {
         ChangeLanguageAndRefresh();
+        image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
     }
 
     void Awake()

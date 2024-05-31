@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroesText : MonoBehaviour
 {
+    
     public static HeroesText instance;
+    public Image image;
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI levelUpButtonText;
     public TextMeshProUGUI heroText;
@@ -20,9 +23,13 @@ public class HeroesText : MonoBehaviour
     public TextMeshProUGUI levelWeaponText;
     public TextMeshProUGUI descriptionText;
 
+    public Image imageToResize;
+
     void Start()
     {
         ChangeLanguageAndRefresh();
+        // Изменяем размер изображения на 200x200
+        image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
     }
 
     void Awake()
