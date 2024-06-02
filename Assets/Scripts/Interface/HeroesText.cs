@@ -33,14 +33,11 @@ public class HeroesText : MonoBehaviour
         if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
         {
             attitude = (float)Screen.height / 1280f;
-            Debug.Log(attitude);
         }
         else
         {
             attitude = (float)Screen.width / 720f;
-            Debug.Log(attitude);
         }
-        // image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
         image.GetComponent<RectTransform>().transform.localScale = new Vector2(attitude, attitude);
     }
 

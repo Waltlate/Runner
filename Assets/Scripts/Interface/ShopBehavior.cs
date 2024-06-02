@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopBehavior : MonoBehaviour
 {
     public static ShopBehavior instance;
+    public GameObject canvasInfo;
+    public TextMeshProUGUI textInfo;
+    private string textHeroes = "Из сундука героев падает 10 случайных карт оружия героев";
+    private string textWarrior = "Из сундука воина падает 5 карт оружия воина";
+    private string textArcher = "Из сундука лучника падает 5 карт оружия лучника";
+    private string textMage = "Из сундука мага падает 5 карт оружия мага";
     private Button[] btn;
 
     public void Start()
@@ -26,19 +33,10 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000)
             {
                 SetInteractableBtn(true);
-                //foreach (var elem in btn){
-                //    elem.interactable = true;
-                //}
-                //btn.interactable = true;
             }
             else
             {
                 SetInteractableBtn(false);
-                //foreach (var elem in btn){
-                //    Debug.Log(elem.name);
-                //    elem.interactable = false;
-                //}
-                //btn.interactable = false;
             }
         }
     }
@@ -46,8 +44,7 @@ public class ShopBehavior : MonoBehaviour
     private void SetInteractableBtn(bool state) {
         foreach (var elem in btn)
         {
-         //   Debug.Log(elem.name);
-            if(elem.name != "BackBtn")
+            if(elem.name == "ButtonChest")
             elem.interactable = state;
         }
     }
@@ -157,5 +154,29 @@ public class ShopBehavior : MonoBehaviour
         ChangeStateButton();
         if(PlayerParameters.Coins != 0)
         PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
+    }
+
+    public void InfoChestHeroes()
+    {
+        canvasInfo.SetActive(true);
+        textInfo.text = textHeroes;
+    }
+
+    public void InfoChestWarrior()
+    {
+        canvasInfo.SetActive(true);
+        textInfo.text = textWarrior;
+    }
+
+    public void InfoChestArcher()
+    {
+        canvasInfo.SetActive(true);
+        textInfo.text = textArcher;
+    }
+
+    public void InfoChestMage()
+    {
+        canvasInfo.SetActive(true);
+        textInfo.text = textMage;
     }
 }

@@ -8,6 +8,7 @@ public class ShopText : MonoBehaviour
 {
     public static ShopText instance;
     public Image image;
+    private float attitude;
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI shopText;
     public TextMeshProUGUI coinText;
@@ -17,7 +18,16 @@ public class ShopText : MonoBehaviour
     void Start()
     {
         ChangeLanguageAndRefresh();
-        image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
+
+        if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
+        {
+            attitude = (float)Screen.height / 1280f;
+        }
+        else
+        {
+            attitude = (float)Screen.width / 720f;
+        }
+        image.GetComponent<RectTransform>().transform.localScale = new Vector2(attitude, attitude);
     }
 
     void Awake()
