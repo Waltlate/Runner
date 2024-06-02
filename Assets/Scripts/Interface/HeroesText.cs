@@ -9,6 +9,7 @@ public class HeroesText : MonoBehaviour
     
     public static HeroesText instance;
     public Image image;
+    private float attitude;
     public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI levelUpButtonText;
     public TextMeshProUGUI heroText;
@@ -28,8 +29,19 @@ public class HeroesText : MonoBehaviour
     void Start()
     {
         ChangeLanguageAndRefresh();
-        // Изменяем размер изображения на 200x200
-        image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
+
+        if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
+        {
+            attitude = (float)Screen.height / 1280f;
+            Debug.Log(attitude);
+        }
+        else
+        {
+            attitude = (float)Screen.width / 720f;
+            Debug.Log(attitude);
+        }
+        // image.GetComponent<RectTransform>().transform.localScale = new Vector2(Screen.width / 720f, Screen.height / 1280f);
+        image.GetComponent<RectTransform>().transform.localScale = new Vector2(attitude, attitude);
     }
 
     void Awake()

@@ -7,6 +7,7 @@ using UnityEditor;
 
 public class LevelWorld : MonoBehaviour
 {
+    public static LevelWorld instance;
     public static int levelWorld;
     public static int levelEnemy = 1;
     public Button btnPlus;
@@ -19,6 +20,10 @@ public class LevelWorld : MonoBehaviour
         ChangeStateButton();
     }
 
+    void Awake()
+    {
+        instance = this;
+    }
     public void LevelWorldUp()
     {
         int minLevel = Math.Min(Math.Min(PlayerPrefs.GetInt("WarriorLevel", 1), PlayerPrefs.GetInt("ArcherLevel", 1)), PlayerPrefs.GetInt("MageLevel", 1));

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerParameters : MonoBehaviour
 {
     public static PlayerParameters instance;
     public static BaseClass archer;
+    public Image expFill;
     public static int health;
     public static int maxHealth = 5;
+    public Image hpFill;
     public static float distance;
     public static float speedAttack;
     public static int Coins = 0;
@@ -73,8 +76,10 @@ public class PlayerParameters : MonoBehaviour
         levelLabel.text = $"{LanguageSettenings.ls.level}. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
         levelWorldLabel.text = $"{LanguageSettenings.ls.levelWorld}";
         currentLevelWorldLabel.text = $"{LevelWorld.levelWorld}";
-        hpLabel.text = $"{LanguageSettenings.ls.hp}: {health}";
-        scoreLabel.text = $"{LanguageSettenings.ls.score}: {Score}";
+        hpLabel.text = $"{health}/{maxHealth * archer.Level}";
+        hpFill.fillAmount = (float)health / (maxHealth * archer.Level);
+        expFill.fillAmount = (float)archer.CurrentExp / archer.LevelExp;
+        scoreLabel.text = $"{Score}";
         bestScoreLabel.text = $"{LanguageSettenings.ls.bestScore}: {BestScore}";
         coinsLabel.text = $"{Coins}";
     }

@@ -289,7 +289,7 @@ public class RoadGenerator : MonoBehaviour
         SwitchClass.instance.Switch();
         PlayerParameters.instance.Stats();
         HeroesText.instance.ChangeLanguageAndRefresh();
-
+        LevelWorld.instance.ChangeStateButton();
     }
 
     public void ShopGames()
