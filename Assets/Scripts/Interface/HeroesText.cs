@@ -27,8 +27,6 @@ public class HeroesText : MonoBehaviour
     public TextMeshProUGUI levelWeaponText;
     public TextMeshProUGUI descriptionText;
 
-    public Image imageToResize;
-
     void Start()
     {
         ChangeLanguageAndRefresh();

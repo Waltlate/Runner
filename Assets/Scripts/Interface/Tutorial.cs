@@ -73,6 +73,7 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("Hell");
         if (greatings || enemyExist)
         {
             StopTime();

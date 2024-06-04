@@ -69,9 +69,17 @@ public class PlayerController : MonoBehaviour
         //    warriorController.isMoving = true;
         //    warriorController.SetAnimatorFloat("Velocity", Vector3.forward.magnitude);
         //}
-        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
+
+        //
+        //if(Input.anyKeyDown) 
+        //    Debug.Log($"{pointFinish} {laneOffset}");
+        //if (Input.anyKeyDown)
+        //    Debug.Log(Input.anyKeyDown.ToString());
+
+            if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
         {
             MoveHorizontal(-laneChangeSpeed);
+            Debug.Log("a");
         }
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && pointFinish < laneOffset)
         {

@@ -39,12 +39,13 @@ public class ShopText : MonoBehaviour
     {
         backButtonText.text = LanguageSettenings.ls.back;
         shopText.text = LanguageSettenings.ls.shop;
-        coinText.text = $"{PlayerParameters.Coins}"; ;
+        coinText.text = ConvertNumberToString(PlayerParameters.Coins);
 
-        if(PlayerParameters.Coins >= 1000)
+        if (PlayerParameters.Coins >= 1000)
         {
             color = new Color(0, 1, 0);
-        } else
+        }
+        else
         {
             color = new Color(1, 0, 0);
         }
@@ -52,6 +53,30 @@ public class ShopText : MonoBehaviour
         for (int i = 0; i < buyText.Length; i++)
         {
             buyText[i].color = color;
+        }
+    }
+
+    string ConvertNumberToString(float number)
+    {
+        const string k = "k";
+        const string m = "m";
+        const string b = "b";
+
+        if (number < 9999)
+        {
+            return number.ToString("###0.");
+        }
+        else if (number < 1000000)
+        {
+            return (number / 1000f).ToString("0.##") + k;
+        }
+        else if (number < 1000000000)
+        {
+            return (number / 1000000f).ToString("0.###") + m;
+        }
+        else
+        {
+            return (number / 1000000000f).ToString("0.####") + b;
         }
     }
 }

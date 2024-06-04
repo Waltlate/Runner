@@ -297,6 +297,8 @@ public class RoadGenerator : MonoBehaviour
         menu.SetActive(false);
         displayGame.SetActive(false);
         shop.SetActive(true);
+        ShopBehavior.instance.ChangeStateButton();
+        ShopText.instance.ChangeLanguageAndRefresh();
     }
 
     public void SettingsGame()

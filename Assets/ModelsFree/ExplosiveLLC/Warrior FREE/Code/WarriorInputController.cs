@@ -13,24 +13,24 @@ namespace WarriorAnimsFREE
 
 		private void Update()
 		{
-			Inputs();
-			Toggles();
+			//Inputs();
+			//Toggles();
 		}
 
 		/// <summary>
 		/// Input abstraction for easier asset updates using outside control schemes.
 		/// </summary>
-		private void Inputs()
-		{
-            //if(Input.GetKeyDown(KeyCode.Space))
-            //	Debug.Log("space");
-            //inputAttack = Input.GetKeyDown(KeyCode.Space);
-            //inputJump = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
-            inputAttack = Input.GetButtonDown("Attack");
-            inputJump = Input.GetButtonDown("Jump");
-            inputHorizontal = Input.GetAxisRaw("Horizontal");
-			inputVertical = Input.GetAxisRaw("Vertical");
-		}
+		//private void Inputs()
+		//{
+  //          //if(Input.GetKeyDown(KeyCode.Space))
+  //          //	Debug.Log("space");
+  //          //inputAttack = Input.GetKeyDown(KeyCode.Space);
+  //          //inputJump = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
+  //          inputAttack = Input.GetButtonDown("Attack");
+  //          inputJump = Input.GetButtonDown("Jump");
+  //          inputHorizontal = Input.GetAxisRaw("Horizontal");
+		//	inputVertical = Input.GetAxisRaw("Vertical");
+		//}
 
 		private void Toggles()
 		{
