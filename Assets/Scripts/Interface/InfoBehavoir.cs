@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfoShopBehavoir : MonoBehaviour
+public class InfoBehavoir : MonoBehaviour
 {
     public void Close()
     {
