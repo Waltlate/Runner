@@ -38,6 +38,9 @@ public class Tutorial : MonoBehaviour
     private string coinText = "Собирай монетки, чтобы улучшать героев";
     private string trapText = "Избегай ловушки. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
     private string perkText = "Подбирай бонусы. Они могут улучшить твой счет или подлечить тебя";
+    private float attitude;
+    private float screenWight = 720;
+    private float screenHeight = 1280;
 
     private void Start()
     {
@@ -54,6 +57,9 @@ public class Tutorial : MonoBehaviour
         headStyle.alignment = TextAnchor.MiddleCenter;
         headStyle.fontSize = 30;
         headStyle.wordWrap = true;
+        //headStyle.font.material.color = Color.white;
+        //headStyle.CalcScreenSize( new Vector2(2,2));
+        //headStyle.si
     }
 
     public void TextLoad()
@@ -134,15 +140,15 @@ public class Tutorial : MonoBehaviour
     {
         if (greatings && countGreatings < greatingsText.Length)
         {
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), greatingsText[countGreatings], headStyle);
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), greatingsText[countGreatings], headStyle);
 
             if(k > 1.05f || k < 0.95f)
             {
                 step *= -1;
             }
             k += step;
-            if (countGreatings == 2) GUI.Box(new Rect(10 - (180 * (k - 1)) / 2, 240 - (60 * (k - 1)) / 2, 180 * k, 60 * k), "");
-            if (countGreatings == 3) GUI.Box(new Rect(Screen.width - 350 - (250 * (k - 1)) / 2, 180 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
+            if (countGreatings == 2) GUI.Box(CreateRect(10 - (180 * (k - 1)) / 2, 240 - (60 * (k - 1)) / 2, 180 * k, 60 * k), "");
+            if (countGreatings == 3) GUI.Box(CreateRect(screenWight - 350 - (250 * (k - 1)) / 2, 180 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
         }
 
         if (enemyExist && enemyTrigger)
@@ -152,44 +158,60 @@ public class Tutorial : MonoBehaviour
                 step *= -1;
             }
             k += step;
-            GUI.Box(new Rect(10 - (350 * (k - 1)) / 2, 125 - (60 * (k - 1)) / 2, 350 * k, 60 * k), "");
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), enemyText, headStyle);
-            GUI.Box(new Rect(Screen.width / 2 - 150 / 2 + enemyCoordinate * 80,
-                             Screen.height / 2  - 150 / 2 + 230,
+            GUI.Box(CreateRect(10 - (350 * (k - 1)) / 2, 125 - (60 * (k - 1)) / 2, 350 * k, 60 * k), "");
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), enemyText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + enemyCoordinate * 80,
+                             screenHeight / 2  - 150 / 2 + 210,
                              150, 150), "");
         }
 
         if (enemyFlyExist && enemyFlyTrigger && !enemyExist)
         {
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), enemyFlyText, headStyle);
-            GUI.Box(new Rect(Screen.width / 2 - 150 / 2 + enemyFlyCoordinate * 80,
-                             Screen.height / 2 - 150 / 2 + 230 - 170,
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), enemyFlyText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + enemyFlyCoordinate * 80,
+                             screenHeight / 2 - 150 / 2 + 230 - 170,
                              150, 150), "");
         }
 
         if (coinExist && coinTrigger && !enemyExist && !enemyFlyExist)
         {
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), coinText, headStyle);
-            GUI.Box(new Rect(Screen.width / 2 - 150 / 2 + coinCoordinate * 80,
-                             Screen.height / 2  - 150 / 2 + 230,
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), coinText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + coinCoordinate * 80,
+                             screenHeight / 2  - 150 / 2 + 230,
                              150, 150), "");
         }
 
         if (trapExist && trapTrigger && !enemyExist && !enemyFlyExist && !coinExist)
         {
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), trapText, headStyle);
-            GUI.Box(new Rect(Screen.width / 2 - 150 / 2 + trapCoordinate * 80,
-                             Screen.height / 2 - 150 / 2 + 230,
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), trapText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + trapCoordinate * 80,
+                             screenHeight / 2 - 150 / 2 + 230,
                              150, 150), "");
         }
 
         if (perkExist && perkTrigger && !enemyExist && !enemyFlyExist && !coinExist && !trapExist)
         {
-            GUI.Label(new Rect(Screen.width * 0.1f, Screen.height / 2 - 450, Screen.width * 0.8f, 500), perkText, headStyle);
-            GUI.Box(new Rect(Screen.width / 2 - 150 / 2 + perkCoordinate * 80,
-                             Screen.height / 2 - 150 / 2 + 230,
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), perkText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + perkCoordinate * 80,
+                             screenHeight / 2 - 150 / 2 + 230,
                              150, 150), "");
         }
+        Debug.Log(attitude);
+    }
+
+    private Rect CreateRect(float x, float y, float width, float height)
+    {
+        if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
+        {
+            attitude = (float)Screen.height / 1280f;
+        }
+        else
+        {
+            attitude = (float)Screen.width / 720f;
+        }
+
+        return new Rect(x * attitude, y * attitude, width * attitude, height * attitude);
+        //return new Rect(x * attitude + (1 - attitude)/2 * Screen.width , y * attitude + (1 - attitude) / 2 * Screen.height, width * attitude, height * attitude);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -254,7 +276,7 @@ public class Tutorial : MonoBehaviour
 
     private void StopTime()
     {
-        if ((Time.timeScale - 0) > 0.0000001f)
+        if ((Time.timeScale - 0.0f) > 0.0000001f)
             currentTimeScale = Time.timeScale;
         Time.timeScale = 0;
     }

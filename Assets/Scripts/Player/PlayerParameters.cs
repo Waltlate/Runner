@@ -36,7 +36,7 @@ public class PlayerParameters : MonoBehaviour
     {
         BestScore = PlayerPrefs.GetInt("BestScore", 0);
         Coins = PlayerPrefs.GetInt("Coins", 0);
-        Coins = 10000;
+        //Coins = 10000;
         archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
                                   PlayerPrefs.GetInt("WarriorCurrentExp", 0),
                                   PlayerPrefs.GetInt("WarriorLevelExp", 50),
