@@ -155,8 +155,8 @@ public class Tutorial : MonoBehaviour
                 step *= -1;
             }
             k += step;
-            if (countGreatings == 2) GUI.Box(CreateRect(10 - (180 * (k - 1)) / 2, 240 - (60 * (k - 1)) / 2, 180 * k, 60 * k), "");
-            if (countGreatings == 3) GUI.Box(CreateRect(screenWight - 350 - (250 * (k - 1)) / 2, 180 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
+            if (countGreatings == 2) GUI.Box(CreateRect(100 - (200 * (k - 1)) / 2, 210 - (60 * (k - 1)) / 2, 200 * k, 60 * k), "");
+            if (countGreatings == 3) GUI.Box(CreateRect(screenWight - 270 - (250 * (k - 1)) / 2, 270 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
         }
 
         if (enemyExist && enemyTrigger)
@@ -177,7 +177,7 @@ public class Tutorial : MonoBehaviour
         {
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), enemyFlyText, headStyle);
             GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + enemyFlyCoordinate * 80,
-                             screenHeight / 2 - 150 / 2 + 230 - 170,
+                             screenHeight / 2 - 150 / 2 + 230 - 210,
                              150, 150), "");
         }
 
@@ -274,7 +274,9 @@ public class Tutorial : MonoBehaviour
     private void StopTime()
     {
         if ((Time.timeScale - 0.0f) > 0.0000001f)
+        {
             currentTimeScale = Time.timeScale;
-        Time.timeScale = 0;
+            Time.timeScale = 0;
+        }
     }
 }

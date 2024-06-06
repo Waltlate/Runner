@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-//using UnityEngine.UIElements;
 using UnityEngine.UI;
 
 public class SetteningsText : MonoBehaviour
 {
     public static SetteningsText instance;
+    public TextMeshProUGUI textTutorial;
+    public TextMeshProUGUI textSettings;
     public Image image;
     private float attitude;
-    public TextMeshProUGUI backButtonText;
-    public TextMeshProUGUI tutorialText;
 
     void Start()
     {
@@ -35,7 +32,7 @@ public class SetteningsText : MonoBehaviour
 
     public void ChangeLanguageAndRefresh()
     {
-        backButtonText.text = LanguageSettenings.ls.back;
-        tutorialText.text = LanguageSettenings.ls.startTutorial;
+        textTutorial.text = LanguageSettenings.ls.startTutorial;
+        textSettings.text = LanguageSettenings.ls.settenigns;
     }
 }

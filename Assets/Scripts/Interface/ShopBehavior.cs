@@ -9,11 +9,16 @@ public class ShopBehavior : MonoBehaviour
 {
     public static ShopBehavior instance;
     public GameObject canvasInfo;
+    public GameObject canvasChestOpen;
+    public GameObject[] weaponIcon;
+    public TextMeshProUGUI[] textWeaponCount;
+    public Image currentWeaponImage;
+    public Sprite[] weaponImage;
     public TextMeshProUGUI textInfo;
-    private string textHeroes = "Из сундука героев падает 10 случайных карт оружия героев";
-    private string textWarrior = "Из сундука воина падает 5 карт оружия воина";
-    private string textArcher = "Из сундука лучника падает 5 карт оружия лучника";
-    private string textMage = "Из сундука мага падает 5 карт оружия мага";
+    //private string textHeroes = "Из сундука героев падает 10 случайных карт оружия героев";
+    //private string textWarrior = "Из сундука воина падает 5 карт оружия воина";
+    //private string textArcher = "Из сундука лучника падает 5 карт оружия лучника";
+    //private string textMage = "Из сундука мага падает 5 карт оружия мага";
     private Button[] btns;
     public TextMeshProUGUI[] textBuy;
     public TextMeshProUGUI[] textCount;
@@ -117,6 +122,14 @@ public class ShopBehavior : MonoBehaviour
                     PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
                 ClearChests();
 
+
+                canvasChestOpen.SetActive(true);
+                weaponIcon[1].SetActive(true);
+                weaponIcon[2].SetActive(true);
+                textWeaponCount[0].text = ConvertNumberToString(sumNum[1]);
+                textWeaponCount[1].text = ConvertNumberToString(sumNum[0]);
+                textWeaponCount[2].text = ConvertNumberToString(sumNum[2]);
+                currentWeaponImage.sprite = weaponImage[1];
             }
     }
 
@@ -126,6 +139,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000 * Int32.Parse(textCount[1].text))
             {
                 BuyBase("Warrior", Int32.Parse(textCount[1].text));
+                currentWeaponImage.sprite = weaponImage[0];
             }
     }
     public void BuyCardsArcher()
@@ -134,6 +148,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000 * Int32.Parse(textCount[2].text))
             {
                 BuyBase("Archer", Int32.Parse(textCount[2].text));
+                currentWeaponImage.sprite = weaponImage[1];
             }
     }
 
@@ -143,6 +158,7 @@ public class ShopBehavior : MonoBehaviour
             if (PlayerParameters.Coins >= 1000 * Int32.Parse(textCount[3].text))
             {
                 BuyBase("Mage", Int32.Parse(textCount[3].text));
+                currentWeaponImage.sprite = weaponImage[2];
             }
     }
 
@@ -171,6 +187,11 @@ public class ShopBehavior : MonoBehaviour
         if(PlayerParameters.Coins != 0)
             PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
         ClearChests();
+
+        canvasChestOpen.SetActive(true);
+        weaponIcon[1].SetActive(false);
+        weaponIcon[2].SetActive(false);
+        textWeaponCount[0].text = ConvertNumberToString(5 * count);
     }
 
     private void ClearChests()
@@ -193,25 +214,25 @@ public class ShopBehavior : MonoBehaviour
     public void InfoChestHeroes()
     {
         canvasInfo.SetActive(true);
-        textInfo.text = textHeroes;
+        textInfo.text = LanguageSettenings.ls.infoChestHeroes;
     }
 
     public void InfoChestWarrior()
     {
         canvasInfo.SetActive(true);
-        textInfo.text = textWarrior;
+        textInfo.text = LanguageSettenings.ls.infoChestWarrior;
     }
 
     public void InfoChestArcher()
     {
         canvasInfo.SetActive(true);
-        textInfo.text = textArcher;
+        textInfo.text = LanguageSettenings.ls.infoChestArcher;
     }
 
     public void InfoChestMage()
     {
         canvasInfo.SetActive(true);
-        textInfo.text = textMage;
+        textInfo.text = LanguageSettenings.ls.infoChestMage;
     }
 
     public void CountChestPlus(int number)

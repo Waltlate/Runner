@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         SwipeManager.instance.MoveEvent += MovePlayer;
         StartCoroutine(AttackCoroutine());
-
     }
 
     void Awake()
@@ -76,10 +75,10 @@ public class PlayerController : MonoBehaviour
         //if (Input.anyKeyDown)
         //    Debug.Log(Input.anyKeyDown.ToString());
 
-            if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
+        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
         {
             MoveHorizontal(-laneChangeSpeed);
-            Debug.Log("a");
+            //Debug.Log("a");
         }
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && pointFinish < laneOffset)
         {
@@ -139,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
                 (transform.position.y == 0.25f) || transform.position.y >= 2.5f && transform.position.y <= 3f)
             {
+                //Debug.Log("here");
                 if (enemies.Length > bullets.Length)
                 {
                     if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().level <= PlayerParameters.archer.Damage ||
@@ -162,9 +162,6 @@ public class PlayerController : MonoBehaviour
                                 }
                             }
                         }
-                        //if(warriorInputSystemController)
-                        //    warriorInputSystemController.inputAttack = true;
-
                     }
 
                 }

@@ -8,19 +8,14 @@ using TMPro;
 
 /*
 Добавить:
-- поправить окна туториала
-- анимация лутбокса
-- англ поправить
 - музыка
-- остановить поворот экрана на телефоне
 
 Баги:
 - смена уровня врагов при лвлапе
 - перки генерируются внутри препятствий
 - проверить существование объекта ???
-- в туториале скорость в 0 превращается
+- в туториале скорость в 0 превращается и происходит остановка короутины
 - при считывании языка инверсия данных происходит
-- на винде клава не работает (проверить джостик)
 */
 
 public class RoadGenerator : MonoBehaviour
@@ -55,13 +50,7 @@ public class RoadGenerator : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.SetInt("BestScore", 0);
         ResetLevel();
-        
-        
-        //StartLevel();
-
-        //StartCoroutine(Movement());
     }
 
     void Awake()
@@ -175,7 +164,7 @@ public class RoadGenerator : MonoBehaviour
 
         PlayerController.instance.animator.SetBool("Moving", true);
         PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
-        Debug.Log(PlayerController.instance.animator.GetBool("Moving"));
+        //Debug.Log(PlayerController.instance.animator.GetBool("Moving"));
     }
 
     public void ResumeLevel()

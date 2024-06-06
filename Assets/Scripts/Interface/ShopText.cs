@@ -9,9 +9,12 @@ public class ShopText : MonoBehaviour
     public static ShopText instance;
     public Image image;
     private float attitude;
-    public TextMeshProUGUI backButtonText;
     public TextMeshProUGUI shopText;
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI textChestHeroes;
+    public TextMeshProUGUI textChestWarrior;
+    public TextMeshProUGUI textChestArcher;
+    public TextMeshProUGUI textChestMage;
     public TextMeshProUGUI[] buyText;
     private Color color;
 
@@ -37,17 +40,20 @@ public class ShopText : MonoBehaviour
 
     public void ChangeLanguageAndRefresh()
     {
-        backButtonText.text = LanguageSettenings.ls.back;
         shopText.text = LanguageSettenings.ls.shop;
         coinText.text = ConvertNumberToString(PlayerParameters.Coins);
+        textChestHeroes.text = LanguageSettenings.ls.chestHeroes;
+        textChestWarrior.text = LanguageSettenings.ls.chestWarrior;
+        textChestArcher.text = LanguageSettenings.ls.chestArcher;
+        textChestMage.text = LanguageSettenings.ls.chestMage;
 
         if (PlayerParameters.Coins >= 1000)
         {
-            color = new Color(0, 1, 0);
+            color = Color.green;
         }
         else
         {
-            color = new Color(1, 0, 0);
+            color = Color.red;
         }
 
         for (int i = 0; i < buyText.Length; i++)

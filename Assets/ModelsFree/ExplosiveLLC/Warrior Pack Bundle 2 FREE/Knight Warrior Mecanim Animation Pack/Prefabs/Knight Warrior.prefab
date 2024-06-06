@@ -2212,7 +2212,6 @@ MonoBehaviour:
   inputJump: 0
   inputHorizontal: 0
   inputVertical: 0
-  moveInput: {x: 0, y: 0, z: 0}
 --- !u!114 &3276053267084655111
 MonoBehaviour:
   m_ObjectHideFlags: 0

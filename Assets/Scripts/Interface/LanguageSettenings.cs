@@ -52,14 +52,13 @@ public class LanguageSettenings : MonoBehaviour
     #endif
 
 
-
-        if (DisplayText.instance)
-        {
-            DisplayText.instance.ChangeLanguageAndRefresh();
-        }
         if (HeroesText.instance)
         {
             HeroesText.instance.ChangeLanguageAndRefresh();
+        }
+        if (InfoBehavoir.instance)
+        {
+            InfoBehavoir.instance.ChangeLanguageAndRefresh();
         }
         if (ShopText.instance)
         {
@@ -127,9 +126,7 @@ public class LanguageSystem
     public string settenigns = "Settenigns";
     public string exit = "Exit";
 
-    public string back;
     public string levelUp;
-    public string buy;
 
     public string hero;
     public string stats;
@@ -137,14 +134,12 @@ public class LanguageSystem
 
     public string startTutorial;
 
-    public string pause;
     public string continueBtn;
     public string restart;
 
     public string level;
     public string levelWorld;
     public string levelWorldFull;
-    public string hp;
     public string health;
     public string damage;
     public string speed;
@@ -154,7 +149,17 @@ public class LanguageSystem
     public string descriptionArcher;
     public string descriptionMage;
 
-    public string coins;
-    public string score;
     public string bestScore;
+
+    public string close;
+    public string infoLevelWorld;
+    public string infoChestHeroes;
+    public string infoChestWarrior;
+    public string infoChestArcher;
+    public string infoChestMage;
+
+    public string chestHeroes;
+    public string chestWarrior;
+    public string chestArcher;
+    public string chestMage;
 }
