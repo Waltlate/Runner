@@ -44,6 +44,14 @@ public class Tutorial : MonoBehaviour
 
     private void Start()
     {
+        if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
+        {
+            attitude = (float)Screen.height / 1280f;
+        }
+        else
+        {
+            attitude = (float)Screen.width / 720f;
+        }
         TextLoad();
         if (trigerTutorial)
         {
@@ -55,7 +63,7 @@ public class Tutorial : MonoBehaviour
             perkTrigger = true;
         }
         headStyle.alignment = TextAnchor.MiddleCenter;
-        headStyle.fontSize = 30;
+        headStyle.fontSize = ((int)(30 * attitude));
         headStyle.wordWrap = true;
         //headStyle.font.material.color = Color.white;
         //headStyle.CalcScreenSize( new Vector2(2,2));
@@ -196,22 +204,11 @@ public class Tutorial : MonoBehaviour
                              screenHeight / 2 - 150 / 2 + 230,
                              150, 150), "");
         }
-        Debug.Log(attitude);
     }
 
     private Rect CreateRect(float x, float y, float width, float height)
     {
-        if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
-        {
-            attitude = (float)Screen.height / 1280f;
-        }
-        else
-        {
-            attitude = (float)Screen.width / 720f;
-        }
-
-        return new Rect(x * attitude, y * attitude, width * attitude, height * attitude);
-        //return new Rect(x * attitude + (1 - attitude)/2 * Screen.width , y * attitude + (1 - attitude) / 2 * Screen.height, width * attitude, height * attitude);
+        return new Rect(x * attitude + (Screen.width - 720 * attitude) / 2, y * attitude + (Screen.height - 1280 * attitude) / 2, width * attitude, height * attitude);
     }
 
     private void OnTriggerEnter(Collider other)
