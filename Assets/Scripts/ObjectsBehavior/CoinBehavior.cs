@@ -9,6 +9,7 @@ public class CoinBehavior : MonoBehaviour
     public float offset = 0.5f;
     public static int coinMultiple = 1;
     public TextMeshProUGUI coinText;
+    public AudioClip clipCoin;
 
 
     public void Start()
@@ -37,6 +38,7 @@ public class CoinBehavior : MonoBehaviour
         {
                 Destroy(gameObject);
                 PlayerParameters.Coins += LevelWorld.levelWorld * coinMultiple;
+            AudioSource.PlayClipAtPoint(clipCoin, transform.position);
         }
     }
 }

@@ -1579,6 +1579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0.5
   coinText: {fileID: 7408306937921409488}
+  clipCoin: {fileID: 8300000, guid: 952abda2b66f7b74bbdf03a9265c7f90, type: 3}
 --- !u!1 &2358808270638143639
 GameObject:
   m_ObjectHideFlags: 0
@@ -3023,6 +3024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0.5
   coinText: {fileID: 100398592083707221}
+  clipCoin: {fileID: 8300000, guid: 952abda2b66f7b74bbdf03a9265c7f90, type: 3}
 --- !u!1 &4005272637889567882
 GameObject:
   m_ObjectHideFlags: 0
@@ -4467,6 +4469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0.5
   coinText: {fileID: 4088172449606881706}
+  clipCoin: {fileID: 8300000, guid: 952abda2b66f7b74bbdf03a9265c7f90, type: 3}
 --- !u!1 &4062254518844457010
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,7 +5070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8967502875486611991}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalPosition: {x: 2.5, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

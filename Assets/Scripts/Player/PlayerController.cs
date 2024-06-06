@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController instance;
     Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
-    //Quaternion startGameRotation;
     float laneOffset = 2.5f;
     public float laneChangeSpeed = 15;
     Rigidbody rb;
@@ -28,12 +27,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject fireBall;
     public float bulletSpeed = 3f;
-    //private bool isClick = false;
-    //private float clickTime = 0;
-    //private float clickDelay = 0.5f;
 
     private float timeAttack;
-    //private float startTimeAttack;
     public LayerMask Enemy;
     public LayerMask Bullet;
     private float attackRange = 0.5f;
@@ -41,14 +36,16 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public bool useRootMotion = false;
     public float animationSpeed = 1.5f;
-    //[HideInInspector] public WarriorInputSystemController warriorInputSystemController;
-    //[HideInInspector] public WarriorController warriorController;
+    private AudioSource audio;
+    public float speedAudio = 2;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         SwipeManager.instance.MoveEvent += MovePlayer;
         StartCoroutine(AttackCoroutine());
+        audio = GetComponent<AudioSource>();
+        audio.pitch = speedAudio;
     }
 
     void Awake()

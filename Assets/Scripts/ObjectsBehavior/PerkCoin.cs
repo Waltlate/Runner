@@ -10,6 +10,7 @@ public class PerkCoin : MonoBehaviour
         {
             Destroy(gameObject);
             PerkGenerator.coinX2 = true;
+
         }
     }
 }

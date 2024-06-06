@@ -13,6 +13,10 @@ public class EnemyBehavior : MonoBehaviour
     public TextMeshProUGUI levelLabel;
 
     public GameObject[] enemies;
+    //private AudioSource audio => GetComponent<AudioSource>();
+    //public AudioClip clipAttack;
+    //public AudioClip clipDeath;
+
 
     public void Start()
     {
@@ -47,11 +51,10 @@ public class EnemyBehavior : MonoBehaviour
            
             if (health <= 0)
             {
-                //if (level > 1)
-                //    Debug.Log("level" + level);
                 Destroy(this.gameObject);
                 PlayerParameters.Coins += level;
                 PlayerParameters.archer.CurrentExp += level;
+                //AudioSource.PlayClipAtPoint(clipDeath, transform.position);
             }
         }
 
