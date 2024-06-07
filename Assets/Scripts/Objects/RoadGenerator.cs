@@ -57,8 +57,15 @@ public class RoadGenerator : MonoBehaviour
     public TMP_Dropdown dropdownLanguage;
     public TMP_Dropdown dropdownClass;
 
+    public GameObject camera;
+    private AudioSource cameraAudio;
+    public AudioClip mainTheme;
+    public AudioClip gameTheme;
+
     private void Start()
     {
+        if(camera)
+            cameraAudio = camera.GetComponent<AudioSource>();
         ResetLevel();
     }
 
@@ -174,6 +181,9 @@ public class RoadGenerator : MonoBehaviour
         PlayerController.instance.animator.SetBool("Moving", true);
         PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
         //Debug.Log(PlayerController.instance.animator.GetBool("Moving"));
+        cameraAudio.clip = gameTheme;
+        cameraAudio.Play();
+        PlayerController.instance.AudioPlay();
     }
 
     public void ResumeLevel()
@@ -293,6 +303,9 @@ public class RoadGenerator : MonoBehaviour
         }
 
         PlayerController.instance.animator.SetBool("Moving", false);
+        cameraAudio.clip = mainTheme;
+        cameraAudio.Play();
+        PlayerController.instance.AudioStop();
     }
 
     public void HeroesGames()

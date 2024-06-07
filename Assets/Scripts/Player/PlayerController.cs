@@ -331,4 +331,13 @@ public class PlayerController : MonoBehaviour
         if (animator)
             animator.SetFloat(name, f);
     }
+
+    public void AudioStop() {
+        audio.Stop();
+    }
+
+    public void AudioPlay()
+    {
+        audio.Play();
+    }
 }

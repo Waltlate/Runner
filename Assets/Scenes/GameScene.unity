@@ -8195,6 +8195,7 @@ GameObject:
   - component: {fileID: 298870906}
   - component: {fileID: 298870908}
   - component: {fileID: 298870909}
+  - component: {fileID: 298870910}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8282,11 +8283,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: efeb5e4a843e64e6b9a9fa21c7dec041, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8368,6 +8369,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &298870910
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298870904}
+  m_Enabled: 1
 --- !u!1 &303775398
 GameObject:
   m_ObjectHideFlags: 0
@@ -25005,6 +25014,9 @@ MonoBehaviour:
   currentCoins: 0
   dropdownLanguage: {fileID: 135000372}
   dropdownClass: {fileID: 1178175518}
+  camera: {fileID: 298870904}
+  mainTheme: {fileID: 8300000, guid: efeb5e4a843e64e6b9a9fa21c7dec041, type: 3}
+  gameTheme: {fileID: 8300000, guid: 40c85a1e0ba5a45dbbd49b04c664cac2, type: 3}
 --- !u!1 &1121194188
 GameObject:
   m_ObjectHideFlags: 0
@@ -40048,7 +40060,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d4e8510840b59424a8cf91deef237627, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.101
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
