@@ -9,6 +9,7 @@ public class EnemyFlyBehavior : MonoBehaviour
     public int health;
 
     public TextMeshProUGUI levelLabel;
+    public AudioClip clipDeath;
 
     public void Start()
     {
@@ -28,6 +29,7 @@ public class EnemyFlyBehavior : MonoBehaviour
                 Destroy(this.gameObject);
                 PlayerParameters.Coins += level;
                 PlayerParameters.archer.CurrentExp += level;
+                AudioSource.PlayClipAtPoint(clipDeath, transform.position);
             }
         }
         if (other.gameObject.tag == "Hero")

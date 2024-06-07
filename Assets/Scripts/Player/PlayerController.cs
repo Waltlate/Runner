@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
 
         //if(warriorInputSystemController.inputAttack)
         //Debug.Log(warriorInputSystemController.inputAttack);
-
     }
 
     IEnumerator AttackCoroutine()
@@ -123,8 +122,6 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.0001f);
-            //yield return new WaitForSeconds(PlayerParameters.archer.Speed / 60 * 100 * 15);
-            //Debug.Log("second" + PlayerParameters.archer.Speed);
             Collider[] enemies = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
                                                 transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
                                                 attackRange, Enemy);
@@ -135,7 +132,6 @@ public class PlayerController : MonoBehaviour
                 (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
                 (transform.position.y == 0.25f) || transform.position.y >= 2.5f && transform.position.y <= 3f)
             {
-                //Debug.Log("here");
                 if (enemies.Length > bullets.Length)
                 {
                     if (enemies[0].gameObject.GetComponent<EnemyBehavior>() != null && enemies[0].gameObject.GetComponent<EnemyBehavior>().level <= PlayerParameters.archer.Damage ||
@@ -283,8 +279,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator MoveCoroutine(float vectorX) {
         isMoving = true;
         while(Mathf.Abs(pointStart - transform.position.x) < laneOffset) {
-            yield return new WaitForFixedUpdate();
-
+            //yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0001f);
             rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
             lastVectorX = vectorX;
             float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));

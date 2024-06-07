@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PerkHealth : MonoBehaviour
 {
+    public AudioClip clipHealth;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Hero")
@@ -16,6 +19,7 @@ public class PerkHealth : MonoBehaviour
                 //Debug.Log($"heal++ {PlayerParameters.health} {PlayerParameters.maxHealth}");
             }
             Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(clipHealth, transform.position);
         }
     }
 }

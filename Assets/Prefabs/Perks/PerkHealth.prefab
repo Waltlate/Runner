@@ -34160,6 +34160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fb46c93b4b94ec4a0cb0ed94ff8ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipHealth: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
 --- !u!1001 &8935219773000766214
 PrefabInstance:
   m_ObjectHideFlags: 0

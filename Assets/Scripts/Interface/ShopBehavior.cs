@@ -15,10 +15,10 @@ public class ShopBehavior : MonoBehaviour
     public Image currentWeaponImage;
     public Sprite[] weaponImage;
     public TextMeshProUGUI textInfo;
-    //private string textHeroes = "Из сундука героев падает 10 случайных карт оружия героев";
-    //private string textWarrior = "Из сундука воина падает 5 карт оружия воина";
-    //private string textArcher = "Из сундука лучника падает 5 карт оружия лучника";
-    //private string textMage = "Из сундука мага падает 5 карт оружия мага";
+    //private string textHeroes = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 10 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
+    //private string textWarrior = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+    //private string textArcher = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+    //private string textMage = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
     private Button[] btns;
     public TextMeshProUGUI[] textBuy;
     public TextMeshProUGUI[] textCount;
@@ -194,7 +194,7 @@ public class ShopBehavior : MonoBehaviour
         textWeaponCount[0].text = ConvertNumberToString(5 * count);
     }
 
-    private void ClearChests()
+    public void ClearChests()
     {
         for (int i = 0; i < btnPlus.Length; i++)
         {

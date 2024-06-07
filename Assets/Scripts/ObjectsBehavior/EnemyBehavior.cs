@@ -15,7 +15,7 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject[] enemies;
     //private AudioSource audio => GetComponent<AudioSource>();
     //public AudioClip clipAttack;
-    //public AudioClip clipDeath;
+    public AudioClip clipDeath;
 
 
     public void Start()
@@ -54,7 +54,7 @@ public class EnemyBehavior : MonoBehaviour
                 Destroy(this.gameObject);
                 PlayerParameters.Coins += level;
                 PlayerParameters.archer.CurrentExp += level;
-                //AudioSource.PlayClipAtPoint(clipDeath, transform.position);
+                AudioSource.PlayClipAtPoint(clipDeath, transform.position);
             }
         }
 
