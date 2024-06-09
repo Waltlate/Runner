@@ -11,7 +11,7 @@ Add:
 --- Music
 
 - add second scene
-- �������
+- perk shield
 - speed game and speed difference game - SerializedField
 --- time perk - SerializedField
 - down key + trap in fly
@@ -22,9 +22,9 @@ Add:
 Bugs:
 --- lvl enemy update
 --- perks in objects
-- exist obects ???
+--- exist obects ???
 --- in tutorial speed = 0 and size
-- for read reverse language data
+--- for read reverse language data
 */
 
 public class RoadGenerator : MonoBehaviour
@@ -176,14 +176,16 @@ public class RoadGenerator : MonoBehaviour
             pause.SetActive(false);
         speed = maxSpeed;
         Time.timeScale = currentTime;
-        SwipeManager.instance.enabled = true;
+        SwipeManager.instance.enabled = true; //???
 
-
-        PlayerController.instance.animator.SetBool("Moving", true);
-        PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
+        if (PlayerController.instance)
+        {
+            PlayerController.instance.animator.SetBool("Moving", true);
+            PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
+            PlayerController.instance.AudioPlay();
+        }
         cameraAudio.clip = gameTheme;
         cameraAudio.Play();
-        PlayerController.instance.AudioPlay();
     }
 
     public void ResumeLevel()
@@ -191,7 +193,7 @@ public class RoadGenerator : MonoBehaviour
         pause.SetActive(false);
         buttonPause.interactable = true;
         Time.timeScale = currentTime;
-       
+        PlayerController.instance.AudioPlay();
     }
 
     public void RestartLevel()
@@ -207,6 +209,7 @@ public class RoadGenerator : MonoBehaviour
         currentTime = Time.timeScale;
         Time.timeScale = 0;
         pause.SetActive(true);
+        PlayerController.instance.AudioStop();
     }
 
     private void CreateNextRoad()
@@ -255,7 +258,8 @@ public class RoadGenerator : MonoBehaviour
         buttonPause.interactable = false;
         countRoad = 0;
         menu.SetActive(true);
-        //MenuText.instance.ChangeLanguageAndRefresh();
+        if(MenuText.instance)
+            MenuText.instance.ChangeLanguageAndRefresh();
 
         PerkGenerator.timerPerks = 0f;
         if (perk.activeSelf == true)
@@ -306,11 +310,13 @@ public class RoadGenerator : MonoBehaviour
         {
             ShopBehavior.instance.ChangeStateButton();
         }
-
-        PlayerController.instance.animator.SetBool("Moving", false);
+        if (PlayerController.instance)
+        {
+            PlayerController.instance.animator.SetBool("Moving", false);
+            PlayerController.instance.AudioStop();
+        }
         cameraAudio.clip = mainTheme;
         cameraAudio.Play();
-        PlayerController.instance.AudioStop();
     }
 
     public void HeroesGames()
@@ -345,7 +351,8 @@ public class RoadGenerator : MonoBehaviour
         else
             dropdownLanguage.value = 1;
         if(ToggleController.instance)
-        ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
+            ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
+        SetteningsText.instance.ChangeLanguageAndRefresh();
     }
 
     public void BackButton()
@@ -355,13 +362,11 @@ public class RoadGenerator : MonoBehaviour
         shop.SetActive(false);
         displayGame.SetActive(true);
         menu.SetActive(true);
-        
+        MenuText.instance.ChangeLanguageAndRefresh();
     }
 
     public void ExitGame()
     {
         Application.Quit();
     }
-
-
 }

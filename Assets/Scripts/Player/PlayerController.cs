@@ -46,8 +46,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         SwipeManager.instance.MoveEvent += MovePlayer;
         StartCoroutine(AttackCoroutine());
-        audio = GetComponent<AudioSource>();
-        audio.pitch = speedAudio;
+
     }
 
     void Awake()
@@ -55,6 +54,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>(); //вруби
 
         instance = this;
+        audio = GetComponent<AudioSource>();
+        audio.pitch = speedAudio;
     }
 
     void Update()
@@ -335,12 +336,14 @@ public class PlayerController : MonoBehaviour
     }
 
     public void AudioStop() {
-        audio.Stop();
+        if(audio)
+            audio.Stop();
     }
 
     public void AudioPlay()
     {
-        audio.Play();
+        if (audio)
+            audio.Play();
     }
 
     public void SoundDamage()

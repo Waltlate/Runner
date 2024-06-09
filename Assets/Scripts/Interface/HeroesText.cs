@@ -24,6 +24,7 @@ public class HeroesText : MonoBehaviour
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI levelWeaponText;
     public TextMeshProUGUI descriptionText;
+    public TMP_Dropdown dropdown;
 
     void Start()
     {
@@ -60,6 +61,10 @@ public class HeroesText : MonoBehaviour
         distanceText.text = $" {LanguageSettenings.ls.distance}: {PlayerParameters.archer.Distance}";
         levelWeaponText.text = $" {LanguageSettenings.ls.level}. {PlayerParameters.archer.LevelWeapon} [{ConvertNumberToString(PlayerParameters.archer.CurrentExpWeapon)}/{ConvertNumberToString(PlayerParameters.archer.LevelExpWeapon)}]";
         descriptionText.text = PlayerParameters.archer.Description;
+        dropdown.options[0].text = LanguageSettenings.ls.classNameWarrior;
+        dropdown.options[1].text = LanguageSettenings.ls.classNameArcher;
+        dropdown.options[2].text = LanguageSettenings.ls.classNameMage;
+        dropdown.captionText.text = dropdown.options[dropdown.value].text;
     }
 
     string ConvertNumberToString(float number)

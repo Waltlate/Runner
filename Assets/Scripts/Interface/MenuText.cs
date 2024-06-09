@@ -33,6 +33,7 @@ public class MenuText : MonoBehaviour
     void Awake()
     {
         instance = this;
+        ChangeLanguageAndRefresh();
     }
 
     public void ChangeLanguageAndRefresh()

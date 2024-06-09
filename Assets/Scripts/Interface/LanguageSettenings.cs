@@ -51,49 +51,42 @@ public class LanguageSettenings : MonoBehaviour
         ls = JsonUtility.FromJson<LanguageSystem>(json);
     #endif
 
+        StartCoroutine(SomeCoroutine());
+    }
 
-        if (HeroesText.instance)
+    
+
+    private IEnumerator SomeCoroutine()
+    {
+    yield return new WaitForSeconds(0.2f);
+        if (HeroesText.instance != null)
         {
             HeroesText.instance.ChangeLanguageAndRefresh();
         }
-        if (InfoBehavoir.instance)
+        if (InfoBehavoir.instance != null)
         {
             InfoBehavoir.instance.ChangeLanguageAndRefresh();
         }
-        if (ShopText.instance)
+        if (ShopText.instance != null)
         {
             ShopText.instance.ChangeLanguageAndRefresh();
         }
-        if (MenuText.instance)
+        if (MenuText.instance != null)
         {
             MenuText.instance.ChangeLanguageAndRefresh();
         }
-        if (SetteningsText.instance)
+        if (SetteningsText.instance != null)
         {
             SetteningsText.instance.ChangeLanguageAndRefresh();
         }
-        if (PauseText.instance)
+        if (PauseText.instance != null)
         {
             PauseText.instance.ChangeLanguageAndRefresh();
         }
-
-
-        //if (PlayerParameters.instance)
-        //{
-        //    if (PlayerParameters.archer.ClassName == "Warrior")
-        //    {
-        //        PlayerParameters.archer.Description = ls.descriptionWarrior;
-        //    }
-        //    if (PlayerParameters.archer.ClassName == "Archer")
-        //    {
-        //        PlayerParameters.archer.Description = ls.descriptionArcher;
-        //    }
-        //}
     }
 
 
-
-    IEnumerator ReadFileFromAndroid(string path, System.Action<string> callback)
+IEnumerator ReadFileFromAndroid(string path, System.Action<string> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get(path);
         yield return www.SendWebRequest();
@@ -120,11 +113,11 @@ public class LanguageSystem
     public string trapText;
     public string perkText;
 
-    public string play = "Play";
-    public string heroes = "Heroes";
-    public string shop = "Shop";
-    public string settenigns = "Settenigns";
-    public string exit = "Exit";
+    public string play; //= "Play";
+    public string heroes;// = "Heroes";
+    public string shop;// = "Shop";
+    public string settenigns;// = "Settenigns";
+    public string exit;// = "Exit";
 
     public string levelUp;
 
@@ -144,6 +137,10 @@ public class LanguageSystem
     public string damage;
     public string speed;
     public string distance;
+
+    public string classNameWarrior;
+    public string classNameArcher;
+    public string classNameMage;
 
     public string descriptionWarrior;
     public string descriptionArcher;

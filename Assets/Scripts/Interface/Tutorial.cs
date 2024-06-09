@@ -135,7 +135,6 @@ public class Tutorial : MonoBehaviour
         if (!(greatings || enemyTrigger || enemyFlyTrigger || coinTrigger || trapTrigger || perkTrigger))
         {
             trigerTutorial = false;
-            //ToggleController.instance.OffToggle();
         }
 
         if (!trigerTutorial)
