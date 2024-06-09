@@ -23,14 +23,23 @@ public class EnemyBehavior : MonoBehaviour
         level = LevelWorld.levelWorld + LevelWorld.levelEnemy - 1;
         health = level;
         damage = level;
-        if(PlayerParameters.instance)
-        if(level > PlayerParameters.archer.Level)
-            if(level > PlayerParameters.archer.Level + PlayerParameters.archer.LevelWeapon - 1)
-                levelLabel.color = Color.red;
-            else
-                levelLabel.color = Color.yellow;
+        ColorLabelUpdate();
         levelLabel.text = $"Lvl. {level}";
+    }
 
+    public void ColorLabelUpdate()
+    {
+        if (PlayerParameters.instance)
+            if (level > PlayerParameters.archer.Level)
+            {
+                if (level > PlayerParameters.archer.Level + PlayerParameters.archer.LevelWeapon - 1)
+                    levelLabel.color = Color.red;
+                else
+                    levelLabel.color = Color.yellow;
+            } else
+            {
+                levelLabel.color = Color.green;
+            }
     }
 
     public void Awake()
@@ -62,11 +71,15 @@ public class EnemyBehavior : MonoBehaviour
         {
             PlayerParameters.health -= damage;
             Destroy(this.gameObject);
+            PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
-            if(PlayerController.instance)
-            PlayerController.instance.ResetGame();
+            if (PlayerController.instance)
+            {
+                PlayerController.instance.SoundDamageStop();
+                PlayerController.instance.ResetGame();
+            }
         }
     }
 }

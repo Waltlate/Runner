@@ -29,8 +29,9 @@ public class PlayerParameters : MonoBehaviour
     public TextMeshProUGUI scoreLabel;
     public TextMeshProUGUI bestScoreLabel;
     public TextMeshProUGUI coinsLabel;
-    
-    
+
+    public GameObject roadGenerator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +70,7 @@ public class PlayerParameters : MonoBehaviour
             health = archer.Level * maxHealth;
             archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
             archer.Damage = archer.Level + archer.LevelWeapon - 1;
+            EnemyUpdate();
         }
         LoadText();
     }
@@ -140,4 +142,14 @@ public class PlayerParameters : MonoBehaviour
         return result;
     }
 
+    void EnemyUpdate()
+    {
+        EnemyBehavior[] enemies = roadGenerator.GetComponentsInChildren<EnemyBehavior>();
+
+        foreach (var elem in enemies)
+        {
+                elem.ColorLabelUpdate();
+        }
+        Debug.Log("Enemy update" + enemies.Length);
+    }
 }

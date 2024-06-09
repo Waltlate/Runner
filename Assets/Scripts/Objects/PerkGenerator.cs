@@ -13,7 +13,8 @@ public class PerkGenerator : MonoBehaviour
     public static bool coinX2 = false;
     public static float timerCoinX2 = 5f;
     public GameObject coinUI;
-    private float maxTimePerks = 30f;
+    [SerializeField]
+    private float maxTimePerks = 30f; 
 
     void Awake()
     {

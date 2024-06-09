@@ -7,24 +7,24 @@ using System.Data;
 using TMPro;
 
 /*
-��������:
-- ������
+Add:
+--- Music
 
-- ������ �����
+- add second scene
 - �������
-- �������� ���� � �� ������������ �������� - SerializedField
-- ����� ������ ������ - SerializedField
-- ���� ������������, ������� ��������� ��� ��������� �����
-- ������� �������� ���-3 �� �������� ��������� ������� � ������
-- ��� ������ ���� �������������� � ������������ �� ������ Microsoft
+- speed game and speed difference game - SerializedField
+--- time perk - SerializedField
+- down key + trap in fly
+- add top-3 with score and date record
+- style Microsoft
 
 
-����:
-- ����� ������ ������ ��� ������
-- ����� ������������ ������ �����������
-- ��������� ������������� ������� ???
-- � ��������� �������� � 0 ������������ � ���������� ��������� ���������
-- ��� ���������� ����� �������� ������ ����������
+Bugs:
+--- lvl enemy update
+--- perks in objects
+- exist obects ???
+--- in tutorial speed = 0 and size
+- for read reverse language data
 */
 
 public class RoadGenerator : MonoBehaviour
@@ -33,7 +33,8 @@ public class RoadGenerator : MonoBehaviour
     public GameObject[] RoadPrefab;
     private List<GameObject> roads = new List<GameObject>();
     public float maxSpeed = 10;
-    private float speed = 0;
+    [HideInInspector]
+    public float speed = 0;
     public int maxRoadCount = 6;
     public GameObject menu;
     public GameObject pause;
@@ -180,7 +181,6 @@ public class RoadGenerator : MonoBehaviour
 
         PlayerController.instance.animator.SetBool("Moving", true);
         PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
-        //Debug.Log(PlayerController.instance.animator.GetBool("Moving"));
         cameraAudio.clip = gameTheme;
         cameraAudio.Play();
         PlayerController.instance.AudioPlay();
@@ -221,18 +221,23 @@ public class RoadGenerator : MonoBehaviour
         GameObject go = Instantiate(RoadPrefab[number], pos, Quaternion.identity);
         go.transform.SetParent(transform);
         int perkRoad = new System.Random().Next(0, 3);
+        int distance;
         if (roads.Count > 1)
         for (int i = 0; i < 3; i++)
         {
             GameObject my_object = Objects[new System.Random().Next(0, Objects.Length)];
-            my_object.transform.position = new Vector3(-2.5f + 2.5f * i, my_object.transform.position.y, -3f + new System.Random().Next(0, 10));
+                distance = new System.Random().Next(-3, 3);
+                my_object.transform.position = new Vector3(-2.5f + 2.5f * i, my_object.transform.position.y, distance);
             Instantiate(my_object, go.transform);
             if(i == perkRoad)
                 if (PerkGenerator.exist == true)
                 {
                     GameObject my_perk = Perks[new System.Random().Next(0, Perks.Length)];
-                    my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, my_object.transform.position.z - 5f);
-                    Instantiate(my_perk, go.transform);
+                        if(distance > 0)
+                    my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, -6f);
+                        else
+                    my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, 7f);
+                        Instantiate(my_perk, go.transform);
                     PerkGenerator.exist = false;
                 }
             }
@@ -357,4 +362,6 @@ public class RoadGenerator : MonoBehaviour
     {
         Application.Quit();
     }
+
+
 }

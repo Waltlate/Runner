@@ -9,10 +9,15 @@ public class TrapBehavior : MonoBehaviour
         if (other.gameObject.tag == "Hero")
         {
             PlayerParameters.health -= LevelWorld.levelWorld;
+            PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
-            PlayerController.instance.ResetGame();
+            if (PlayerController.instance)
+            {
+                PlayerController.instance.SoundDamageStop();
+                PlayerController.instance.ResetGame();
+            }
         }
     }
 }

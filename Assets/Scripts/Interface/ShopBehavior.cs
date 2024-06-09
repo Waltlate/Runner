@@ -15,10 +15,6 @@ public class ShopBehavior : MonoBehaviour
     public Image currentWeaponImage;
     public Sprite[] weaponImage;
     public TextMeshProUGUI textInfo;
-    //private string textHeroes = "�� ������� ������ ������ 10 ��������� ���� ������ ������";
-    //private string textWarrior = "�� ������� ����� ������ 5 ���� ������ �����";
-    //private string textArcher = "�� ������� ������� ������ 5 ���� ������ �������";
-    //private string textMage = "�� ������� ���� ������ 5 ���� ������ ����";
     private Button[] btns;
     public TextMeshProUGUI[] textBuy;
     public TextMeshProUGUI[] textCount;

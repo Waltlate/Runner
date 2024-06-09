@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.5f;
     private AudioSource audio;
     public float speedAudio = 2;
+    public AudioClip soundRun;
+    public AudioClip soundDamage;
 
     void Start()
     {
@@ -339,5 +341,29 @@ public class PlayerController : MonoBehaviour
     public void AudioPlay()
     {
         audio.Play();
+    }
+
+    public void SoundDamage()
+    {
+        StartCoroutine(SoundDamageCoroutine());
+    }
+
+    public void SoundDamageStop()
+    {
+        StopCoroutine(SoundDamageCoroutine());
+    }
+    IEnumerator SoundDamageCoroutine()
+    {
+        audio.pitch = 1f;
+        audio.clip = soundDamage;
+        audio.Play();
+        yield return new WaitForSeconds(audio.clip.length);
+        audio.pitch = speedAudio;
+        audio.clip = soundRun;
+        audio.Play();
+        if (PlayerParameters.health == PlayerParameters.maxHealth * PlayerParameters.archer.Level && RoadGenerator.instance.speed == 0)
+        { 
+            AudioStop();
+        }
     }
 }

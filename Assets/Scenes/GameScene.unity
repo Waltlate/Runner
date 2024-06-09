@@ -8285,7 +8285,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -14851,7 +14851,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 12.5, y: 0}
-  m_SizeDelta: {x: -45, y: -10}
+  m_SizeDelta: {x: -45, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616585326
 MonoBehaviour:
@@ -24990,6 +24990,7 @@ MonoBehaviour:
   - {fileID: 4019650548477789817, guid: d231703c4073b4e9094b856bf0780ae0, type: 3}
   - {fileID: 4019650548477789817, guid: 16fb2479792104609ab574f3cd5559ec, type: 3}
   maxSpeed: 10
+  speed: 0
   maxRoadCount: 6
   menu: {fileID: 1157013195}
   pause: {fileID: 1545443449}
@@ -26221,6 +26222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreUI: {fileID: 1931577044}
   coinUI: {fileID: 720026174}
+  maxTimePerks: 30
 --- !u!1 &1153320187
 GameObject:
   m_ObjectHideFlags: 0
@@ -40060,7 +40062,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d4e8510840b59424a8cf91deef237627, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -47039,6 +47041,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1175616835363306511, guid: bc399d025e88b49cf8bada3491082f83, type: 3}
     - target: {fileID: 48311567684447688, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
+      propertyPath: soundRun
+      value: 
+      objectReference: {fileID: 8300000, guid: d4e8510840b59424a8cf91deef237627, type: 3}
+    - target: {fileID: 48311567684447688, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
       propertyPath: speedAudio
       value: 2
       objectReference: {fileID: 0}
@@ -47050,6 +47056,10 @@ PrefabInstance:
       propertyPath: bulletSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 48311567684447688, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
+      propertyPath: soundDamage
+      value: 
+      objectReference: {fileID: 8300000, guid: 49e4fc09dad9041f386b53c8654be0cb, type: 3}
     - target: {fileID: 48311567684447688, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
       propertyPath: Enemy.m_Bits
       value: 64
@@ -47166,6 +47176,10 @@ PrefabInstance:
       propertyPath: scoreLabel
       value: 
       objectReference: {fileID: 1995734454}
+    - target: {fileID: 48311567684447702, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
+      propertyPath: roadGenerator
+      value: 
+      objectReference: {fileID: 1115222625}
     - target: {fileID: 48311567684447702, guid: 02e3d24fc663b4b03bf43db2ac920f3a, type: 3}
       propertyPath: bestScoreLabel
       value: 

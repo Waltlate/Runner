@@ -10,7 +10,6 @@ public class HeroesText : MonoBehaviour
     public static HeroesText instance;
     public GameObject canvasInfo;
     public TextMeshProUGUI textInfo;
-    //private string textLevelWorld = "ѕовышай уровень мира, чтобы увеличить свой счет. ƒенег с монеты станет выпадать больше и бонус лечени€ увеличитс€. “акже начальные враги станут сильнее";
     public Image image;
     private float attitude;
     public TextMeshProUGUI levelUpButtonText;

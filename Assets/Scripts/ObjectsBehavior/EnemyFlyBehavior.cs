@@ -35,10 +35,16 @@ public class EnemyFlyBehavior : MonoBehaviour
         if (other.gameObject.tag == "Hero")
         {
             PlayerParameters.health -= level;
+            Destroy(this.gameObject);
+            PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
-            PlayerController.instance.ResetGame();
+            if (PlayerController.instance)
+            {
+                PlayerController.instance.SoundDamageStop();
+                PlayerController.instance.ResetGame();
+            }
         }
     }
 }
