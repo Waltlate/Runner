@@ -8,11 +8,14 @@ public class PerkGenerator : MonoBehaviour
     public static bool exist = false;
     public static float timerPerks = 0f;
     public static bool scoreX2 = false;
-    public static float timerScoreX2 = 5f;
+    public float timerScoreX2 = 10f;
     public GameObject scoreUI;
     public static bool coinX2 = false;
-    public static float timerCoinX2 = 5f;
+    public float timerCoinX2 = 10f;
     public GameObject coinUI;
+    public static bool schield = false;
+    public  float timerSchield = 10f;
+    public GameObject schieldsHero;
     [SerializeField]
     private float maxTimePerks = 30f; 
 
@@ -36,14 +39,17 @@ public class PerkGenerator : MonoBehaviour
             coinX2 = false;
         }
 
-        timerPerks += Time.deltaTime; // Увеличиваем время каждый кадр
-        //Debug.Log(timerPerks);
-        if (timerPerks >= maxTimePerks) // Проверяем, прошло ли уже 30 секунд
+        if (schield == true)
         {
-            timerPerks = 0f; // Сбрасываем таймер
-            exist = true;
+            StartCoroutine(CoroutineSchield());
         }
 
+        timerPerks += Time.deltaTime; 
+        if (timerPerks >= maxTimePerks) 
+        {
+            timerPerks = 0f;
+            exist = true;
+        }
     }
 
     public void ClearScoreMultiple() {
@@ -61,7 +67,7 @@ public class PerkGenerator : MonoBehaviour
     {
         RoadGenerator.scoreMultiple = 2;
         scoreUI.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(timerScoreX2);
         ClearScoreMultiple();
     }
 
@@ -69,7 +75,17 @@ public class PerkGenerator : MonoBehaviour
     {
         CoinBehavior.coinMultiple = 2;
         coinUI.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(timerCoinX2);
         ClearCoinMultiple();
+    }
+
+    IEnumerator CoroutineSchield()
+    {
+        //CoinBehavior.coinMultiple = 2;
+        schieldsHero.SetActive(true);
+        yield return new WaitForSeconds(timerSchield);
+        schieldsHero.SetActive(false);
+        schield = false;
+        //ClearCoinMultiple();
     }
 }

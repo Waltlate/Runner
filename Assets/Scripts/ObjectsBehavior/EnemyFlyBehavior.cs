@@ -34,15 +34,26 @@ public class EnemyFlyBehavior : MonoBehaviour
         }
         if (other.gameObject.tag == "Hero")
         {
-            PlayerParameters.health -= level;
+            if (!PerkGenerator.schield)
+            {
+                PlayerParameters.health -= level;
+                PlayerController.instance.SoundDamage();
+            }
+            else
+            {
+                PlayerController.instance.SoundBlock();
+            }
             Destroy(this.gameObject);
-            PlayerController.instance.SoundDamage();
+
+            //PlayerParameters.health -= level;
+            //Destroy(this.gameObject);
+            //PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)
             {
-                PlayerController.instance.SoundDamageStop();
+                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }

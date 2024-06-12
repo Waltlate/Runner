@@ -8,14 +8,24 @@ public class TrapBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Hero")
         {
-            PlayerParameters.health -= LevelWorld.levelWorld;
-            PlayerController.instance.SoundDamage();
+            if (!PerkGenerator.schield)
+            {
+                PlayerParameters.health -= LevelWorld.levelWorld;
+                PlayerController.instance.SoundDamage();
+            }
+            else
+            {
+                PlayerController.instance.SoundBlock();
+            }
+
+            //PlayerParameters.health -= LevelWorld.levelWorld;
+            //PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)
             {
-                PlayerController.instance.SoundDamageStop();
+                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }

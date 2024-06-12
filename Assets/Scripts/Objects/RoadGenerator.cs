@@ -11,8 +11,8 @@ Add:
 --- Music
 
 - add second scene
-- perk shield
-- speed game and speed difference game - SerializedField
+--- perk shield
+--- speed game and speed difference game - SerializedField
 --- time perk - SerializedField
 - down key + trap in fly
 - add top-3 with score and date record
@@ -36,6 +36,10 @@ public class RoadGenerator : MonoBehaviour
     public float maxSpeed = 10;
     [HideInInspector]
     public float speed = 0;
+    [SerializeField]
+    public float maxSpeedGame = 3f;
+    [SerializeField]
+    public float differenceSpeedGame = 0.0001f;
     public int maxRoadCount = 6;
     public GameObject menu;
     public GameObject pause;
@@ -146,9 +150,9 @@ public class RoadGenerator : MonoBehaviour
     private void FixedUpdate()
     {
         if (speed == 0) return;
-        if (Time.timeScale < 3f)
+        if (Time.timeScale < maxSpeedGame)
         {
-            Time.timeScale += 0.0001f;
+            Time.timeScale += differenceSpeedGame;
         }
         currentScore += 1 * scoreMultiple * LevelWorld.levelWorld;
         PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;

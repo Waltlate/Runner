@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public float speedAudio = 2;
     public AudioClip soundRun;
     public AudioClip soundDamage;
+    public AudioClip soundBlock;
 
     void Start()
     {
@@ -349,17 +350,22 @@ public class PlayerController : MonoBehaviour
 
     public void SoundDamage()
     {
-        StartCoroutine(SoundDamageCoroutine());
+        StartCoroutine(SoundCoroutine(soundDamage));
     }
 
-    public void SoundDamageStop()
+    public void SoundBlock()
     {
-        StopCoroutine(SoundDamageCoroutine());
+        StartCoroutine(SoundCoroutine(soundBlock));
     }
-    IEnumerator SoundDamageCoroutine()
+
+    //public void SoundDamageStop()
+    //{
+    //    StopCoroutine(SoundDamageCoroutine());
+    //}
+    IEnumerator SoundCoroutine(AudioClip clip)
     {
         audio.pitch = 1f;
-        audio.clip = soundDamage;
+        audio.clip = clip;
         audio.Play();
         yield return new WaitForSeconds(audio.clip.length);
         audio.pitch = speedAudio;

@@ -69,15 +69,22 @@ public class EnemyBehavior : MonoBehaviour
 
         if (other.gameObject.tag == "Hero")
         {
-            PlayerParameters.health -= damage;
+            if (!PerkGenerator.schield)
+            {
+                PlayerParameters.health -= damage;
+                PlayerController.instance.SoundDamage();
+            }
+            else
+            {
+                PlayerController.instance.SoundBlock();
+            }
             Destroy(this.gameObject);
-            PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)
             {
-                PlayerController.instance.SoundDamageStop();
+                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }
