@@ -301,7 +301,7 @@ public class PlayerController : MonoBehaviour
         pointStart = 0;
         pointFinish = 0;
         transform.position = startGamePosition;
-        LevelWorld.levelEnemy = 1;
+        LevelWorld.levelEnemy = 1; // Why?
     }
 
     public void ResetGame()

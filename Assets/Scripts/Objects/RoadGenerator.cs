@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /*
 Add:
 --- Music
+- change main phone
 
-- add second scene
+--- add second scene
 --- perk shield
 --- speed game and speed difference game - SerializedField
 --- time perk - SerializedField
@@ -67,6 +69,7 @@ public class RoadGenerator : MonoBehaviour
     private AudioSource cameraAudio;
     public AudioClip mainTheme;
     public AudioClip gameTheme;
+    private string mainScene = "MainScene";
 
     private void Start()
     {
@@ -206,6 +209,12 @@ public class RoadGenerator : MonoBehaviour
         PlayerController.instance.ClearSettings();
         ResetLevel();
         StartLevel();
+    }
+
+    public void BackMenu()
+    {
+        PlayerController.instance.ClearSettings();
+        ResetLevel();
     }
 
     public void PauseLevel()
@@ -372,6 +381,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void ExitGame()
     {
-        Application.Quit();
+        SceneManager.LoadScene(mainScene);
+        //Application.Quit();
     }
 }

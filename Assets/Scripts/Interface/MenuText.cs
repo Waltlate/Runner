@@ -13,7 +13,7 @@ public class MenuText : MonoBehaviour
     public TextMeshProUGUI heroesButtonText;
     public TextMeshProUGUI shopButtonText;
     public TextMeshProUGUI settenignsButtonText;
-    public TextMeshProUGUI exitButtonText;
+    public TextMeshProUGUI mainMenuButtonText;
 
     void Start()
     {
@@ -38,10 +38,10 @@ public class MenuText : MonoBehaviour
 
     public void ChangeLanguageAndRefresh()
     {
-        playButtonText.text = LanguageSettenings.ls.play;
+        playButtonText.text = LanguageSettenings.ls.startRun;
         heroesButtonText.text = LanguageSettenings.ls.heroes;
         shopButtonText.text = LanguageSettenings.ls.shop;
         settenignsButtonText.text = LanguageSettenings.ls.settenigns;
-        exitButtonText.text = LanguageSettenings.ls.exit;
+        mainMenuButtonText.text = LanguageSettenings.ls.mainMenu;
     }
 }

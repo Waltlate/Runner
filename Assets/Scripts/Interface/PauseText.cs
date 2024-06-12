@@ -10,6 +10,7 @@ public class PauseText : MonoBehaviour
     private float attitude;
     public TextMeshProUGUI continueButtonText;
     public TextMeshProUGUI restartButtonText;
+    public TextMeshProUGUI backMenuButtonText;
 
     void Start()
     {
@@ -35,5 +36,7 @@ public class PauseText : MonoBehaviour
     {
         continueButtonText.text = LanguageSettenings.ls.continueBtn;
         restartButtonText.text = LanguageSettenings.ls.restart;
+        backMenuButtonText.text = LanguageSettenings.ls.backMenu;
     }
+
 }

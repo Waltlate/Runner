@@ -113,11 +113,14 @@ public class LanguageSystem
     public string trapText;
     public string perkText;
 
-    public string play; //= "Play";
-    public string heroes;// = "Heroes";
-    public string shop;// = "Shop";
-    public string settenigns;// = "Settenigns";
-    public string exit;// = "Exit";
+    public string play;
+    public string startRun;
+    public string heroes;
+    public string shop;
+    public string settenigns;
+    public string topRun;
+    public string mainMenu;
+    public string exit;
 
     public string levelUp;
 
@@ -129,6 +132,7 @@ public class LanguageSystem
 
     public string continueBtn;
     public string restart;
+    public string backMenu;
 
     public string level;
     public string levelWorld;
