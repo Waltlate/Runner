@@ -29,15 +29,12 @@ public class Tutorial : MonoBehaviour
     GUIStyle headStyle = new GUIStyle();
     float k = 1; //koef size box
     float step = 0.0003f;
-    private string[] greatingsText = { "Приветствую, приключенец. Здесь начинается твой забег",
-                                   "Перемещайся влево, вправо и вверх, чтобы уклоняться от врагов и ловушек",
-                                   "Если не сможешь увернуться, то твое здоровье будет уменьшаться",
-                                   "Со временем твой счет будет увеличиваться. Пробеги как можно дальше пока твое здоровье не опустилось до нуля"};
-    private string enemyText = "На твоем пути будут встречаться враги. Ты можешь победить врагов, которые ниже твоего уровня своим оружием. Противники посильнее будут наносить урон соответствующий их уровню";
-    private string enemyFlyText = "В игре появляются летающие враги. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
-    private string coinText = "Собирай монетки, чтобы улучшать героев";
-    private string trapText = "Избегай ловушки. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
-    private string perkText = "Подбирай бонусы. Они могут улучшить твой счет или подлечить тебя";
+    private string[] greatingsText;
+    private string enemyText;// = "На твоем пути будут встречаться враги. Ты можешь победить врагов, которые ниже твоего уровня своим оружием. Противники посильнее будут наносить урон соответствующий их уровню";
+    private string enemyFlyText;// = "В игре появляются летающие враги. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
+    private string coinText;// = "Собирай монетки, чтобы улучшать героев";
+    private string trapText;// = "Избегай ловушки. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
+    private string perkText;// = "Подбирай бонусы. Они могут улучшить твой счет или подлечить тебя";
     private float attitude;
     private float screenWight = 720;
     private float screenHeight = 1280;
@@ -65,9 +62,6 @@ public class Tutorial : MonoBehaviour
         headStyle.alignment = TextAnchor.MiddleCenter;
         headStyle.fontSize = ((int)(30 * attitude));
         headStyle.wordWrap = true;
-        //headStyle.font.material.color = Color.white;
-        //headStyle.CalcScreenSize( new Vector2(2,2));
-        //headStyle.si
     }
 
     public void TextLoad()
@@ -87,7 +81,6 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("Hell");
         if (greatings || enemyExist)
         {
             StopTime();
@@ -98,38 +91,38 @@ public class Tutorial : MonoBehaviour
         }
 
         if(countGreatings == greatingsText.Length && greatings) {
-            greatings = false; 
-            Time.timeScale = currentTimeScale;
+            greatings = false;
+            RecoveryTime();
         }
 
         if (Input.anyKeyDown && enemyExist && enemyTrigger)
         {
             enemyTrigger = enemyExist = false;
-            Time.timeScale = currentTimeScale;
+            RecoveryTime();
         }
 
         if (Input.anyKeyDown && enemyFlyExist && enemyFlyTrigger && !enemyExist)
         {
             enemyFlyTrigger = enemyFlyExist = false;
-            Time.timeScale = currentTimeScale;
+            RecoveryTime();
         }
 
         if (Input.anyKeyDown && coinExist && coinTrigger && !enemyExist && !enemyFlyExist)
         {
             coinTrigger = coinExist = false;
-            Time.timeScale = currentTimeScale;
+            RecoveryTime();
         }
 
         if (Input.anyKeyDown && trapExist && trapTrigger && !enemyExist && !enemyFlyExist && !coinExist)
         {
             trapTrigger = trapExist = false;
-            Time.timeScale = currentTimeScale;
+            RecoveryTime();
         }
 
         if (Input.anyKeyDown && perkExist && perkTrigger && !enemyExist && !enemyFlyExist && !coinExist && !trapExist)
         {
             perkTrigger = perkExist = false;
-            Time.timeScale = currentTimeScale;
+            RecoveryTime();
         }
 
         if (!(greatings || enemyTrigger || enemyFlyTrigger || coinTrigger || trapTrigger || perkTrigger))
@@ -277,5 +270,11 @@ public class Tutorial : MonoBehaviour
             currentTimeScale = Time.timeScale;
             Time.timeScale = 0;
         }
+    }
+
+    private void RecoveryTime()
+    {
+        Time.timeScale = currentTimeScale;
+        PlayerController.instance.rb.AddForce(Vector3.up * 0.0001f, ForceMode.Impulse);
     }
 }

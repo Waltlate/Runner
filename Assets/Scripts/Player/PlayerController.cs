@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
     float laneOffset = 2.5f;
     public float laneChangeSpeed = 15;
-    Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     Vector3 targetVelocity;
     float pointStart;
     float pointFinish;

@@ -24,6 +24,7 @@ Bugs:
 --- perks in objects
 --- exist obects ???
 --- in tutorial speed = 0 and size
+- tutorisl coroutine attack stoped
 --- for read reverse language data
 */
 
