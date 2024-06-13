@@ -17,7 +17,7 @@ Add:
 --- speed game and speed difference game - SerializedField
 --- time perk - SerializedField
 - down key + trap in fly
-- add top-3 with score and date record
+--- add top-3 with score and date record
 - style Microsoft
 
 
@@ -70,9 +70,11 @@ public class RoadGenerator : MonoBehaviour
     public AudioClip mainTheme;
     public AudioClip gameTheme;
     private string mainScene = "MainScene";
+    private TopRun[] topRuns = new TopRun[3];
 
     private void Start()
     {
+        GetTopRun();
         if(camera)
             cameraAudio = camera.GetComponent<AudioSource>();
         ResetLevel();
@@ -106,6 +108,25 @@ public class RoadGenerator : MonoBehaviour
         }
     }
 
+
+    private void GetTopRun()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            topRuns[i] = new TopRun();
+            topRuns[i].className = PlayerPrefs.GetString("ClassName" + i, "---");
+            topRuns[i].score = PlayerPrefs.GetInt("TopRunScore" + i, 0);
+            topRuns[i].date = PlayerPrefs.GetString("TopRunDate" + i, "--.--.--");
+        }
+    }
+
+    //private void PrintTopRun()
+    //{
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        Debug.Log(topRuns[i].className + topRuns[i].score + topRuns[i].date);
+    //    }
+    //}
 
     //IEnumerator Movement()
     //{
@@ -298,6 +319,7 @@ public class RoadGenerator : MonoBehaviour
             SwipeManager.instance.enabled = false;
         }
 
+        TopRunUpdate();
         Debug.Log($"{PlayerParameters.BestScore} - {PlayerParameters.Score} - {currentScore}");
         if (PlayerParameters.BestScore < PlayerParameters.Score)
         {
@@ -331,8 +353,27 @@ public class RoadGenerator : MonoBehaviour
         }
         cameraAudio.clip = mainTheme;
         cameraAudio.Play();
+        //Debug.Log(DateTime.Now.ToString("dd/MM/yyyy"));
     }
 
+    private void TopRunUpdate()
+    {
+        if(topRuns[2].score < PlayerParameters.Score)
+        {
+            topRuns[2].score = PlayerParameters.Score;
+            topRuns[2].className = PlayerParameters.archer.ClassName;
+            topRuns[2].date = DateTime.Now.ToString("dd/MM/yy");
+
+            Array.Sort(topRuns, (x, y) => y.CompareTo(x));
+
+            for (int i = 0; i < 3; i++)
+            {
+                PlayerPrefs.SetString("ClassName" + i, topRuns[i].className);
+                PlayerPrefs.SetInt("TopRunScore" + i, topRuns[i].score);
+                PlayerPrefs.SetString("TopRunDate" + i, topRuns[i].date);
+            }
+        }
+    }
     public void HeroesGames()
     {
         menu.SetActive(false);

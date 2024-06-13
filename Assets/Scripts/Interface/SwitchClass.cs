@@ -29,7 +29,7 @@ public class SwitchClass : MonoBehaviour
         warrior.SetActive(false);
         archer.SetActive(false);
         mage.SetActive(false);
-        Debug.Log(dropdown.value);
+        //Debug.Log(dropdown.value);
         //if (dropdown.options[dropdown.value].text == "Warrior") {
         if(dropdown.value == 0) {
             PlayerParameters.archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
