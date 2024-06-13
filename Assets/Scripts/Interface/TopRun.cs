@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class TopRun : IComparable<TopRun>
 {
-    public string className;
+    public int className;
     public int score;
     public string date;
 
+    public enum EClass { Warrior = 1, Archer, Mage };
     public TopRun()
     {
-        className = "---";
+        className = 0;
         score = 0;
         date = "--.--.--";
     }

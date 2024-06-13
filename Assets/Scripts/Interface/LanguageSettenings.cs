@@ -151,6 +151,9 @@ public class LanguageSystem
     public string descriptionMage;
 
     public string bestScore;
+    public string classText;
+    public string score;
+    public string dateText;
 
     public string close;
     public string infoLevelWorld;

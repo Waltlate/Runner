@@ -114,7 +114,7 @@ public class RoadGenerator : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             topRuns[i] = new TopRun();
-            topRuns[i].className = PlayerPrefs.GetString("ClassName" + i, "---");
+            topRuns[i].className = PlayerPrefs.GetInt("ClassName" + i, 0);
             topRuns[i].score = PlayerPrefs.GetInt("TopRunScore" + i, 0);
             topRuns[i].date = PlayerPrefs.GetString("TopRunDate" + i, "--.--.--");
         }
@@ -260,10 +260,15 @@ public class RoadGenerator : MonoBehaviour
         go.transform.SetParent(transform);
         int perkRoad = new System.Random().Next(0, 3);
         int distance;
+        int numberObject = 0;
         if (roads.Count > 1)
         for (int i = 0; i < 3; i++)
         {
-            GameObject my_object = Objects[new System.Random().Next(0, Objects.Length)];
+            if (i == 1 && numberObject == 2) 
+                numberObject = 5; 
+            else
+                numberObject = new System.Random().Next(0, Objects.Length);
+            GameObject my_object = Objects[numberObject];
                 distance = new System.Random().Next(-3, 3);
                 my_object.transform.position = new Vector3(-2.5f + 2.5f * i, my_object.transform.position.y, distance);
             Instantiate(my_object, go.transform);
@@ -278,7 +283,7 @@ public class RoadGenerator : MonoBehaviour
                         Instantiate(my_perk, go.transform);
                     PerkGenerator.exist = false;
                 }
-            }
+        }
 
         roads.Add(go);
         countRoad++;
@@ -361,18 +366,26 @@ public class RoadGenerator : MonoBehaviour
         if(topRuns[2].score < PlayerParameters.Score)
         {
             topRuns[2].score = PlayerParameters.Score;
-            topRuns[2].className = PlayerParameters.archer.ClassName;
+            topRuns[2].className = (int)GetNumberClass(PlayerParameters.archer.ClassName);
             topRuns[2].date = DateTime.Now.ToString("dd/MM/yy");
 
             Array.Sort(topRuns, (x, y) => y.CompareTo(x));
 
             for (int i = 0; i < 3; i++)
             {
-                PlayerPrefs.SetString("ClassName" + i, topRuns[i].className);
+                PlayerPrefs.SetInt("ClassName" + i, topRuns[i].className);
                 PlayerPrefs.SetInt("TopRunScore" + i, topRuns[i].score);
                 PlayerPrefs.SetString("TopRunDate" + i, topRuns[i].date);
             }
         }
+    }
+
+    private TopRun.EClass GetNumberClass(string className)
+    {
+        if (className == "Warrior") return TopRun.EClass.Warrior;
+        if (className == "Archer") return TopRun.EClass.Archer;
+        if (className == "Mage") return TopRun.EClass.Mage;
+        return 0;
     }
     public void HeroesGames()
     {

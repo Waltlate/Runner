@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(warriorInputSystemController.inputAttack);
     }
 
-    IEnumerator AttackCoroutine()
+    public IEnumerator AttackCoroutine()
     {
         while (true)
         {
@@ -235,8 +235,6 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         Physics.gravity = new Vector3(0, jumpGravity, 0);
         StartCoroutine(StopJumpCoroutine());
-
-
     }
 
     IEnumerator StopJumpCoroutine()
@@ -276,7 +274,6 @@ public class PlayerController : MonoBehaviour
         pointFinish += Mathf.Sign(speed) * laneOffset;
         if(isMoving) {
             StopCoroutine(movingCoroutine); 
-
         }
         movingCoroutine = StartCoroutine(MoveCoroutine(speed));
     }
@@ -293,6 +290,10 @@ public class PlayerController : MonoBehaviour
         }
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
+        if(transform.position.y > 1)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, realGravity, rb.velocity.z);
+        }
         isMoving = false;
     }
 

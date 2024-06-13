@@ -4878,6 +4878,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textTopRun: {fileID: 196310534}
+  textClass: {fileID: 899219969}
+  textScore: {fileID: 873312769}
+  textDate: {fileID: 473798618}
   classNames:
   - {fileID: 1052557664}
   - {fileID: 1995774960}

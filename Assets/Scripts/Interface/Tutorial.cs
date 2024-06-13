@@ -276,5 +276,8 @@ public class Tutorial : MonoBehaviour
     {
         Time.timeScale = currentTimeScale;
         PlayerController.instance.rb.AddForce(Vector3.up * 0.0001f, ForceMode.Impulse);
+        StartCoroutine(PlayerController.instance.AttackCoroutine());
+        PlayerController.instance.rb.AddForce(Vector3.up * 0.0001f, ForceMode.Impulse);
+        //Physics.gravity = new Vector3(0, -10, 0);
     }
 }
