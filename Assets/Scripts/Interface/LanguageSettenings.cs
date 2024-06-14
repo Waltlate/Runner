@@ -111,6 +111,7 @@ public class LanguageSystem
     public string enemyFlyText;
     public string coinText;
     public string trapText;
+    public string flyTrapText;
     public string perkText;
 
     public string play;

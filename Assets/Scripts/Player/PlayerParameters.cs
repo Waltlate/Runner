@@ -150,6 +150,6 @@ public class PlayerParameters : MonoBehaviour
         {
                 elem.ColorLabelUpdate();
         }
-        Debug.Log("Enemy update" + enemies.Length);
+        //Debug.Log("Enemy update" + enemies.Length);
     }
 }

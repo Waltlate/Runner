@@ -11,23 +11,26 @@ using UnityEngine.SceneManagement;
 Add:
 --- Music
 - change main phone
+--- playerprefs for tutorial
+? move settings
+? add settings music
 
 --- add second scene
 --- perk shield
 --- speed game and speed difference game - SerializedField
 --- time perk - SerializedField
-- down key + trap in fly
+--- down key + trap in fly
 --- add top-3 with score and date record
 - style Microsoft
-
 
 Bugs:
 --- lvl enemy update
 --- perks in objects
 --- exist obects ???
 --- in tutorial speed = 0 and size
-- tutorisl coroutine attack stoped
+-+- tutorisl coroutine attack stoped (sometimes)
 --- for read reverse language data
+??? sometimes stoped time
 */
 
 public class RoadGenerator : MonoBehaviour
@@ -38,11 +41,13 @@ public class RoadGenerator : MonoBehaviour
     public float maxSpeed = 10;
     [HideInInspector]
     public float speed = 0;
+    private float currentTime = 1f;
     [SerializeField]
     public float maxSpeedGame = 3f;
     [SerializeField]
     public float differenceSpeedGame = 0.0001f;
     public int maxRoadCount = 6;
+    public bool isPlaying = false;
     public GameObject menu;
     public GameObject pause;
     public GameObject displayGame;
@@ -53,7 +58,6 @@ public class RoadGenerator : MonoBehaviour
     public GameObject tutorial;
     public GameObject[] Objects;
     public GameObject[] Perks;
-    private float currentTime = 1;
     private int currentScore = 0;
     public static int scoreMultiple = 1;
 
@@ -77,6 +81,11 @@ public class RoadGenerator : MonoBehaviour
         GetTopRun();
         if(camera)
             cameraAudio = camera.GetComponent<AudioSource>();
+        if (PlayerPrefs.GetInt("TrigerTutorial", 1) == 1)
+            Tutorial.trigerTutorial = true;
+        else
+            Tutorial.trigerTutorial = false;
+        Debug.Log(PlayerPrefs.GetInt("TrigerTutorial", 1));
         ResetLevel();
     }
 
@@ -128,49 +137,6 @@ public class RoadGenerator : MonoBehaviour
     //    }
     //}
 
-    //IEnumerator Movement()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(0.01f);
-    //        //countSpeed = Time.deltaTime;
-    //        countSpeed = 0.01f;
-    //        //Debug.Log(countSpeed);
-    //        if (speed != 0)
-    //        {
-    //            foreach (GameObject road in roads)
-    //            {
-    //                road.transform.position -= new Vector3(0, 0, speed * countSpeed);
-    //            }
-
-    //            if (roads[0].transform.position.z < -20)
-    //            {
-    //                Destroy(roads[0]);
-    //                roads.RemoveAt(0);
-    //                CreateNextRoad();
-
-    //                //Debug.Log("road");//--------
-
-    //            }
-    //            if (Input.GetKeyDown(KeyCode.Escape))
-    //            {
-    //                PauseLevel();
-    //            }
-
-    //            Time.timeScale = 3f;
-
-    //            if (Time.timeScale < 3f)
-    //            {
-    //                Time.timeScale += 0.0001f;
-    //                //Debug.Log(Time.timeScale);
-    //            }
-    //            currentScore += 1 * scoreMultiple;
-    //            PlayerParameters.Score = currentScore + (PlayerParameters.Coins - currentCoins) * 10;
-    //        }
-    //    }
-    //}
-
-
     private void FixedUpdate()
     {
         if (speed == 0) return;
@@ -184,7 +150,8 @@ public class RoadGenerator : MonoBehaviour
 
     public void StartLevel()
     {
-        if(Tutorial.trigerTutorial == true) {
+        isPlaying = true;
+        if (Tutorial.trigerTutorial == true) {
             tutorial.SetActive(true);
             Tutorial.instance.TextLoad();
             if (Tutorial.trigerTutorial)
@@ -204,7 +171,7 @@ public class RoadGenerator : MonoBehaviour
         if(pause.activeSelf)
             pause.SetActive(false);
         speed = maxSpeed;
-        Time.timeScale = currentTime;
+        Time.timeScale = 1f;
         SwipeManager.instance.enabled = true; //???
 
         if (PlayerController.instance)
@@ -219,6 +186,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void ResumeLevel()
     {
+        isPlaying = true;
         pause.SetActive(false);
         buttonPause.interactable = true;
         Time.timeScale = currentTime;
@@ -240,6 +208,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void PauseLevel()
     {
+        isPlaying = false;
         buttonPause.interactable = false;
         currentTime = Time.timeScale;
         Time.timeScale = 0;
@@ -295,6 +264,7 @@ public class RoadGenerator : MonoBehaviour
 
     public void ResetLevel()
     {
+        isPlaying = false;
         buttonPause.interactable = false;
         countRoad = 0;
         menu.SetActive(true);
@@ -436,6 +406,5 @@ public class RoadGenerator : MonoBehaviour
     public void ExitGame()
     {
         SceneManager.LoadScene(mainScene);
-        //Application.Quit();
     }
 }

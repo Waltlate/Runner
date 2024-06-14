@@ -17,15 +17,12 @@ public class TrapBehavior : MonoBehaviour
             {
                 PlayerController.instance.SoundBlock();
             }
-
-            //PlayerParameters.health -= LevelWorld.levelWorld;
-            //PlayerController.instance.SoundDamage();
+            Destroy(this.gameObject);
         }
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)
             {
-                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }

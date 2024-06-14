@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
     float laneOffset = 2.5f;
     public float laneChangeSpeed = 15;
+    private BoxCollider bc;
     [HideInInspector]
     public Rigidbody rb;
     Vector3 targetVelocity;
@@ -19,7 +20,10 @@ public class PlayerController : MonoBehaviour
     float pointFinish;
     bool isMoving = false;
     Coroutine movingCoroutine;
+    Coroutine jumpCoroutine;
+    Coroutine rollCoroutine;
     float lastVectorX;
+    bool isRoll = false;
     bool isJumping = false;
     float jumpPower = 15;
     float jumpGravity = -40;
@@ -46,8 +50,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        bc = GetComponent<BoxCollider>();
         SwipeManager.instance.MoveEvent += MovePlayer;
-        StartCoroutine(AttackCoroutine());
+
 
     }
 
@@ -58,68 +63,159 @@ public class PlayerController : MonoBehaviour
         instance = this;
         audio = GetComponent<AudioSource>();
         audio.pitch = speedAudio;
+        StartCoroutine(AttackCoroutine());
     }
 
     void Update()
     {
         SetAnimatorFloat("Animation Speed", animationSpeed);
-        //if (warriorController)
-        //{
-        //    warriorController.LockMove(false);
-        //    warriorController.SetAnimatorBool("Moving", true);
-        //    warriorController.isMoving = true;
-        //    warriorController.SetAnimatorFloat("Velocity", Vector3.forward.magnitude);
-        //}
-
-        //
-        //if(Input.anyKeyDown) 
-        //    Debug.Log($"{pointFinish} {laneOffset}");
-        //if (Input.anyKeyDown)
-        //    Debug.Log(Input.anyKeyDown.ToString());
-
-        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
+        if (RoadGenerator.instance.isPlaying)
         {
-            MoveHorizontal(-laneChangeSpeed);
-            //Debug.Log("a");
+            if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && pointFinish > -laneOffset)
+            {
+                MoveHorizontal(-laneChangeSpeed);
+            }
+            if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && pointFinish < laneOffset)
+            {
+                MoveHorizontal(laneChangeSpeed);
+            }
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isJumping == false)
+            {
+                Jump();
+            }
+            if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && isRoll == false)
+            {
+                Roll();
+            }
+            if (transform.position.y < 0)
+                transform.position = new Vector3(transform.position.x, 0.25f, transform.position.z);
         }
-        if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && pointFinish < laneOffset)
+    }
+
+    void MovePlayer(bool[] swipes)
+    {
+        if (RoadGenerator.instance.isPlaying)
         {
-            MoveHorizontal(laneChangeSpeed);
+            if (swipes[(int)SwipeManager.Direction.Left] && pointFinish > -laneOffset)
+            {
+                MoveHorizontal(-laneChangeSpeed);
+            }
+            if (swipes[(int)SwipeManager.Direction.Right] && pointFinish < laneOffset)
+            {
+                MoveHorizontal(laneChangeSpeed);
+            }
+            if (swipes[(int)SwipeManager.Direction.Up] && isJumping == false)
+            {
+                Jump();
+            }
+            if (swipes[(int)SwipeManager.Direction.Down] && isRoll == false)
+            {
+                Roll();
+            }
         }
+    }
 
-        if((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isJumping == false)
+    void MoveHorizontal(float speed)
+    {
+        pointStart = pointFinish;
+        pointFinish += Mathf.Sign(speed) * laneOffset;
+        if (isMoving)
         {
-            Jump();
+            StopCoroutine(movingCoroutine);
         }
-        if (transform.position.y < 0)
-            transform.position = new Vector3(transform.position.x, 0.25f, transform.position.z);
+        movingCoroutine = StartCoroutine(MoveCoroutine(speed));
+    }
 
-        ////if (EventSystem.current.IsPointerOverGameObject()) return;
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    CreateBullet();
-        //}
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (!isClick)
-        //    {
-        //        isClick = true;
-        //        clickTime = Time.time;
-        //    }
-        //    else
-        //    {
-        //        if (Time.time - clickTime < clickDelay)
-        //        {
-        //            CreateBullet();
-        //            Debug.Log("Double click!");
-        //        }
-        //        isClick = false;
-        //    }
-        //}
+    IEnumerator MoveCoroutine(float vectorX)
+    {
+        isMoving = true;
+        while (Mathf.Abs(pointStart - transform.position.x) < laneOffset)
+        {
+            //yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0001f);
+            rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
+            lastVectorX = vectorX;
+            float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        }
+        rb.velocity = Vector3.zero;
+        transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
+        if (transform.position.y > 1)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, realGravity, rb.velocity.z);
+        }
+        isMoving = false;
+    }
 
+    void Jump()
+    {
+        isJumping = true;
+        if (isRoll)
+        {
+            StopCoroutine(rollCoroutine);
+            animator.SetBool("Trigger", true);
+            animator.SetInteger("Jumping", 0);
+            bc.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            isRoll = false;
+        }
+        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        Physics.gravity = new Vector3(0, jumpGravity, 0);
+        animator.SetInteger("Jumping", 1);
+        animator.SetInteger("Trigger Number", 1);
+        animator.SetBool("Trigger", true);
+        jumpCoroutine = StartCoroutine(StopJumpCoroutine());
+    }
 
-        //if(warriorInputSystemController.inputAttack)
-        //Debug.Log(warriorInputSystemController.inputAttack);
+    IEnumerator StopJumpCoroutine()
+    {
+        do
+        {
+            if (rb.velocity.y > 0 && animator.GetInteger("Jumping") != 1)
+            {
+                animator.SetInteger("Jumping", 1);
+            }
+            yield return new WaitForSeconds(0.02f);
+            if (rb.velocity.y < 0 && animator.GetInteger("Jumping") != 2)
+            {
+                animator.SetBool("Trigger", true);
+                animator.SetInteger("Jumping", 2);
+            }
+        } while (rb.velocity.y != 0);
+        animator.SetBool("Trigger", true);
+        animator.SetInteger("Jumping", 0);
+        isJumping = false;
+
+        Physics.gravity = new Vector3(0, realGravity, 0);
+    }
+
+    void Roll()
+    {
+        isRoll = true;
+        if (isJumping)
+        {
+            StopCoroutine(jumpCoroutine);
+            animator.SetBool("Trigger", true);
+            animator.SetInteger("Jumping", 0);
+            isJumping = false;
+            Physics.gravity = new Vector3(0, realGravity, 0);
+        }
+        bc.transform.localScale = new Vector3(0.5f, 0.35f, 0.5f);
+        animator.SetInteger("Jumping", 1);
+        animator.SetInteger("Trigger Number", 1);
+        animator.SetBool("Trigger", true);
+        rollCoroutine = StartCoroutine(StopRollCoroutine());
+    }
+
+    IEnumerator StopRollCoroutine()
+    {
+        animator.SetInteger("Jumping", 1);
+        animator.SetBool("Trigger", true);
+        animator.SetInteger("Jumping", 2);
+        yield return new WaitForSeconds(0.75f);
+        animator.SetBool("Trigger", true);
+        animator.SetInteger("Jumping", 0);
+        bc.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        isRoll = false;
     }
 
     public IEnumerator AttackCoroutine()
@@ -161,9 +257,7 @@ public class PlayerController : MonoBehaviour
                             }
                         }
                     }
-
                 }
-
                 timeAttack = PlayerParameters.archer.Speed * 0.001f * 15 * 0.8f / Time.timeScale;
             }
             else
@@ -204,99 +298,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Trigger", true);
     }
 
-    void MovePlayer(bool[] swipes)
-    {
-        if (swipes[(int)SwipeManager.Direction.Left] && pointFinish > -laneOffset)
-        {
-            MoveHorizontal(-laneChangeSpeed);
-        }
-        if (swipes[(int)SwipeManager.Direction.Right] && pointFinish < laneOffset)
-        {
-            MoveHorizontal(laneChangeSpeed);
-        }
-
-        if (swipes[(int)SwipeManager.Direction.Up] && isJumping == false)
-        {
-            Jump();
-        }
-    }
-
-    void Jump()
-    {
-        //if(warriorInputSystemController)
-        //warriorInputSystemController.inputJump = true;
-        isJumping = true;
-        animator.SetInteger("Jumping", 1);
-        animator.SetInteger("Trigger Number", 1);
-        animator.SetBool("Trigger", true);
-        //Debug.Log("Here " + animator.GetInteger("Jumping"));
-        //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-        //Debug.Log("Here " + animator.GetBool("Trigger"));
-        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        Physics.gravity = new Vector3(0, jumpGravity, 0);
-        StartCoroutine(StopJumpCoroutine());
-    }
-
-    IEnumerator StopJumpCoroutine()
-    {
-
-        do {
-            if (rb.velocity.y > 0 && animator.GetInteger("Jumping") != 1)
-            {
-                animator.SetInteger("Jumping", 1);
-                //Debug.Log("Here " + animator.GetInteger("Jumping"));
-                //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-                //Debug.Log("Here " + animator.GetBool("Trigger"));
-            }
-            yield return new WaitForSeconds(0.02f);
-            if (rb.velocity.y < 0 && animator.GetInteger("Jumping") != 2) {
-                animator.SetBool("Trigger", true);
-                animator.SetInteger("Jumping", 2);
-                //Debug.Log("Here " + animator.GetInteger("Jumping"));
-                //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-                //Debug.Log("Here " + animator.GetBool("Trigger"));
-            }
-        } while (rb.velocity.y != 0);
-        animator.SetBool("Trigger", true);
-        animator.SetInteger("Jumping", 0);
-        //Debug.Log("Here " + animator.GetInteger("Jumping"));
-        //Debug.Log("Here " + animator.GetInteger("Trigger Number"));
-        //Debug.Log("Here " + animator.GetBool("Trigger"));
-        //animator.SetInteger("Trigger Number", 1);
-        //animator.SetBool("Trigger", true);
-        isJumping = false;
-
-        Physics.gravity = new Vector3(0, realGravity, 0);
-    }
-
-    void MoveHorizontal(float speed) {
-        pointStart = pointFinish;
-        pointFinish += Mathf.Sign(speed) * laneOffset;
-        if(isMoving) {
-            StopCoroutine(movingCoroutine); 
-        }
-        movingCoroutine = StartCoroutine(MoveCoroutine(speed));
-    }
-
-    IEnumerator MoveCoroutine(float vectorX) {
-        isMoving = true;
-        while(Mathf.Abs(pointStart - transform.position.x) < laneOffset) {
-            //yield return new WaitForFixedUpdate();
-            yield return new WaitForSeconds(0.0001f);
-            rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
-            lastVectorX = vectorX;
-            float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));
-            transform.position = new Vector3(x, transform.position.y, transform.position.z);
-        }
-        rb.velocity = Vector3.zero;
-        transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
-        if(transform.position.y > 1)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, realGravity, rb.velocity.z);
-        }
-        isMoving = false;
-    }
-
     public void ClearSettings() {
         rb.velocity = Vector3.zero;
         pointStart = 0;
@@ -304,33 +305,11 @@ public class PlayerController : MonoBehaviour
         transform.position = startGamePosition;
         LevelWorld.levelEnemy = 1; // Why?
     }
-
     public void ResetGame()
     {
         ClearSettings();
         RoadGenerator.instance.ResetLevel();
     }
-
-    //public void SetAnimatorInt(string name, int i)
-    //{
-    //    animator.SetInteger(name, i);
-    //}
-
-    //public void SetAnimatorTrigger(AnimatorTrigger trigger)
-    //{
-    //    animator.SetInteger("Trigger Number", (int)trigger);
-    //    animator.SetTrigger("Trigger");
-    //}
-
-    //public void SetAnimatorBool(string name, bool b)
-    //{
-    //    animator.SetBool(name, b);
-    //}
-
-    //public void SetAnimatorRootMotion(bool b)
-    //{
-    //    useRootMotion = b;
-    //}
 
     public void SetAnimatorFloat(string name, float f)
     {

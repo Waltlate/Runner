@@ -18,6 +18,9 @@ public class Tutorial : MonoBehaviour
     public bool trapTrigger;
     public bool trapExist;
     private float trapCoordinate;
+    public bool flyTrapTrigger;
+    public bool flyTrapExist;
+    private float flyTrapCoordinate;
     public bool coinTrigger;
     public bool coinExist;
     private float coinCoordinate;
@@ -30,11 +33,12 @@ public class Tutorial : MonoBehaviour
     float k = 1; //koef size box
     float step = 0.0003f;
     private string[] greatingsText;
-    private string enemyText;// = "На твоем пути будут встречаться враги. Ты можешь победить врагов, которые ниже твоего уровня своим оружием. Противники посильнее будут наносить урон соответствующий их уровню";
-    private string enemyFlyText;// = "В игре появляются летающие враги. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
-    private string coinText;// = "Собирай монетки, чтобы улучшать героев";
-    private string trapText;// = "Избегай ловушки. Их уровень равен уровеню мира и они наносят урон в соответствии своему уровню";
-    private string perkText;// = "Подбирай бонусы. Они могут улучшить твой счет или подлечить тебя";
+    private string enemyText;
+    private string enemyFlyText;
+    private string coinText;
+    private string trapText;
+    private string flyTrapText;
+    private string perkText;
     private float attitude;
     private float screenWight = 720;
     private float screenHeight = 1280;
@@ -50,18 +54,17 @@ public class Tutorial : MonoBehaviour
             attitude = (float)Screen.width / 720f;
         }
         TextLoad();
+
         if (trigerTutorial)
         {
-            greatings = true;
-            enemyTrigger = true;
-            enemyFlyTrigger = true;
-            coinTrigger = true;
-            trapTrigger = true;
-            perkTrigger = true;
+            OnTutorial();
         }
+
         headStyle.alignment = TextAnchor.MiddleCenter;
         headStyle.fontSize = ((int)(30 * attitude));
         headStyle.wordWrap = true;
+        headStyle.normal.textColor = Color.magenta;
+        headStyle.fontStyle = FontStyle.Bold;
     }
 
     public void TextLoad()
@@ -71,6 +74,7 @@ public class Tutorial : MonoBehaviour
         enemyFlyText = LanguageSettenings.ls.enemyFlyText;
         coinText = LanguageSettenings.ls.coinText;
         trapText = LanguageSettenings.ls.trapText;
+        flyTrapText = LanguageSettenings.ls.flyTrapText;
         perkText = LanguageSettenings.ls.perkText;
     }
 
@@ -83,7 +87,7 @@ public class Tutorial : MonoBehaviour
     {
         if (greatings || enemyExist)
         {
-            StopTime();
+            StartCoroutine(StopTime());
         }
 
         if (Input.anyKeyDown && greatings) {
@@ -92,42 +96,49 @@ public class Tutorial : MonoBehaviour
 
         if(countGreatings == greatingsText.Length && greatings) {
             greatings = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
         if (Input.anyKeyDown && enemyExist && enemyTrigger)
         {
             enemyTrigger = enemyExist = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
         if (Input.anyKeyDown && enemyFlyExist && enemyFlyTrigger && !enemyExist)
         {
             enemyFlyTrigger = enemyFlyExist = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
         if (Input.anyKeyDown && coinExist && coinTrigger && !enemyExist && !enemyFlyExist)
         {
             coinTrigger = coinExist = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
         if (Input.anyKeyDown && trapExist && trapTrigger && !enemyExist && !enemyFlyExist && !coinExist)
         {
             trapTrigger = trapExist = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
         if (Input.anyKeyDown && perkExist && perkTrigger && !enemyExist && !enemyFlyExist && !coinExist && !trapExist)
         {
             perkTrigger = perkExist = false;
-            RecoveryTime();
+            StartCoroutine(RecoveryTime());
         }
 
-        if (!(greatings || enemyTrigger || enemyFlyTrigger || coinTrigger || trapTrigger || perkTrigger))
+        if (Input.anyKeyDown && flyTrapExist && flyTrapTrigger && !enemyExist && !enemyFlyExist && !coinExist && !trapExist && !perkExist)
+        {
+            flyTrapTrigger = flyTrapExist = false;
+            StartCoroutine(RecoveryTime());
+        }
+
+        if (!(greatings || enemyTrigger || enemyFlyTrigger || coinTrigger || trapTrigger || perkTrigger || flyTrapTrigger))
         {
             trigerTutorial = false;
+            PlayerPrefs.SetInt("TrigerTutorial", 0);
         }
 
         if (!trigerTutorial)
@@ -196,6 +207,14 @@ public class Tutorial : MonoBehaviour
                              screenHeight / 2 - 150 / 2 + 230,
                              150, 150), "");
         }
+
+        if (flyTrapExist && flyTrapTrigger && !enemyExist && !enemyFlyExist && !coinExist && !trapExist && !perkExist)
+        {
+            GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), flyTrapText, headStyle);
+            GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + flyTrapCoordinate * 80,
+                             screenHeight / 2 - 150 / 2 + 200,
+                             150, 150), "");
+        }
     }
 
     private Rect CreateRect(float x, float y, float width, float height)
@@ -209,35 +228,42 @@ public class Tutorial : MonoBehaviour
         {
             enemyExist = true;
             enemyCoordinate = other.gameObject.transform.position.x;
-            StopTime();
+            StartCoroutine(StopTime());
         }
 
         if (other.gameObject.name == "EnemyFly" && enemyFlyTrigger)
         {
             enemyFlyExist = true;
             enemyFlyCoordinate = other.gameObject.transform.position.x;
-            StopTime();
+            StartCoroutine(StopTime());
         }
 
         if (other.gameObject.name == "Coin" && coinTrigger)
         {
             coinExist = true;
             coinCoordinate = other.gameObject.transform.position.x;
-            StopTime();
+            StartCoroutine(StopTime());
         }
 
         if (other.gameObject.name == "Trap" && trapTrigger)
         {
             trapExist = true;
             trapCoordinate = other.gameObject.transform.position.x;
-            StopTime();
+            StartCoroutine(StopTime());
         }
 
         if ((other.gameObject.name == "Perk") && perkTrigger)
         {
             perkExist = true;
             perkCoordinate = other.gameObject.transform.position.x;
-            StopTime();
+            StartCoroutine(StopTime());
+        }
+
+        if ((other.gameObject.name == "FlyTrap") && flyTrapTrigger)
+        {
+            flyTrapExist = true;
+            flyTrapCoordinate = other.gameObject.transform.position.x;
+            StartCoroutine(StopTime());
         }
     }
 
@@ -249,6 +275,7 @@ public class Tutorial : MonoBehaviour
         enemyFlyTrigger = true;
         coinTrigger = true;
         trapTrigger = true;
+        flyTrapTrigger = true;
         perkTrigger = true;
     }
 
@@ -260,24 +287,26 @@ public class Tutorial : MonoBehaviour
         enemyFlyTrigger = false;
         coinTrigger = false;
         trapTrigger = false;
+        flyTrapTrigger = false;
         perkTrigger = false;
     }
 
-    private void StopTime()
+    IEnumerator StopTime()
     {
         if ((Time.timeScale - 0.0f) > 0.0000001f)
         {
             currentTimeScale = Time.timeScale;
             Time.timeScale = 0;
         }
+        PlayerController.instance.AudioStop();
+        yield return new WaitForSeconds(0.05f);
     }
 
-    private void RecoveryTime()
+    IEnumerator RecoveryTime()
     {
         Time.timeScale = currentTimeScale;
-        PlayerController.instance.rb.AddForce(Vector3.up * 0.0001f, ForceMode.Impulse);
-        StartCoroutine(PlayerController.instance.AttackCoroutine());
-        PlayerController.instance.rb.AddForce(Vector3.up * 0.0001f, ForceMode.Impulse);
-        //Physics.gravity = new Vector3(0, -10, 0);
+        PlayerController.instance.rb.AddForce(Vector3.up * 1f, ForceMode.Impulse);
+        PlayerController.instance.AudioPlay();
+        yield return new WaitForSeconds(0.05f);
     }
 }
