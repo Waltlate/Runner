@@ -10,10 +10,11 @@ using UnityEngine.SceneManagement;
 /*
 Add:
 --- Music
-- change main phone
+--- change main phone
 --- playerprefs for tutorial
 ? move settings
 ? add settings music
+? settings apps
 
 --- add second scene
 --- perk shield
