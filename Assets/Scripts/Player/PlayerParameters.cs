@@ -32,12 +32,10 @@ public class PlayerParameters : MonoBehaviour
 
     public GameObject roadGenerator;
 
-    // Start is called before the first frame update
     void Start()
     {
         BestScore = PlayerPrefs.GetInt("BestScore", 0);
         Coins = PlayerPrefs.GetInt("Coins", 0);
-        //Coins = 10000;
         archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
                                   PlayerPrefs.GetInt("WarriorCurrentExp", 0),
                                   PlayerPrefs.GetInt("WarriorLevelExp", 50),
@@ -52,8 +50,8 @@ public class PlayerParameters : MonoBehaviour
         Score = 0;
         LoadText();
         RoadGenerator.instance.dropdownClass.value = PlayerPrefs.GetInt("NumbersHero", 0);
-        if(SwitchClass.instance)
-        SwitchClass.instance.Switch();
+        if (SwitchClass.instance)
+            SwitchClass.instance.Switch();
     }
 
     private void Awake()
@@ -61,10 +59,10 @@ public class PlayerParameters : MonoBehaviour
         instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(archer.CurrentExp >= archer.LevelExp) {
+        if (archer.CurrentExp >= archer.LevelExp)
+        {
             archer.CurrentExp -= archer.LevelExp;
             archer.Level += 1;
             health = archer.Level * maxHealth;
@@ -75,7 +73,8 @@ public class PlayerParameters : MonoBehaviour
         LoadText();
     }
 
-    private void LoadText() {
+    private void LoadText()
+    {
         levelLabel.text = $"{LanguageSettenings.ls.level}. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
         levelWorldLabel.text = $"{LanguageSettenings.ls.levelWorld}";
         currentLevelWorldLabel.text = $"{LevelWorld.levelWorld}";
@@ -90,13 +89,13 @@ public class PlayerParameters : MonoBehaviour
     public void Stats()
     {
         archer.Level = archer.Level;
-        //maxHealth = archer.Health;
         health = archer.Level * archer.Health;
         archer.CurrentExp = archer.CurrentExp;
         archer.LevelExp = archer.LevelExp;
     }
 
-    public int ExpLevelWeapon(int level) {
+    public int ExpLevelWeapon(int level)
+    {
         int result = 1;
 
         result *= BinaryPow(10, level / 3);
@@ -148,8 +147,7 @@ public class PlayerParameters : MonoBehaviour
 
         foreach (var elem in enemies)
         {
-                elem.ColorLabelUpdate();
+            elem.ColorLabelUpdate();
         }
-        //Debug.Log("Enemy update" + enemies.Length);
     }
 }

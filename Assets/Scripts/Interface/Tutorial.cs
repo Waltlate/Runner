@@ -90,11 +90,13 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(StopTime());
         }
 
-        if (Input.anyKeyDown && greatings) {
+        if (Input.anyKeyDown && greatings)
+        {
             countGreatings++;
         }
 
-        if(countGreatings == greatingsText.Length && greatings) {
+        if (countGreatings == greatingsText.Length && greatings)
+        {
             greatings = false;
             StartCoroutine(RecoveryTime());
         }
@@ -153,7 +155,7 @@ public class Tutorial : MonoBehaviour
         {
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), greatingsText[countGreatings], headStyle);
 
-            if(k > 1.05f || k < 0.95f)
+            if (k > 1.05f || k < 0.95f)
             {
                 step *= -1;
             }
@@ -172,7 +174,7 @@ public class Tutorial : MonoBehaviour
             GUI.Box(CreateRect(10 - (350 * (k - 1)) / 2, 125 - (60 * (k - 1)) / 2, 350 * k, 60 * k), "");
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), enemyText, headStyle);
             GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + enemyCoordinate * 80,
-                             screenHeight / 2  - 150 / 2 + 210,
+                             screenHeight / 2 - 150 / 2 + 210,
                              150, 150), "");
         }
 
@@ -188,7 +190,7 @@ public class Tutorial : MonoBehaviour
         {
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), coinText, headStyle);
             GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + coinCoordinate * 80,
-                             screenHeight / 2  - 150 / 2 + 230,
+                             screenHeight / 2 - 150 / 2 + 230,
                              150, 150), "");
         }
 
@@ -212,8 +214,8 @@ public class Tutorial : MonoBehaviour
         {
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), flyTrapText, headStyle);
             GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + flyTrapCoordinate * 80,
-                             screenHeight / 2 - 150 / 2 + 200,
-                             150, 150), "");
+                             screenHeight / 2 - 150 / 2 + 100,
+                             150, 300), "");
         }
     }
 

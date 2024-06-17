@@ -48,14 +48,14 @@ public class ShopBehavior : MonoBehaviour
                 SetInteractableBtn(false);
             }
         }
-
     }
 
-    private void SetInteractableBtn(bool state) {
+    private void SetInteractableBtn(bool state)
+    {
         foreach (var elem in btns)
         {
-            if(elem.name == "ButtonChest")
-            elem.interactable = state;
+            if (elem.name == "ButtonChest")
+                elem.interactable = state;
         }
     }
 
@@ -72,7 +72,8 @@ public class ShopBehavior : MonoBehaviour
                 int[] num = new int[3];
                 int[] sumNum = { 0, 0, 0 };
                 int j;
-                for (int i = 0; i < Int32.Parse(textCount[0].text); i++) {
+                for (int i = 0; i < Int32.Parse(textCount[0].text); i++)
+                {
                     j = new System.Random().Next(0, 3);
                     num[j % 3] = new System.Random().Next(0, 11);
                     num[(j + 1) % 3] = new System.Random().Next(0, 11 - num[j % 3]);
@@ -118,7 +119,6 @@ public class ShopBehavior : MonoBehaviour
                     PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
                 ClearChests();
 
-
                 canvasChestOpen.SetActive(true);
                 weaponIcon[1].SetActive(true);
                 weaponIcon[2].SetActive(true);
@@ -138,6 +138,7 @@ public class ShopBehavior : MonoBehaviour
                 currentWeaponImage.sprite = weaponImage[0];
             }
     }
+
     public void BuyCardsArcher()
     {
         if (PlayerParameters.instance)
@@ -158,7 +159,8 @@ public class ShopBehavior : MonoBehaviour
             }
     }
 
-    private void BuyBase(string className, int count) {
+    private void BuyBase(string className, int count)
+    {
         PlayerParameters.Coins -= 1000 * count;
         int currentExpWeapon = PlayerPrefs.GetInt(className + "CurrentExpWeapon", 0);
 
@@ -180,7 +182,7 @@ public class ShopBehavior : MonoBehaviour
             WeaponBehavior.instance.ChangeStateButton();
         }
         ChangeStateButton();
-        if(PlayerParameters.Coins != 0)
+        if (PlayerParameters.Coins != 0)
             PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
         ClearChests();
 
@@ -310,7 +312,8 @@ public class ShopBehavior : MonoBehaviour
         }
     }
 
-    public void ChangeStateButton(Button btn, Color color, bool state) {
+    public void ChangeStateButton(Button btn, Color color, bool state)
+    {
         btn.interactable = state;
         btn.gameObject.transform.Find("Sign").gameObject.GetComponent<Image>().color = color;
     }

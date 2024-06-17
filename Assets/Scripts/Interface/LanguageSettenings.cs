@@ -12,12 +12,8 @@ public class LanguageSettenings : MonoBehaviour
     public TMP_Dropdown dropdown;
     public TextMeshProUGUI bestScoreLabel;
 
-
     void Awake()
     {
-        //14:00 haskey
-
-        //PlayerPrefs.SetString("Languages", "ENG");
         LanguageSystemLoad();
     }
 
@@ -38,27 +34,20 @@ public class LanguageSettenings : MonoBehaviour
     {
         string path = "";
 
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
         path = "jar:file://" + Application.dataPath + "!/assets/Languages/" + PlayerPrefs.GetString("Languages", "ENG") + ".json";
-        StartCoroutine(ReadFileFromAndroid(path, (result) =>
-        {
-            json = result;
-            ls = JsonUtility.FromJson<LanguageSystem>(json);
-        }));
-    #else
+        StartCoroutine(ReadFileFromAndroid(path));
+#else
         path = Path.Combine(Application.streamingAssetsPath, "Languages", PlayerPrefs.GetString("Languages", "ENG") + ".json");
         json = File.ReadAllText(path);
         ls = JsonUtility.FromJson<LanguageSystem>(json);
-    #endif
+        UpdateCanvas();
+#endif
 
-        StartCoroutine(SomeCoroutine());
     }
 
-    
-
-    private IEnumerator SomeCoroutine()
+    private void UpdateCanvas()
     {
-    yield return new WaitForSeconds(0.2f);
         if (HeroesText.instance != null)
         {
             HeroesText.instance.ChangeLanguageAndRefresh();
@@ -83,17 +72,26 @@ public class LanguageSettenings : MonoBehaviour
         {
             PauseText.instance.ChangeLanguageAndRefresh();
         }
+        if (FirstScene.instance != null)
+        {
+            FirstScene.instance.ChangeLanguageAndRefresh();
+        }
+        if (TopRunText.instance != null)
+        {
+            TopRunText.instance.ChangeLanguageAndRefresh();
+        }
     }
 
-
-IEnumerator ReadFileFromAndroid(string path, System.Action<string> callback)
+    IEnumerator ReadFileFromAndroid(string path)
     {
         UnityWebRequest www = UnityWebRequest.Get(path);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            callback.Invoke(www.downloadHandler.text);
+            json = www.downloadHandler.text;
+            ls = JsonUtility.FromJson<LanguageSystem>(json);
+            UpdateCanvas();
         }
         else
         {

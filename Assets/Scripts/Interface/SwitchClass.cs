@@ -25,13 +25,13 @@ public class SwitchClass : MonoBehaviour
         instance = this;
     }
 
-    public void Switch() {
+    public void Switch()
+    {
         warrior.SetActive(false);
         archer.SetActive(false);
         mage.SetActive(false);
-        //Debug.Log(dropdown.value);
-        //if (dropdown.options[dropdown.value].text == "Warrior") {
-        if(dropdown.value == 0) {
+        if (dropdown.value == 0)
+        {
             PlayerParameters.archer = new WarriorClass(PlayerPrefs.GetInt("WarriorLevel", 1),
                                                         PlayerPrefs.GetInt("WarriorCurrentExp", 0),
                                                         PlayerPrefs.GetInt("WarriorLevelExp", 50),
@@ -46,7 +46,6 @@ public class SwitchClass : MonoBehaviour
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("WarriorHealth", 10);
             PlayerPrefs.SetInt("NumbersHero", 0);
         }
-        //if (dropdown.options[dropdown.value].text == "Archer")
         if (dropdown.value == 1)
         {
             PlayerParameters.archer = new ArcherClass(PlayerPrefs.GetInt("ArcherLevel", 1),
@@ -63,9 +62,8 @@ public class SwitchClass : MonoBehaviour
             PlayerParameters.maxHealth = PlayerPrefs.GetInt("ArcherHealth", 5);
             PlayerPrefs.SetInt("NumbersHero", 1);
         }
-        //if (dropdown.options[dropdown.value].text == "Mage")
         if (dropdown.value == 2)
-                {
+        {
             PlayerParameters.archer = new MageClass(PlayerPrefs.GetInt("MageLevel", 1),
                                                         PlayerPrefs.GetInt("MageCurrentExp", 0),
                                                         PlayerPrefs.GetInt("MageLevelExp", 50),
@@ -81,11 +79,9 @@ public class SwitchClass : MonoBehaviour
             PlayerPrefs.SetInt("NumbersHero", 2);
         }
         PlayerParameters.instance.Stats();
-        if(HeroesText.instance)
+        if (HeroesText.instance)
             HeroesText.instance.ChangeLanguageAndRefresh();
-        if(WeaponBehavior.instance)
+        if (WeaponBehavior.instance)
             WeaponBehavior.instance.ChangeStateButton();
     }
-
-
 }

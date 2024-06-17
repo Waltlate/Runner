@@ -13,8 +13,6 @@ public class EnemyBehavior : MonoBehaviour
     public TextMeshProUGUI levelLabel;
 
     public GameObject[] enemies;
-    //private AudioSource audio => GetComponent<AudioSource>();
-    //public AudioClip clipAttack;
     public AudioClip clipDeath;
 
 
@@ -36,7 +34,8 @@ public class EnemyBehavior : MonoBehaviour
                     levelLabel.color = Color.red;
                 else
                     levelLabel.color = Color.yellow;
-            } else
+            }
+            else
             {
                 levelLabel.color = Color.green;
             }
@@ -57,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             health -= PlayerParameters.archer.Damage;
 
-           
+
             if (health <= 0)
             {
                 Destroy(this.gameObject);
@@ -84,7 +83,6 @@ public class EnemyBehavior : MonoBehaviour
         {
             if (PlayerController.instance)
             {
-                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }

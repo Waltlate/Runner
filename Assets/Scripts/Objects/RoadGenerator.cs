@@ -9,28 +9,14 @@ using UnityEngine.SceneManagement;
 
 /*
 Add:
---- Music
---- change main phone
---- playerprefs for tutorial
 ? move settings
 ? add settings music
 ? settings apps
 
---- add second scene
---- perk shield
---- speed game and speed difference game - SerializedField
---- time perk - SerializedField
---- down key + trap in fly
---- add top-3 with score and date record
 - style Microsoft
 
 Bugs:
---- lvl enemy update
---- perks in objects
---- exist obects ???
---- in tutorial speed = 0 and size
 -+- tutorisl coroutine attack stoped (sometimes)
---- for read reverse language data
 ??? sometimes stoped time
 */
 
@@ -70,7 +56,7 @@ public class RoadGenerator : MonoBehaviour
     public TMP_Dropdown dropdownLanguage;
     public TMP_Dropdown dropdownClass;
 
-    public GameObject camera;
+    public GameObject cameraRoad;
     private AudioSource cameraAudio;
     public AudioClip mainTheme;
     public AudioClip gameTheme;
@@ -80,9 +66,9 @@ public class RoadGenerator : MonoBehaviour
     private void Start()
     {
         GetTopRun();
-        if(camera)
-            cameraAudio = camera.GetComponent<AudioSource>();
-        if (PlayerPrefs.GetInt("TrigerTutorial", 1) == 1)
+        if (cameraRoad)
+            cameraAudio = cameraRoad.GetComponent<AudioSource>();
+        if (PlayerPrefs.GetInt("TrigerTutorial", 0) == 1)
             Tutorial.trigerTutorial = true;
         else
             Tutorial.trigerTutorial = false;
@@ -121,7 +107,7 @@ public class RoadGenerator : MonoBehaviour
 
     private void GetTopRun()
     {
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             topRuns[i] = new TopRun();
             topRuns[i].className = PlayerPrefs.GetInt("ClassName" + i, 0);
@@ -152,7 +138,8 @@ public class RoadGenerator : MonoBehaviour
     public void StartLevel()
     {
         isPlaying = true;
-        if (Tutorial.trigerTutorial == true) {
+        if (Tutorial.trigerTutorial == true)
+        {
             tutorial.SetActive(true);
             Tutorial.instance.TextLoad();
             if (Tutorial.trigerTutorial)
@@ -165,11 +152,11 @@ public class RoadGenerator : MonoBehaviour
             }
         }
         currentCoins = PlayerParameters.Coins;
-        if(buttonPause.interactable == false)
+        if (buttonPause.interactable == false)
             buttonPause.interactable = true;
         menu.SetActive(false);
         perk.SetActive(true);
-        if(pause.activeSelf)
+        if (pause.activeSelf)
             pause.SetActive(false);
         speed = maxSpeed;
         Time.timeScale = 1f;
@@ -220,7 +207,7 @@ public class RoadGenerator : MonoBehaviour
     private void CreateNextRoad()
     {
         Vector3 pos = new Vector3(0, 0, -15);
-        if(roads.Count > 0)
+        if (roads.Count > 0)
         {
             pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, 15);
         }
@@ -232,32 +219,32 @@ public class RoadGenerator : MonoBehaviour
         int distance;
         int numberObject = 0;
         if (roads.Count > 1)
-        for (int i = 0; i < 3; i++)
-        {
-            if (i == 1 && numberObject == 2) 
-                numberObject = 5; 
-            else
-                numberObject = new System.Random().Next(0, Objects.Length);
-            GameObject my_object = Objects[numberObject];
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == 1 && numberObject == 2)
+                    numberObject = 5;
+                else
+                    numberObject = new System.Random().Next(0, Objects.Length);
+                GameObject my_object = Objects[numberObject];
                 distance = new System.Random().Next(-3, 3);
                 my_object.transform.position = new Vector3(-2.5f + 2.5f * i, my_object.transform.position.y, distance);
-            Instantiate(my_object, go.transform);
-            if(i == perkRoad)
-                if (PerkGenerator.exist == true)
-                {
-                    GameObject my_perk = Perks[new System.Random().Next(0, Perks.Length)];
-                        if(distance > 0)
-                    my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, -6f);
+                Instantiate(my_object, go.transform);
+                if (i == perkRoad)
+                    if (PerkGenerator.exist == true)
+                    {
+                        GameObject my_perk = Perks[new System.Random().Next(0, Perks.Length)];
+                        if (distance > 0)
+                            my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, -6f);
                         else
-                    my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, 7f);
+                            my_perk.transform.position = new Vector3(my_object.transform.position.x, 0, 7f);
                         Instantiate(my_perk, go.transform);
-                    PerkGenerator.exist = false;
-                }
-        }
+                        PerkGenerator.exist = false;
+                    }
+            }
 
         roads.Add(go);
         countRoad++;
-        if(countRoad % 25 == 0)
+        if (countRoad % 25 == 0)
         {
             LevelWorld.levelEnemy++;
         }
@@ -269,7 +256,7 @@ public class RoadGenerator : MonoBehaviour
         buttonPause.interactable = false;
         countRoad = 0;
         menu.SetActive(true);
-        if(MenuText.instance)
+        if (MenuText.instance)
             MenuText.instance.ChangeLanguageAndRefresh();
 
         PerkGenerator.timerPerks = 0f;
@@ -304,12 +291,13 @@ public class RoadGenerator : MonoBehaviour
         }
         currentScore = 0;
         PlayerParameters.Score = 0;
-        if (PlayerParameters.archer != null) {
-        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
-        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
-        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
-        PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
-        PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
+        if (PlayerParameters.archer != null)
+        {
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
+            PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
         }
         if (PlayerParameters.Coins != 0)
             PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
@@ -329,12 +317,11 @@ public class RoadGenerator : MonoBehaviour
         }
         cameraAudio.clip = mainTheme;
         cameraAudio.Play();
-        //Debug.Log(DateTime.Now.ToString("dd/MM/yyyy"));
     }
 
     private void TopRunUpdate()
     {
-        if(topRuns[2].score < PlayerParameters.Score)
+        if (topRuns[2].score < PlayerParameters.Score)
         {
             topRuns[2].score = PlayerParameters.Score;
             topRuns[2].className = (int)GetNumberClass(PlayerParameters.archer.ClassName);
@@ -389,7 +376,7 @@ public class RoadGenerator : MonoBehaviour
             dropdownLanguage.value = 0;
         else
             dropdownLanguage.value = 1;
-        if(ToggleController.instance)
+        if (ToggleController.instance)
             ToggleController.instance.toggle.isOn = Tutorial.trigerTutorial;
         SetteningsText.instance.ChangeLanguageAndRefresh();
     }

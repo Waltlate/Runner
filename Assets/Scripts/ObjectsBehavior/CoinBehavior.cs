@@ -36,8 +36,8 @@ public class CoinBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Hero")
         {
-                Destroy(gameObject);
-                PlayerParameters.Coins += LevelWorld.levelWorld * coinMultiple;
+            Destroy(gameObject);
+            PlayerParameters.Coins += LevelWorld.levelWorld * coinMultiple;
             AudioSource.PlayClipAtPoint(clipCoin, transform.position);
         }
     }

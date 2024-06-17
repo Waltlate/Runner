@@ -21,7 +21,8 @@ public class BaseClass
 
 
 
-    public string ClassName {
+    public string ClassName
+    {
         get { return className; }
         set { className = value; }
     }

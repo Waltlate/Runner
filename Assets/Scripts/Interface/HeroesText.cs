@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HeroesText : MonoBehaviour
 {
-    
+
     public static HeroesText instance;
     public GameObject canvasInfo;
     public TextMeshProUGUI textInfo;
@@ -14,7 +14,7 @@ public class HeroesText : MonoBehaviour
     private float attitude;
     public TextMeshProUGUI levelUpButtonText;
     public TextMeshProUGUI heroText;
-    public TextMeshProUGUI statsText; 
+    public TextMeshProUGUI statsText;
     public TextMeshProUGUI weaponText;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI levelWorldText;
@@ -48,7 +48,6 @@ public class HeroesText : MonoBehaviour
 
     public void ChangeLanguageAndRefresh()
     {
-        //backButtonText.text = LanguageSettenings.ls.back;
         levelUpButtonText.text = LanguageSettenings.ls.levelUp;
         heroText.text = LanguageSettenings.ls.hero;
         statsText.text = LanguageSettenings.ls.stats;

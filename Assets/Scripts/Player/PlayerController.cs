@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public bool useRootMotion = false;
     public float animationSpeed = 1.5f;
-    private AudioSource audio;
+    private AudioSource audioPlayer;
     public float speedAudio = 2;
     public AudioClip soundRun;
     public AudioClip soundDamage;
@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>(); //вруби
 
         instance = this;
-        audio = GetComponent<AudioSource>();
-        audio.pitch = speedAudio;
+        audioPlayer = GetComponent<AudioSource>();
+        audioPlayer.pitch = speedAudio;
         StartCoroutine(AttackCoroutine());
     }
 
@@ -131,7 +131,6 @@ public class PlayerController : MonoBehaviour
         isMoving = true;
         while (Mathf.Abs(pointStart - transform.position.x) < laneOffset)
         {
-            //yield return new WaitForFixedUpdate();
             yield return new WaitForSeconds(0.0001f);
             rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
             lastVectorX = vectorX;
@@ -224,10 +223,10 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.0001f);
             Collider[] enemies = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
-                                                transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
+                                                transform.position + new Vector3(0, 0, +laneOffset * PlayerParameters.archer.Distance),
                                                 attackRange, Enemy);
             Collider[] bullets = Physics.OverlapCapsule(transform.position + new Vector3(0, 0, 1.5f),
-                                                transform.position + new Vector3(0, 0, + laneOffset * PlayerParameters.archer.Distance),
+                                                transform.position + new Vector3(0, 0, +laneOffset * PlayerParameters.archer.Distance),
                                                            attackRange, Bullet);
             if (timeAttack <= 0 &&
                 (transform.position.x == -laneOffset || transform.position.x == 0 || transform.position.x == laneOffset) &&
@@ -298,7 +297,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Trigger", true);
     }
 
-    public void ClearSettings() {
+    public void ClearSettings()
+    {
         rb.velocity = Vector3.zero;
         pointStart = 0;
         pointFinish = 0;
@@ -317,15 +317,16 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat(name, f);
     }
 
-    public void AudioStop() {
-        if(audio)
-            audio.Stop();
+    public void AudioStop()
+    {
+        if (audioPlayer)
+            audioPlayer.Stop();
     }
 
     public void AudioPlay()
     {
-        if (audio)
-            audio.Play();
+        if (audioPlayer)
+            audioPlayer.Play();
     }
 
     public void SoundDamage()
@@ -338,21 +339,17 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(SoundCoroutine(soundBlock));
     }
 
-    //public void SoundDamageStop()
-    //{
-    //    StopCoroutine(SoundDamageCoroutine());
-    //}
     IEnumerator SoundCoroutine(AudioClip clip)
     {
-        audio.pitch = 1f;
-        audio.clip = clip;
-        audio.Play();
-        yield return new WaitForSeconds(audio.clip.length);
-        audio.pitch = speedAudio;
-        audio.clip = soundRun;
-        audio.Play();
+        audioPlayer.pitch = 1f;
+        audioPlayer.clip = clip;
+        audioPlayer.Play();
+        yield return new WaitForSeconds(audioPlayer.clip.length);
+        audioPlayer.pitch = speedAudio;
+        audioPlayer.clip = soundRun;
+        audioPlayer.Play();
         if (PlayerParameters.health == PlayerParameters.maxHealth * PlayerParameters.archer.Level && RoadGenerator.instance.speed == 0)
-        { 
+        {
             AudioStop();
         }
     }

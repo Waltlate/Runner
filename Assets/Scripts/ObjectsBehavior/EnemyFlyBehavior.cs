@@ -23,7 +23,6 @@ public class EnemyFlyBehavior : MonoBehaviour
         if (other.gameObject.tag == "Attack")
         {
             health -= PlayerParameters.archer.Damage;
-            //Debug.Log(Health);
             if (health <= 0)
             {
                 Destroy(this.gameObject);
@@ -44,16 +43,11 @@ public class EnemyFlyBehavior : MonoBehaviour
                 PlayerController.instance.SoundBlock();
             }
             Destroy(this.gameObject);
-
-            //PlayerParameters.health -= level;
-            //Destroy(this.gameObject);
-            //PlayerController.instance.SoundDamage();
         }
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)
             {
-                //PlayerController.instance.SoundDamageStop();
                 PlayerController.instance.ResetGame();
             }
         }

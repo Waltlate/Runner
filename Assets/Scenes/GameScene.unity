@@ -25233,7 +25233,7 @@ MonoBehaviour:
   currentCoins: 0
   dropdownLanguage: {fileID: 135000372}
   dropdownClass: {fileID: 1178175518}
-  camera: {fileID: 298870904}
+  cameraRoad: {fileID: 298870904}
   mainTheme: {fileID: 8300000, guid: efeb5e4a843e64e6b9a9fa21c7dec041, type: 3}
   gameTheme: {fileID: 8300000, guid: 40c85a1e0ba5a45dbbd49b04c664cac2, type: 3}
 --- !u!1 &1121194188

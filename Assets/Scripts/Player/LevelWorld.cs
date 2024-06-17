@@ -27,7 +27,7 @@ public class LevelWorld : MonoBehaviour
     public void LevelWorldUp()
     {
         int minLevel = Math.Min(Math.Min(PlayerPrefs.GetInt("WarriorLevel", 1), PlayerPrefs.GetInt("ArcherLevel", 1)), PlayerPrefs.GetInt("MageLevel", 1));
-        if(levelWorld < minLevel)
+        if (levelWorld < minLevel)
         {
             levelWorld++;
             RefreshGame();

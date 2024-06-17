@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WarriorClass : BaseClass
 {
-    public WarriorClass() {
+    public WarriorClass()
+    {
         ClassName = "Warrior";
         Description = LanguageSettenings.ls.descriptionWarrior;
         Level = 1;

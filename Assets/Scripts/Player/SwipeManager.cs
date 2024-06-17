@@ -7,7 +7,7 @@ public class SwipeManager : MonoBehaviour
 {
     public static SwipeManager instance;
 
-    public enum Direction { Left, Right, Up, Down};
+    public enum Direction { Left, Right, Up, Down };
 
     bool[] swipe = new bool[4];
 
@@ -28,14 +28,11 @@ public class SwipeManager : MonoBehaviour
     bool TouchEnded() { return Input.GetMouseButtonUp(0); }
     bool GetTouch() { return Input.GetMouseButton(0); }
 
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
     }
 
-
-    // Update is called once per frame
     void Update()
 
     {
@@ -52,14 +49,14 @@ public class SwipeManager : MonoBehaviour
         }
 
         swipeDelta = Vector2.zero;
-        if(touchMoved && GetTouch())
+        if (touchMoved && GetTouch())
         {
             swipeDelta = TouchPosition() - startTouch;
         }
 
         if (swipeDelta.magnitude > SWIPE_THRESHOLD)
         {
-            if(Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
+            if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
             {
                 swipe[(int)Direction.Left] = swipeDelta.x < 0;
                 swipe[(int)Direction.Right] = swipeDelta.x > 0;
@@ -77,12 +74,10 @@ public class SwipeManager : MonoBehaviour
     {
         if (swipe[0] || swipe[1] || swipe[2] || swipe[3])
         {
-            //Debug.Log(swipe[0] + "|" + swipe[1] + swipe[2] + swipe[3]);
             MoveEvent?.Invoke(swipe);
         }
         else
         {
-            //Debug.Log("Click");
             ClickEvent?.Invoke(TouchPosition());
         }
         Reset();
@@ -92,6 +87,6 @@ public class SwipeManager : MonoBehaviour
     {
         startTouch = swipeDelta = Vector2.zero;
         touchMoved = false;
-        for(int i =0; i <4; i++) { swipe[i] = false; }
+        for (int i = 0; i < 4; i++) { swipe[i] = false; }
     }
 }

@@ -24,8 +24,6 @@ public class TopRun : IComparable<TopRun>
             return 1;
         }
         Debug.Log("here");
-
-        // Сравниваем объекты по значению score
         return this.score.CompareTo(other.score);
     }
 }

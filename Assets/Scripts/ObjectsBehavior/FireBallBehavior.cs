@@ -7,7 +7,6 @@ public class FireBallBehavior : MonoBehaviour
     public float onscreenDelay = 3f;
     public GameObject RadiusAttack;
 
-    // Update is called once per frame
     void Update()
     {
         Destroy(gameObject, onscreenDelay);

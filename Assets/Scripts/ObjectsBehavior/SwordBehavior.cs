@@ -6,7 +6,6 @@ public class SwordBehavior : MonoBehaviour
 {
     public float onscreenDelay = 3f;
 
-    // Update is called once per frame
     void Update()
     {
         Destroy(gameObject, onscreenDelay);
@@ -14,7 +13,6 @@ public class SwordBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("destroy");
         Destroy(gameObject);
     }
 }

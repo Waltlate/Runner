@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraSize : MonoBehaviour
 {
     private float attitude;
-    // Start is called before the first frame update
+
     void Start()
     {
         Camera camera = GetComponent<Camera>();

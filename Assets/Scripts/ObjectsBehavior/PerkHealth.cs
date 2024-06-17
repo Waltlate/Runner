@@ -11,12 +11,11 @@ public class PerkHealth : MonoBehaviour
     {
         if (other.gameObject.tag == "Hero")
         {
-            //Debug.Log($"heal {PlayerParameters.health} {PlayerParameters.maxHealth}");
-            if (PlayerParameters.health < PlayerParameters.maxHealth * PlayerParameters.archer.Level) {
+            if (PlayerParameters.health < PlayerParameters.maxHealth * PlayerParameters.archer.Level)
+            {
                 PlayerParameters.health += LevelWorld.levelWorld;
                 if (PlayerParameters.health > PlayerParameters.maxHealth * PlayerParameters.archer.Level)
                     PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
-                //Debug.Log($"heal++ {PlayerParameters.health} {PlayerParameters.maxHealth}");
             }
             Destroy(gameObject);
             AudioSource.PlayClipAtPoint(clipHealth, transform.position);

@@ -45,7 +45,7 @@ public class TopRunText : MonoBehaviour
         textScore.text = LanguageSettenings.ls.score;
         textDate.text = LanguageSettenings.ls.dateText;
         GetTopRun();
-        if(classNames.Length == 3)
+        if (classNames.Length == 3)
         {
             for (int i = 0; i < 3; i++)
             {

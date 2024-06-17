@@ -38,5 +38,4 @@ public class PauseText : MonoBehaviour
         restartButtonText.text = LanguageSettenings.ls.restart;
         backMenuButtonText.text = LanguageSettenings.ls.backMenu;
     }
-
 }

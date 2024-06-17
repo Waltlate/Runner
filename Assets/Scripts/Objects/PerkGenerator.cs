@@ -14,17 +14,16 @@ public class PerkGenerator : MonoBehaviour
     public float timerCoinX2 = 10f;
     public GameObject coinUI;
     public static bool schield = false;
-    public  float timerSchield = 10f;
+    public float timerSchield = 10f;
     public GameObject schieldsHero;
     [SerializeField]
-    private float maxTimePerks = 30f; 
+    private float maxTimePerks = 30f;
 
     void Awake()
     {
         instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (scoreX2 == true)
@@ -44,15 +43,16 @@ public class PerkGenerator : MonoBehaviour
             StartCoroutine(CoroutineSchield());
         }
 
-        timerPerks += Time.deltaTime; 
-        if (timerPerks >= maxTimePerks) 
+        timerPerks += Time.deltaTime;
+        if (timerPerks >= maxTimePerks)
         {
             timerPerks = 0f;
             exist = true;
         }
     }
 
-    public void ClearScoreMultiple() {
+    public void ClearScoreMultiple()
+    {
         RoadGenerator.scoreMultiple = 1;
         scoreUI.SetActive(false);
     }
