@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Data;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +22,7 @@ public class RoadGenerator : MonoBehaviour
 {
     public static RoadGenerator instance;
     public GameObject[] RoadPrefab;
-    private List<GameObject> roads = new List<GameObject>();
+    private List<GameObject> roads = new();
     public float maxSpeed = 10;
     [HideInInspector]
     public float speed = 0;
@@ -72,7 +70,6 @@ public class RoadGenerator : MonoBehaviour
             Tutorial.trigerTutorial = true;
         else
             Tutorial.trigerTutorial = false;
-        Debug.Log(PlayerPrefs.GetInt("TrigerTutorial", 1));
         ResetLevel();
     }
 
@@ -283,7 +280,6 @@ public class RoadGenerator : MonoBehaviour
         }
 
         TopRunUpdate();
-        Debug.Log($"{PlayerParameters.BestScore} - {PlayerParameters.Score} - {currentScore}");
         if (PlayerParameters.BestScore < PlayerParameters.Score)
         {
             PlayerParameters.BestScore = PlayerParameters.Score;

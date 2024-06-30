@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class DisplayText : MonoBehaviour
 {
-    public GameObject phone;
+    [SerializeField]
+    private GameObject phone;
     private float attitude;
 
     void Start()

@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 public class FirstScene : MonoBehaviour
 {
     public static FirstScene instance;
-    public GameObject phone;
+    [SerializeField] private GameObject phone;
     private float attitude;
-    public TextMeshProUGUI playButtonText;
-    public TextMeshProUGUI topRunButtonText;
-    public TextMeshProUGUI exitButtonText;
-    public GameObject menu;
-    public GameObject topRun;
+    [SerializeField] private TextMeshProUGUI playButtonText;
+    [SerializeField] private TextMeshProUGUI topRunButtonText;
+    [SerializeField] private TextMeshProUGUI exitButtonText;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject topRun;
     private string gameScene = "GameScene";
 
     void Start()
