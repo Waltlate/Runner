@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuText : MonoBehaviour
 {
     public static MenuText instance;
-    public GameObject phone;
+    [SerializeField] private GameObject phone;
     private float attitude;
-    public TextMeshProUGUI playButtonText;
-    public TextMeshProUGUI heroesButtonText;
-    public TextMeshProUGUI shopButtonText;
-    public TextMeshProUGUI settenignsButtonText;
-    public TextMeshProUGUI mainMenuButtonText;
+    [SerializeField] private TextMeshProUGUI playButtonText;
+    [SerializeField] private TextMeshProUGUI heroesButtonText;
+    [SerializeField] private TextMeshProUGUI shopButtonText;
+    [SerializeField] private TextMeshProUGUI settenignsButtonText;
+    [SerializeField] private TextMeshProUGUI mainMenuButtonText;
 
     void Start()
     {

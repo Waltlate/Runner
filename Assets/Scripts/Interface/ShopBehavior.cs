@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,20 +6,20 @@ using UnityEngine.UI;
 public class ShopBehavior : MonoBehaviour
 {
     public static ShopBehavior instance;
-    public GameObject canvasInfo;
-    public GameObject canvasChestOpen;
-    public GameObject[] weaponIcon;
-    public TextMeshProUGUI[] textWeaponCount;
-    public Image currentWeaponImage;
-    public Sprite[] weaponImage;
-    public TextMeshProUGUI textInfo;
+    [SerializeField] private GameObject canvasInfo;
+    [SerializeField] private GameObject canvasChestOpen;
+    [SerializeField] private GameObject[] weaponIcon;
+    [SerializeField] private TextMeshProUGUI[] textWeaponCount;
+    [SerializeField] private Image currentWeaponImage;
+    [SerializeField] private Sprite[] weaponImage;
+    [SerializeField] private TextMeshProUGUI textInfo;
     private Button[] btns;
-    public TextMeshProUGUI[] textBuy;
-    public TextMeshProUGUI[] textCount;
-    public Button[] btnPlus;
-    public Button[] btnPlusPlus;
-    public Button[] btnMinus;
-    public Button[] btnMinusMinus;
+    [SerializeField] private TextMeshProUGUI[] textBuy;
+    [SerializeField] private TextMeshProUGUI[] textCount;
+    [SerializeField] private Button[] btnPlus;
+    [SerializeField] private Button[] btnPlusPlus;
+    [SerializeField] private Button[] btnMinus;
+    [SerializeField] private Button[] btnMinusMinus;
 
     public void Start()
     {

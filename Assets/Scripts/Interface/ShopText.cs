@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +5,15 @@ using UnityEngine.UI;
 public class ShopText : MonoBehaviour
 {
     public static ShopText instance;
-    public Image image;
+    [SerializeField] private Image image;
     private float attitude;
-    public TextMeshProUGUI shopText;
-    public TextMeshProUGUI coinText;
-    public TextMeshProUGUI textChestHeroes;
-    public TextMeshProUGUI textChestWarrior;
-    public TextMeshProUGUI textChestArcher;
-    public TextMeshProUGUI textChestMage;
-    public TextMeshProUGUI[] buyText;
+    [SerializeField] private TextMeshProUGUI shopText;
+    [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI textChestHeroes;
+    [SerializeField] private TextMeshProUGUI textChestWarrior;
+    [SerializeField] private TextMeshProUGUI textChestArcher;
+    [SerializeField] private TextMeshProUGUI textChestMage;
+    [SerializeField] private TextMeshProUGUI[] buyText;
     private Color color;
 
     void Start()

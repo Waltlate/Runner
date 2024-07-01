@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class TopRun : IComparable<TopRun>
 {
@@ -10,6 +7,7 @@ public class TopRun : IComparable<TopRun>
     public string date;
 
     public enum EClass { Warrior = 1, Archer, Mage };
+
     public TopRun()
     {
         className = 0;
@@ -23,7 +21,6 @@ public class TopRun : IComparable<TopRun>
         {
             return 1;
         }
-        Debug.Log("here");
         return this.score.CompareTo(other.score);
     }
 }

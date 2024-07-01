@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class EnemyFlyBehavior : MonoBehaviour
 {
-    public int level;
-    public int health;
+    [HideInInspector] public int level;
+    private int health;
 
-    public TextMeshProUGUI levelLabel;
-    public AudioClip clipDeath;
+    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField] private AudioClip clipDeath;
 
-    public void Start()
+    void Start()
     {
         level = LevelWorld.levelWorld;
         health = level;
         levelLabel.text = $"Lvl. {level}";
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Attack")
+        if (other.gameObject.CompareTag("Attack"))
         {
             health -= PlayerParameters.archer.Damage;
             if (health <= 0)
@@ -31,7 +29,7 @@ public class EnemyFlyBehavior : MonoBehaviour
                 AudioSource.PlayClipAtPoint(clipDeath, transform.position);
             }
         }
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             if (!PerkGenerator.schield)
             {

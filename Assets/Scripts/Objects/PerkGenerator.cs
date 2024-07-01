@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PerkGenerator : MonoBehaviour
@@ -8,16 +7,15 @@ public class PerkGenerator : MonoBehaviour
     public static bool exist = false;
     public static float timerPerks = 0f;
     public static bool scoreX2 = false;
-    public float timerScoreX2 = 10f;
-    public GameObject scoreUI;
+    [SerializeField] private float timerScoreX2 = 10f;
+    [SerializeField] private GameObject scoreUI;
     public static bool coinX2 = false;
-    public float timerCoinX2 = 10f;
-    public GameObject coinUI;
+    [SerializeField] private float timerCoinX2 = 10f;
+    [SerializeField] private GameObject coinUI;
     public static bool schield = false;
-    public float timerSchield = 10f;
-    public GameObject schieldsHero;
-    [SerializeField]
-    private float maxTimePerks = 30f;
+    [SerializeField] private float timerSchield = 10f;
+    [SerializeField] private GameObject schieldsHero;
+    [SerializeField] private float maxTimePerks = 30f;
 
     void Awake()
     {
@@ -81,11 +79,9 @@ public class PerkGenerator : MonoBehaviour
 
     IEnumerator CoroutineSchield()
     {
-        //CoinBehavior.coinMultiple = 2;
         schieldsHero.SetActive(true);
         yield return new WaitForSeconds(timerSchield);
         schieldsHero.SetActive(false);
         schield = false;
-        //ClearCoinMultiple();
     }
 }

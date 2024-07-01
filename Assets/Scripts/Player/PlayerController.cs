@@ -1,51 +1,44 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using WarriorAnimsFREE;
 
 public class PlayerController : MonoBehaviour
 {
 
     public static PlayerController instance;
-    Vector3 startGamePosition = new Vector3(0, 0.25f, -6f);
-    float laneOffset = 2.5f;
-    public float laneChangeSpeed = 15;
-    private BoxCollider bc;
-    [HideInInspector]
-    public Rigidbody rb;
-    Vector3 targetVelocity;
+    Vector3 startGamePosition = new(0, 0.25f, -6f);
+    readonly float laneOffset = 2.5f;
+    readonly float laneChangeSpeed = 15;
+    BoxCollider bc;
+    [HideInInspector] private Rigidbody rb;
     float pointStart;
     float pointFinish;
     bool isMoving = false;
     Coroutine movingCoroutine;
     Coroutine jumpCoroutine;
     Coroutine rollCoroutine;
-    float lastVectorX;
     bool isRoll = false;
     bool isJumping = false;
     float jumpPower = 15;
     float jumpGravity = -40;
-    float realGravity = -10;
-    public GameObject sword;
-    public GameObject bullet;
-    public GameObject fireBall;
-    public float bulletSpeed = 3f;
+    readonly float realGravity = -10;
+    float lastVectorX;
+    [SerializeField] private GameObject sword;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject fireBall;
+    [SerializeField] private float bulletSpeed = 3f;
 
-    private float timeAttack;
-    public LayerMask Enemy;
-    public LayerMask Bullet;
-    private float attackRange = 0.5f;
+    float timeAttack;
+    [SerializeField] private LayerMask Enemy;
+    [SerializeField] private LayerMask Bullet;
+    readonly float attackRange = 0.5f;
 
     [HideInInspector] public Animator animator;
-    [HideInInspector] public bool useRootMotion = false;
-    public float animationSpeed = 1.5f;
-    private AudioSource audioPlayer;
-    public float speedAudio = 2;
-    public AudioClip soundRun;
-    public AudioClip soundDamage;
-    public AudioClip soundBlock;
+    [SerializeField] private float animationSpeed = 1.5f;
+    AudioSource audioPlayer;
+    [SerializeField] private float speedAudio = 2;
+    [SerializeField] private AudioClip soundRun;
+    [SerializeField] private AudioClip soundDamage;
+    [SerializeField] private AudioClip soundBlock;
 
     void Start()
     {
@@ -58,8 +51,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponentInChildren<Animator>(); //вруби
-
+        animator = GetComponentInChildren<Animator>();
         instance = this;
         audioPlayer = GetComponent<AudioSource>();
         audioPlayer.pitch = speedAudio;
@@ -217,7 +209,7 @@ public class PlayerController : MonoBehaviour
         isRoll = false;
     }
 
-    public IEnumerator AttackCoroutine()
+    IEnumerator AttackCoroutine()
     {
         while (true)
         {
@@ -266,7 +258,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CreateSword()
+    void CreateSword()
     {
         GameObject newSword = Instantiate(sword,
                             transform.position + new Vector3(0, 0, 1),
@@ -275,7 +267,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Trigger", true);
     }
 
-    private void CreateBullet()
+    void CreateBullet()
     {
         GameObject newBullet = Instantiate(bullet,
                             transform.position + new Vector3(0, 0, 1),
@@ -286,7 +278,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Trigger", true);
     }
 
-    private void CreateFireBall()
+    void CreateFireBall()
     {
         GameObject newFireBall = Instantiate(fireBall,
                             transform.position + new Vector3(0, 0, 1),
@@ -303,8 +295,9 @@ public class PlayerController : MonoBehaviour
         pointStart = 0;
         pointFinish = 0;
         transform.position = startGamePosition;
-        LevelWorld.levelEnemy = 1; // Why?
+        LevelWorld.levelEnemy = 1;
     }
+
     public void ResetGame()
     {
         ClearSettings();

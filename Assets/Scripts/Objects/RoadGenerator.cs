@@ -5,63 +5,47 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-/*
-Add:
-? move settings
-? add settings music
-? settings apps
-
-- style Microsoft
-
-Bugs:
--+- tutorisl coroutine attack stoped (sometimes)
-??? sometimes stoped time
-*/
-
 public class RoadGenerator : MonoBehaviour
 {
     public static RoadGenerator instance;
-    public GameObject[] RoadPrefab;
+    [SerializeField] private GameObject[] RoadPrefab;
     private List<GameObject> roads = new();
-    public float maxSpeed = 10;
-    [HideInInspector]
-    public float speed = 0;
+    [SerializeField] private float maxSpeed = 10;
+    [HideInInspector] public float speed = 0;
     private float currentTime = 1f;
-    [SerializeField]
-    public float maxSpeedGame = 3f;
-    [SerializeField]
-    public float differenceSpeedGame = 0.0001f;
-    public int maxRoadCount = 6;
-    public bool isPlaying = false;
-    public GameObject menu;
-    public GameObject pause;
-    public GameObject displayGame;
-    public GameObject heroes;
-    public GameObject shop;
-    public GameObject settingsGames;
-    public GameObject perk;
-    public GameObject tutorial;
-    public GameObject[] Objects;
-    public GameObject[] Perks;
+    [SerializeField] private float maxSpeedGame = 3f;
+    [SerializeField] private float differenceSpeedGame = 0.0001f;
+    private int maxRoadCount = 6;
+    [HideInInspector] public bool isPlaying = false;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject pause;
+    [SerializeField] private GameObject displayGame;
+    [SerializeField] private GameObject heroes;
+    [SerializeField] private GameObject shop;
+    [SerializeField] private GameObject settingsGames;
+    [SerializeField] private GameObject perk;
+    [SerializeField] private GameObject tutorial;
+    [SerializeField] private GameObject[] Objects;
+    [SerializeField] private GameObject[] Perks;
     private int currentScore = 0;
     public static int scoreMultiple = 1;
 
-    public Button buttonPause;
-    public int currentCoins = 0;
+    [SerializeField] private Button buttonPause;
+    [SerializeField] private int currentCoins = 0;
     private int countRoad = 0;
 
     private float countSpeed;
-    public TMP_Dropdown dropdownLanguage;
+    [SerializeField] private TMP_Dropdown dropdownLanguage;
     public TMP_Dropdown dropdownClass;
 
-    public GameObject cameraRoad;
+    [SerializeField] private GameObject cameraRoad;
     private AudioSource cameraAudio;
-    public AudioClip mainTheme;
-    public AudioClip gameTheme;
+    [SerializeField] private AudioClip mainTheme;
+    [SerializeField] private AudioClip gameTheme;
     private string mainScene = "MainScene";
     private TopRun[] topRuns = new TopRun[3];
 
-    private void Start()
+    void Start()
     {
         GetTopRun();
         if (cameraRoad)
@@ -78,7 +62,7 @@ public class RoadGenerator : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
+    void Update()
     {
         countSpeed = Time.deltaTime;
 
@@ -102,7 +86,7 @@ public class RoadGenerator : MonoBehaviour
     }
 
 
-    private void GetTopRun()
+    void GetTopRun()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -113,7 +97,7 @@ public class RoadGenerator : MonoBehaviour
         }
     }
 
-    //private void PrintTopRun()
+    //void PrintTopRun()
     //{
     //    for (int i = 0; i < 3; i++)
     //    {
@@ -121,7 +105,7 @@ public class RoadGenerator : MonoBehaviour
     //    }
     //}
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (speed == 0) return;
         if (Time.timeScale < maxSpeedGame)
@@ -135,6 +119,7 @@ public class RoadGenerator : MonoBehaviour
     public void StartLevel()
     {
         isPlaying = true;
+
         if (Tutorial.trigerTutorial == true)
         {
             tutorial.SetActive(true);
@@ -148,6 +133,7 @@ public class RoadGenerator : MonoBehaviour
                 Tutorial.instance.OffTutorial();
             }
         }
+
         currentCoins = PlayerParameters.Coins;
         if (buttonPause.interactable == false)
             buttonPause.interactable = true;
@@ -157,7 +143,7 @@ public class RoadGenerator : MonoBehaviour
             pause.SetActive(false);
         speed = maxSpeed;
         Time.timeScale = 1f;
-        SwipeManager.instance.enabled = true; //???
+        SwipeManager.instance.enabled = true;
 
         if (PlayerController.instance)
         {
@@ -165,6 +151,7 @@ public class RoadGenerator : MonoBehaviour
             PlayerController.instance.animator.SetFloat("Velocity", 3 / 3f);
             PlayerController.instance.AudioPlay();
         }
+
         cameraAudio.clip = gameTheme;
         cameraAudio.Play();
     }
@@ -201,7 +188,7 @@ public class RoadGenerator : MonoBehaviour
         PlayerController.instance.AudioStop();
     }
 
-    private void CreateNextRoad()
+    void CreateNextRoad()
     {
         Vector3 pos = new Vector3(0, 0, -15);
         if (roads.Count > 0)
@@ -216,6 +203,7 @@ public class RoadGenerator : MonoBehaviour
         int distance;
         int numberObject = 0;
         if (roads.Count > 1)
+        {
             for (int i = 0; i < 3; i++)
             {
                 if (i == 1 && numberObject == 2)
@@ -238,7 +226,7 @@ public class RoadGenerator : MonoBehaviour
                         PerkGenerator.exist = false;
                     }
             }
-
+        }
         roads.Add(go);
         countRoad++;
         if (countRoad % 25 == 0)
@@ -262,42 +250,20 @@ public class RoadGenerator : MonoBehaviour
             PerkGenerator.instance.ClearCoinMultiple();
             PerkGenerator.instance.ClearScoreMultiple();
         }
-        perk.SetActive(false);
 
+        perk.SetActive(false);
         speed = 0;
-        while (roads.Count > 0)
-        {
-            Destroy(roads[0]);
-            roads.RemoveAt(0);
-        }
-        for (int i = 0; i < maxRoadCount; i++)
-        {
-            CreateNextRoad();
-        }
+        ClearRoads();
+
         if (SwipeManager.instance)
         {
             SwipeManager.instance.enabled = false;
         }
 
         TopRunUpdate();
-        if (PlayerParameters.BestScore < PlayerParameters.Score)
-        {
-            PlayerParameters.BestScore = PlayerParameters.Score;
-            PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
-        }
-        currentScore = 0;
-        PlayerParameters.Score = 0;
-        if (PlayerParameters.archer != null)
-        {
-            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
-            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
-            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
-            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
-            PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
-        }
-        if (PlayerParameters.Coins != 0)
-            PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
-        Time.timeScale = 1;
+        ClearPlayerParameters();
+
+        Time.timeScale = 1f;
         if (ShopText.instance)
         {
             ShopText.instance.ChangeLanguageAndRefresh();
@@ -315,7 +281,41 @@ public class RoadGenerator : MonoBehaviour
         cameraAudio.Play();
     }
 
-    private void TopRunUpdate()
+    void ClearRoads()
+    {
+        while (roads.Count > 0)
+        {
+            Destroy(roads[0]);
+            roads.RemoveAt(0);
+        }
+        for (int i = 0; i < maxRoadCount; i++)
+        {
+            CreateNextRoad();
+        }
+    }
+
+    void ClearPlayerParameters()
+    {
+        if (PlayerParameters.BestScore < PlayerParameters.Score)
+        {
+            PlayerParameters.BestScore = PlayerParameters.Score;
+            PlayerPrefs.SetInt("BestScore", PlayerParameters.BestScore);
+        }
+        currentScore = 0;
+        PlayerParameters.Score = 0;
+        if (PlayerParameters.archer != null)
+        {
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Level", PlayerParameters.archer.Level);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "CurrentExp", PlayerParameters.archer.CurrentExp);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "LevelExp", PlayerParameters.archer.LevelExp);
+            PlayerPrefs.SetInt(PlayerParameters.archer.ClassName + "Health", PlayerParameters.archer.Health);
+            PlayerParameters.health = PlayerParameters.maxHealth * PlayerParameters.archer.Level;
+        }
+        if (PlayerParameters.Coins != 0)
+            PlayerPrefs.SetInt("Coins", PlayerParameters.Coins);
+    }
+
+    void TopRunUpdate()
     {
         if (topRuns[2].score < PlayerParameters.Score)
         {
@@ -334,7 +334,7 @@ public class RoadGenerator : MonoBehaviour
         }
     }
 
-    private TopRun.EClass GetNumberClass(string className)
+    TopRun.EClass GetNumberClass(string className)
     {
         if (className == "Warrior") return TopRun.EClass.Warrior;
         if (className == "Archer") return TopRun.EClass.Archer;

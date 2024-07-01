@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,28 +6,28 @@ public class PlayerParameters : MonoBehaviour
 {
     public static PlayerParameters instance;
     public static BaseClass archer;
-    public Image expFill;
+    [SerializeField] private Image expFill;
     public static int health;
     public static int maxHealth = 5;
-    public Image hpFill;
+    [SerializeField] private Image hpFill;
     public static float distance;
     public static float speedAttack;
     public static int Coins = 0;
     public static int Score = 0;
     public static int BestScore = 0;
 
-    private int k1 = 25;
-    private int k2 = 2;
+    private readonly int expDifferense = 25;
+    private readonly int expLevel = 2;
 
-    public TextMeshProUGUI levelLabel;
-    public TextMeshProUGUI levelWorldLabel;
-    public TextMeshProUGUI currentLevelWorldLabel;
-    public TextMeshProUGUI hpLabel;
-    public TextMeshProUGUI scoreLabel;
-    public TextMeshProUGUI bestScoreLabel;
-    public TextMeshProUGUI coinsLabel;
+    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField] private TextMeshProUGUI levelWorldLabel;
+    [SerializeField] private TextMeshProUGUI currentLevelWorldLabel;
+    [SerializeField] private TextMeshProUGUI hpLabel;
+    [SerializeField] private TextMeshProUGUI scoreLabel;
+    [SerializeField] private TextMeshProUGUI bestScoreLabel;
+    [SerializeField] private TextMeshProUGUI coinsLabel;
 
-    public GameObject roadGenerator;
+    [SerializeField] private GameObject roadGenerator;
 
     void Start()
     {
@@ -45,7 +42,7 @@ public class PlayerParameters : MonoBehaviour
                                   PlayerPrefs.GetInt("WarriorLevelExpWeapon", 2));
         maxHealth = archer.Health;
         health = archer.Level * maxHealth;
-        archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
+        archer.LevelExp = expDifferense * BinaryPow(archer.Level + 1, expLevel) - expDifferense * (archer.Level + 1);
         archer.LevelExpWeapon = ExpLevelWeapon(archer.LevelWeapon);
         Score = 0;
         LoadText();
@@ -54,7 +51,7 @@ public class PlayerParameters : MonoBehaviour
             SwitchClass.instance.Switch();
     }
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
     }
@@ -66,14 +63,14 @@ public class PlayerParameters : MonoBehaviour
             archer.CurrentExp -= archer.LevelExp;
             archer.Level += 1;
             health = archer.Level * maxHealth;
-            archer.LevelExp = k1 * BinaryPow(archer.Level + 1, k2) - k1 * (archer.Level + 1);
+            archer.LevelExp = expDifferense * BinaryPow(archer.Level + 1, expLevel) - expDifferense * (archer.Level + 1);
             archer.Damage = archer.Level + archer.LevelWeapon - 1;
             EnemyUpdate();
         }
         LoadText();
     }
 
-    private void LoadText()
+    void LoadText()
     {
         levelLabel.text = $"{LanguageSettenings.ls.level}. {archer.Level} [{ConvertNumberToString(archer.CurrentExp)}/{ConvertNumberToString(archer.LevelExp)}]";
         levelWorldLabel.text = $"{LanguageSettenings.ls.levelWorld}";
@@ -97,7 +94,6 @@ public class PlayerParameters : MonoBehaviour
     public int ExpLevelWeapon(int level)
     {
         int result = 1;
-
         result *= BinaryPow(10, level / 3);
         if (level % 3 == 1) result *= 2;
         if (level % 3 == 2) result *= 5;

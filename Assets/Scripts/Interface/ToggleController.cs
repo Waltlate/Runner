@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,18 +6,19 @@ public class ToggleController : MonoBehaviour
     public static ToggleController instance;
     public Toggle toggle;
 
-    private void Start()
+    void Start()
     {
         toggle.isOn = Tutorial.trigerTutorial;
 
         toggle.onValueChanged.AddListener(delegate { ToggleValueChanged(); });
     }
-    private void Awake()
+
+    void Awake()
     {
         instance = this;
     }
 
-    public void ToggleValueChanged()
+    void ToggleValueChanged()
     {
         Tutorial.trigerTutorial = toggle.isOn;
     }

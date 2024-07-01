@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class SetteningsText : MonoBehaviour
 {
     public static SetteningsText instance;
-    public TextMeshProUGUI textTutorial;
-    public TextMeshProUGUI textSettings;
-    public Image image;
+    [SerializeField] private TextMeshProUGUI textTutorial;
+    [SerializeField] private TextMeshProUGUI textSettings;
+    [SerializeField] private Image image;
     private float attitude;
 
     void Start()

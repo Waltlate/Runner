@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PerkHealth : MonoBehaviour
 {
-    public AudioClip clipHealth;
+    [SerializeField] private AudioClip clipHealth;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             if (PlayerParameters.health < PlayerParameters.maxHealth * PlayerParameters.archer.Level)
             {

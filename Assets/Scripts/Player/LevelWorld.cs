@@ -1,20 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEditor;
 
 public class LevelWorld : MonoBehaviour
 {
     public static LevelWorld instance;
     public static int levelWorld;
     public static int levelEnemy = 1;
-    public Button btnPlus;
-    public Button btnMinus;
-    public GameObject menu;
+    [SerializeField] private Button btnPlus;
+    [SerializeField] private Button btnMinus;
+    [SerializeField] private GameObject menu;
 
-    public void Start()
+    void Start()
     {
         levelWorld = PlayerPrefs.GetInt("LevelWorld", 1);
         ChangeStateButton();
@@ -24,6 +21,7 @@ public class LevelWorld : MonoBehaviour
     {
         instance = this;
     }
+
     public void LevelWorldUp()
     {
         int minLevel = Math.Min(Math.Min(PlayerPrefs.GetInt("WarriorLevel", 1), PlayerPrefs.GetInt("ArcherLevel", 1)), PlayerPrefs.GetInt("MageLevel", 1));
@@ -69,7 +67,7 @@ public class LevelWorld : MonoBehaviour
         }
     }
 
-    private void RefreshGame()
+    void RefreshGame()
     {
         if (HeroesText.instance)
             HeroesText.instance.ChangeLanguageAndRefresh();

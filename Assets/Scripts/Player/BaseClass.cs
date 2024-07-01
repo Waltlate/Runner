@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 
 public class BaseClass
 {
@@ -18,8 +13,6 @@ public class BaseClass
     private int levelWeapon;
     private int currentExpWeapon;
     private int levelExpWeapon;
-
-
 
     public string ClassName
     {

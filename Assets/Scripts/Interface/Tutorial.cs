@@ -1,37 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UIElements;
 
 public class Tutorial : MonoBehaviour
 {
     public static Tutorial instance;
     public static bool trigerTutorial = false;
-    public bool greatings;
-    public bool enemyTrigger;
-    public bool enemyExist;
+    private bool greatings;
+    private bool enemyTrigger;
+    private bool enemyExist;
     private float enemyCoordinate;
-    public bool enemyFlyTrigger;
-    public bool enemyFlyExist;
+    private bool enemyFlyTrigger;
+    private bool enemyFlyExist;
     private float enemyFlyCoordinate;
-    public bool trapTrigger;
-    public bool trapExist;
+    private bool trapTrigger;
+    private bool trapExist;
     private float trapCoordinate;
-    public bool flyTrapTrigger;
-    public bool flyTrapExist;
+    private bool flyTrapTrigger;
+    private bool flyTrapExist;
     private float flyTrapCoordinate;
-    public bool coinTrigger;
-    public bool coinExist;
+    private bool coinTrigger;
+    private bool coinExist;
     private float coinCoordinate;
-    public bool perkTrigger;
-    public bool perkExist;
+    private bool perkTrigger;
+    private bool perkExist;
     private float perkCoordinate;
     private int countGreatings = 0;
     private float currentTimeScale = 0;
-    GUIStyle headStyle = new GUIStyle();
-    float k = 1; //koef size box
-    float step = 0.0003f;
+    private readonly GUIStyle headStyle = new();
+    private float kSize = 1; //koef size box
+    private float step = 0.0003f;
     private string[] greatingsText;
     private string enemyText;
     private string enemyFlyText;
@@ -40,10 +37,10 @@ public class Tutorial : MonoBehaviour
     private string flyTrapText;
     private string perkText;
     private float attitude;
-    private float screenWight = 720;
-    private float screenHeight = 1280;
+    private readonly float screenWight = 720;
+    private readonly float screenHeight = 1280;
 
-    private void Start()
+    void Start()
     {
         if (((float)Screen.height / 1280f) * 720f < (float)Screen.width)
         {
@@ -155,23 +152,23 @@ public class Tutorial : MonoBehaviour
         {
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), greatingsText[countGreatings], headStyle);
 
-            if (k > 1.05f || k < 0.95f)
+            if (kSize > 1.05f || kSize < 0.95f)
             {
                 step *= -1;
             }
-            k += step;
-            if (countGreatings == 2) GUI.Box(CreateRect(100 - (200 * (k - 1)) / 2, 210 - (60 * (k - 1)) / 2, 200 * k, 60 * k), "");
-            if (countGreatings == 3) GUI.Box(CreateRect(screenWight - 270 - (250 * (k - 1)) / 2, 270 - (60 * (k - 1)) / 2, 250 * k, 60 * k), "");
+            kSize += step;
+            if (countGreatings == 2) GUI.Box(CreateRect(100 - (200 * (kSize - 1)) / 2, 210 - (60 * (kSize - 1)) / 2, 200 * kSize, 60 * kSize), "");
+            if (countGreatings == 3) GUI.Box(CreateRect(screenWight - 270 - (250 * (kSize - 1)) / 2, 270 - (60 * (kSize - 1)) / 2, 250 * kSize, 60 * kSize), "");
         }
 
         if (enemyExist && enemyTrigger)
         {
-            if (k > 1.05f || k < 0.95f)
+            if (kSize > 1.05f || kSize < 0.95f)
             {
                 step *= -1;
             }
-            k += step;
-            GUI.Box(CreateRect(10 - (350 * (k - 1)) / 2, 125 - (60 * (k - 1)) / 2, 350 * k, 60 * k), "");
+            kSize += step;
+            GUI.Box(CreateRect(10 - (350 * (kSize - 1)) / 2, 125 - (60 * (kSize - 1)) / 2, 350 * kSize, 60 * kSize), "");
             GUI.Label(CreateRect(screenWight * 0.1f, screenHeight / 2 - 450, screenWight * 0.8f, 500), enemyText, headStyle);
             GUI.Box(CreateRect(screenWight / 2 - 150 / 2 + enemyCoordinate * 80,
                              screenHeight / 2 - 150 / 2 + 210,
@@ -219,12 +216,12 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private Rect CreateRect(float x, float y, float width, float height)
+    Rect CreateRect(float x, float y, float width, float height)
     {
         return new Rect(x * attitude + (Screen.width - 720 * attitude) / 2, y * attitude + (Screen.height - 1280 * attitude) / 2, width * attitude, height * attitude);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if ((other.gameObject.name == "Enemy" || other.gameObject.name == "Enemys") && enemyTrigger)
         {
@@ -307,7 +304,7 @@ public class Tutorial : MonoBehaviour
     IEnumerator RecoveryTime()
     {
         Time.timeScale = currentTimeScale;
-        PlayerController.instance.rb.AddForce(Vector3.up * 1f, ForceMode.Impulse);
+        //PlayerController.instance.rb.AddForce(Vector3.up * 1f, ForceMode.Impulse);
         PlayerController.instance.AudioPlay();
         yield return new WaitForSeconds(0.05f);
     }

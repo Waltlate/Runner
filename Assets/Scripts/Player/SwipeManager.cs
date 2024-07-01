@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -83,7 +81,7 @@ public class SwipeManager : MonoBehaviour
         Reset();
     }
 
-    private void Reset()
+    void Reset()
     {
         startTouch = swipeDelta = Vector2.zero;
         touchMoved = false;

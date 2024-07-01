@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class DisplayText : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject phone;
+    [SerializeField] private GameObject phone;
     private float attitude;
 
     void Start()

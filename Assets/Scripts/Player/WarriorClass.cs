@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class WarriorClass : BaseClass
 {
@@ -19,7 +16,6 @@ public class WarriorClass : BaseClass
         Speed = 1.5f;
         Distance = 1f;
     }
-
 
     public WarriorClass(int level, int currenExp, int levelExp, int health, int levelWeapon, int currenExpWeapon, int levelExpWeapon)
     {

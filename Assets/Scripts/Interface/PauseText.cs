@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class PauseText : MonoBehaviour
 {
     public static PauseText instance;
-    public GameObject phone;
+    [SerializeField] private GameObject phone;
     private float attitude;
-    public TextMeshProUGUI continueButtonText;
-    public TextMeshProUGUI restartButtonText;
-    public TextMeshProUGUI backMenuButtonText;
+    [SerializeField] private TextMeshProUGUI continueButtonText;
+    [SerializeField] private TextMeshProUGUI restartButtonText;
+    [SerializeField] private TextMeshProUGUI backMenuButtonText;
 
     void Start()
     {

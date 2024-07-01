@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,23 +6,23 @@ public class HeroesText : MonoBehaviour
 {
 
     public static HeroesText instance;
-    public GameObject canvasInfo;
-    public TextMeshProUGUI textInfo;
-    public Image image;
+    [SerializeField] private GameObject canvasInfo;
+    [SerializeField] private TextMeshProUGUI textInfo;
+    [SerializeField] private Image image;
     private float attitude;
-    public TextMeshProUGUI levelUpButtonText;
-    public TextMeshProUGUI heroText;
-    public TextMeshProUGUI statsText;
-    public TextMeshProUGUI weaponText;
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI levelWorldText;
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI damageText;
-    public TextMeshProUGUI speedText;
-    public TextMeshProUGUI distanceText;
-    public TextMeshProUGUI levelWeaponText;
-    public TextMeshProUGUI descriptionText;
-    public TMP_Dropdown dropdown;
+    [SerializeField] private TextMeshProUGUI levelUpButtonText;
+    [SerializeField] private TextMeshProUGUI heroText;
+    [SerializeField] private TextMeshProUGUI statsText;
+    [SerializeField] private TextMeshProUGUI weaponText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI levelWorldText;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private TextMeshProUGUI speedText;
+    [SerializeField] private TextMeshProUGUI distanceText;
+    [SerializeField] private TextMeshProUGUI levelWeaponText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TMP_Dropdown dropdown;
 
     void Start()
     {

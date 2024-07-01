@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
@@ -8,9 +7,9 @@ using UnityEngine.Networking;
 public class LanguageSettenings : MonoBehaviour
 {
     private string json;
-    public static LanguageSystem ls = new LanguageSystem();
-    public TMP_Dropdown dropdown;
-    public TextMeshProUGUI bestScoreLabel;
+    public static LanguageSystem ls = new();
+    [SerializeField] private TMP_Dropdown dropdown;
+    [SerializeField] private TextMeshProUGUI bestScoreLabel;
 
     void Awake()
     {

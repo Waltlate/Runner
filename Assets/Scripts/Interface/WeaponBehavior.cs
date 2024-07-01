@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +6,13 @@ public class WeaponBehavior : MonoBehaviour
 {
     public static WeaponBehavior instance;
     private Button btn;
-    public void Start()
+
+    void Start()
     {
         ChangeStateButton();
     }
 
-    public void Awake()
+    void Awake()
     {
         instance = this;
     }

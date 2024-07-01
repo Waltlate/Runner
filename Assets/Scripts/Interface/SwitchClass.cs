@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,17 +6,17 @@ public class SwitchClass : MonoBehaviour
 {
 
     public static SwitchClass instance;
-    public TMP_Dropdown dropdown;
-    public Image hero;
-    public Sprite[] heroes;
-    public Image weapon;
-    public Sprite[] weapons;
-    public Material archerMaterial;
-    public Material warriorMaterial;
-    public Material mageMaterial;
-    public GameObject warrior;
-    public GameObject archer;
-    public GameObject mage;
+    [SerializeField] private TMP_Dropdown dropdown;
+    [SerializeField] private Image hero;
+    [SerializeField] private Sprite[] heroes;
+    [SerializeField] private Image weapon;
+    [SerializeField] private Sprite[] weapons;
+    [SerializeField] private Material archerMaterial;
+    [SerializeField] private Material warriorMaterial;
+    [SerializeField] private Material mageMaterial;
+    [SerializeField] private GameObject warrior;
+    [SerializeField] private GameObject archer;
+    [SerializeField] private GameObject mage;
 
     public void Awake()
     {

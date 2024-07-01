@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapBehavior : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             if (!PerkGenerator.schield)
             {
@@ -19,6 +17,7 @@ public class TrapBehavior : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+
         if (PlayerParameters.health <= 0)
         {
             if (PlayerController.instance)

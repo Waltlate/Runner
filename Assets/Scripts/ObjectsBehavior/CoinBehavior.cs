@@ -1,18 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class CoinBehavior : MonoBehaviour
 {
     private float euler = 0f;
-    public float offset = 0.5f;
+    [SerializeField] private float offset = 0.5f;
     public static int coinMultiple = 1;
-    public TextMeshProUGUI coinText;
-    public AudioClip clipCoin;
+    [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private AudioClip clipCoin;
 
 
-    public void Start()
+    void Start()
     {
         StartCoroutine(Movement());
         coinText.text = $"{LevelWorld.levelWorld}";
@@ -32,9 +31,9 @@ public class CoinBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             Destroy(gameObject);
             PlayerParameters.Coins += LevelWorld.levelWorld * coinMultiple;

@@ -1,22 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-//using System.random;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public int level = 1;
-    public int health = 1;
-    public int damage = 1;
+    [HideInInspector] public int level = 1;
+    private int health = 1;
+    private int damage = 1;
 
-    public TextMeshProUGUI levelLabel;
+    [SerializeField] private TextMeshProUGUI levelLabel;
 
-    public GameObject[] enemies;
-    public AudioClip clipDeath;
+    [SerializeField] private GameObject[] enemies;
+    [SerializeField] private AudioClip clipDeath;
 
 
-    public void Start()
+    void Start()
     {
         level = LevelWorld.levelWorld + LevelWorld.levelEnemy - 1;
         health = level;
@@ -24,6 +21,16 @@ public class EnemyBehavior : MonoBehaviour
         ColorLabelUpdate();
         levelLabel.text = $"Lvl. {level}";
     }
+
+    void Awake()
+    {
+        if (enemies.Length != 0)
+        {
+            int num = new System.Random().Next(0, enemies.Length);
+            enemies[num].SetActive(true);
+        }
+    }
+
 
     public void ColorLabelUpdate()
     {
@@ -41,18 +48,10 @@ public class EnemyBehavior : MonoBehaviour
             }
     }
 
-    public void Awake()
-    {
-        if (enemies.Length != 0)
-        {
-            int num = new System.Random().Next(0, enemies.Length);
-            enemies[num].SetActive(true);
-        }
-    }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Attack")
+        if (other.gameObject.CompareTag("Attack"))
         {
             health -= PlayerParameters.archer.Damage;
 
@@ -66,7 +65,7 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             if (!PerkGenerator.schield)
             {

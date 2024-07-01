@@ -11628,19 +11628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148ad59d4cfd9480c92b116a34bbd307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greatings: 0
-  enemyTrigger: 0
-  enemyExist: 0
-  enemyFlyTrigger: 0
-  enemyFlyExist: 0
-  trapTrigger: 0
-  trapExist: 0
-  flyTrapTrigger: 0
-  flyTrapExist: 0
-  coinTrigger: 0
-  coinExist: 0
-  perkTrigger: 0
-  perkExist: 0
 --- !u!54 &433912033
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16409,7 +16396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &719230742
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25085,7 +25072,6 @@ MonoBehaviour:
   speed: 0
   maxSpeedGame: 3
   differenceSpeedGame: 0.0001
-  maxRoadCount: 6
   isPlaying: 0
   menu: {fileID: 1157013195}
   pause: {fileID: 1545443449}

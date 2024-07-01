@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PerkSchield : MonoBehaviour
 {
-    public AudioClip clipPerk;
+    [SerializeField] private AudioClip clipPerk;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hero")
+        if (other.gameObject.CompareTag("Hero"))
         {
             Destroy(gameObject);
             PerkGenerator.schield = true;
